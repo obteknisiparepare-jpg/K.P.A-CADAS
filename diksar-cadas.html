@@ -162,7 +162,7 @@
                     <div class="pt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
                         <button onclick="switchTab('register')" class="w-full sm:w-auto px-6 py-3.5 bg-amber-500 hover:bg-amber-600 text-black font-black rounded-2xl shadow-xl transition flex items-center justify-center space-x-2 text-sm">
                             <i class="fa-solid fa-pen-to-square"></i>
-                            <span>Daftar Diksar Sekarang</span>
+                            <span>Daftar Sekarang</span>
                         </button>
                         <button onclick="switchTab('gallery')" class="w-full sm:w-auto px-6 py-3.5 bg-[#0e241b] hover:bg-emerald-900 text-amber-400 font-bold rounded-2xl border-2 border-amber-500/50 shadow-xl transition flex items-center justify-center space-x-2 text-sm">
                             <i class="fa-solid fa-images"></i>
@@ -231,12 +231,12 @@
                 </div>
             </div>
 
-            <!-- Tahapan Diksar -->
+            <!-- Tahapan Kegiatan -->
             <div id="jadwal" class="bg-[#07160f] py-16 border-y border-emerald-900/50">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="text-center max-w-2xl mx-auto mb-12 space-y-2">
-                        <span class="text-xs font-extrabold uppercase tracking-widest text-amber-400 bg-amber-500/10 border border-amber-500/30 px-3 py-1 rounded-full">Tahapan Diksar</span>
-                        <h2 class="font-serif text-2xl sm:text-3xl font-bold text-white">Alur Kegiatan Pendaftaran & Pelatihan</h2>
+                        <span class="text-xs font-extrabold uppercase tracking-widest text-amber-400 bg-amber-500/10 border border-amber-500/30 px-3 py-1 rounded-full">Tahapan Kegiatan</span>
+                        <h2 class="font-serif text-2xl sm:text-3xl font-bold text-white">Alur Pendaftaran & Pelatihan Anggota</h2>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
@@ -261,9 +261,9 @@
                             <span class="mt-4 inline-block text-[10px] font-extrabold text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-circle-info mr-1"></i>Lihat Detail</span>
                         </div>
 
-                        <div onclick="openProgramModal('04. Diksar Lapangan', 'Praktik langsung seluruh teori di medan sebenarnya. Meliputi pembacaan peta lokasi nyata, aplikasi survival, pembentukan fisik dan mental, serta pengukuhan anggota resmi.')" class="bg-[#0e241b] p-6 rounded-2xl border-l-4 border-l-amber-500 border-y border-r border-emerald-800/50 relative cursor-pointer hover:border-amber-500 hover:shadow-2xl transition-all group">
+                        <div onclick="openProgramModal('04. Kegiatan Lapangan', 'Praktik langsung seluruh teori di medan sebenarnya. Meliputi pembacaan peta lokasi nyata, aplikasi survival, pembentukan fisik dan mental, serta pengukuhan anggota resmi.')" class="bg-[#0e241b] p-6 rounded-2xl border-l-4 border-l-amber-500 border-y border-r border-emerald-800/50 relative cursor-pointer hover:border-amber-500 hover:shadow-2xl transition-all group">
                             <div class="w-10 h-10 rounded-xl bg-amber-500 text-black font-black flex items-center justify-center mb-4 text-base font-serif">04</div>
-                            <h3 class="font-bold text-white text-base mb-1 group-hover:text-amber-400 transition-colors">Diksar Lapangan</h3>
+                            <h3 class="font-bold text-white text-base mb-1 group-hover:text-amber-400 transition-colors">Kegiatan Lapangan</h3>
                             <p class="text-xs text-slate-400">Aplikasi teori di alam bebas dan pengukuhan anggota resmi.</p>
                             <span class="mt-4 inline-block text-[10px] font-extrabold text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-circle-info mr-1"></i>Lihat Detail</span>
                         </div>
@@ -282,7 +282,7 @@
                             <img src="KPA CADAS.jpg" alt="Logo KPA CADAS" class="w-16 h-16 object-contain rounded-2xl bg-black border-2 border-amber-500 p-1 shadow-md cursor-pointer" onclick="openLogoModal()" onerror="this.src='https://via.placeholder.com/150/000000/f97316?text=CADAS'">
                             <div>
                                 <span class="text-[10px] font-extrabold uppercase tracking-wider text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-full border border-amber-500/30">Formulir Resmi Pendaftaran</span>
-                                <h2 class="font-serif text-xl sm:text-2xl font-bold mt-1 text-white">Diksar K.P.A CADAS Parepare</h2>
+                                <h2 class="font-serif text-xl sm:text-2xl font-bold mt-1 text-white">Pendaftaran K.P.A CADAS Parepare</h2>
                                 <p class="text-emerald-300 text-xs">Silakan isi Data Diri Anda dengan lengkap dan benar.</p>
                             </div>
                         </div>
@@ -299,7 +299,7 @@
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div class="sm:col-span-2">
                                     <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Nama Lengkap <span class="text-red-400">*</span></label>
-                                    <input type="text" id="reg-nama" required placeholder="Contoh: OBENG BUNGA" class="w-full px-4 py-3 rounded-xl border border-emerald-800 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm bg-[#07160f] text-white">
+                                    <input type="text" id="reg-nama" required placeholder="Contoh: Andi Muhammad Faisal" class="w-full px-4 py-3 rounded-xl border border-emerald-800 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm bg-[#07160f] text-white">
                                 </div>
                                 <div>
                                     <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Nama Lapangan / Panggilan <span class="text-red-400">*</span></label>
@@ -357,7 +357,7 @@
                             </div>
 
                             <div>
-                                <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Alasan Bergabung / Motivasi Mengikuti Diksar K.P.A CADAS <span class="text-red-400">*</span></label>
+                                <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Alasan Bergabung / Motivasi Mengikuti K.P.A CADAS <span class="text-red-400">*</span></label>
                                 <textarea id="reg-motivasi" required rows="3" placeholder="Tuliskan motivasi Anda bergabung dengan K.P.A CADAS Parepare..." class="w-full px-4 py-3 rounded-xl border border-emerald-800 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm bg-[#07160f] text-white"></textarea>
                             </div>
                         </div>
@@ -365,7 +365,7 @@
                         <div class="pt-2">
                             <label class="flex items-start space-x-3 cursor-pointer">
                                 <input type="checkbox" id="reg-check" required class="mt-1 w-4 h-4 text-amber-500 rounded border-emerald-800 bg-[#07160f] focus:ring-amber-500">
-                                <span class="text-xs text-slate-300">Saya menyatakan bahwa seluruh Data Diri di atas adalah benar. Saya bersedia mematuhi seluruh tata tertib kegiatan, menjaga kedisiplinan, serta mengikuti instruksi Instruktur/Senior demi keselamatan dan kelancaran Pendidikan Dasar K.P.A CADAS Parepare.</span>
+                                <span class="text-xs text-slate-300">Saya menyatakan bahwa seluruh Data Diri di atas adalah benar. Saya bersedia mematuhi seluruh tata tertib kegiatan, menjaga kedisiplinan, serta mengikuti instruksi Instruktur/Senior demi keselamatan dan kelancaran kegiatan K.P.A CADAS Parepare.</span>
                             </label>
                         </div>
 
@@ -382,7 +382,7 @@
             </div>
         </section>
 
-        <!-- GALLERY / DOKUMENTASI SECTION (FOTO & VIDEO) -->
+        <!-- GALLERY / DOKUMENTASI SECTION -->
         <section id="view-gallery" class="view-section hidden py-10 sm:py-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
                 
@@ -393,7 +393,7 @@
                             <span class="text-[10px] font-extrabold uppercase tracking-widest text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/30">Arsip & Dokumentasi Foto</span>
                             <h2 class="font-serif text-2xl sm:text-3xl font-bold">Galeri Foto Kegiatan K.P.A CADAS</h2>
                             <p class="text-xs sm:text-sm text-emerald-200 font-light max-w-xl">
-                                Kumpulan dokumentasi foto kegiatan Pendakian, Navigasi Darat, Survival, dan Aksi Konservasi Alam. Klik foto untuk memperbesar atau ikon sampah untuk menghapus.
+                                Kumpulan dokumentasi foto kegiatan pendakian, navigasi darat, survival, dan aksi konservasi alam. Klik foto untuk memperbesar atau ikon sampah untuk menghapus.
                             </p>
                         </div>
                         <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
@@ -409,7 +409,7 @@
                     </div>
 
                     <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                        <!-- Dynamic Photos rendered via JS -->
+                        <!-- Dynamic Photos -->
                     </div>
                 </div>
 
@@ -420,7 +420,7 @@
                             <span class="text-[10px] font-extrabold uppercase tracking-widest text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/30">Arsip Video Kegiatan</span>
                             <h2 class="font-serif text-2xl sm:text-3xl font-bold">Video Dokumentasi YouTube</h2>
                             <p class="text-xs sm:text-sm text-emerald-200 font-light max-w-xl">
-                                Rasakan sensasi penjelajahan alam bebas dan inspirasi menjaga semesta melalui dokumentasi video.
+                                Jelajahi keseruan petualangan, aksi nyata konservasi alam, dan momen persaudaraan terbaik K.P.A CADAS Parepare!
                             </p>
                         </div>
                         <div>
@@ -432,7 +432,7 @@
                     </div>
 
                     <div id="video-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- Dynamic Videos rendered via JS -->
+                        <!-- Dynamic Videos -->
                     </div>
                 </div>
 
@@ -449,7 +449,7 @@
                         <div>
                             <h3 class="font-serif font-black text-base sm:text-lg text-emerald-950 leading-tight">K.P.A CADAS PAREPARE</h3>
                             <p class="text-[10px] font-bold text-amber-600 uppercase tracking-wider">Cinta Alam Dan Semesta - Sulawesi Selatan</p>
-                            <p class="text-[10px] text-slate-500 font-semibold mt-0.5">Bukti Tanda Pendaftaran Diksar</p>
+                            <p class="text-[10px] text-slate-500 font-semibold mt-0.5">Bukti Tanda Pendaftaran</p>
                         </div>
                     </div>
 
@@ -482,7 +482,7 @@
                     </div>
 
                     <div class="text-[10px] text-slate-500 italic text-center">
-                        *Harap simpan atau cetak kartu ini sebagai bukti saat verifikasi berkas Diksar.
+                        *Harap simpan atau cetak kartu ini sebagai bukti saat verifikasi berkas.
                     </div>
                 </div>
 
@@ -557,12 +557,11 @@
             <form onsubmit="handleVideoUpload(event)" class="space-y-3">
                 <div>
                     <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Judul Video <span class="text-red-400">*</span></label>
-                    <input type="text" id="video-title" required placeholder="Contoh: Dokumentasi Diksar Lapangan 2026" class="w-full px-3 py-2 rounded-xl border border-emerald-800 bg-[#07160f] text-white text-xs outline-none">
+                    <input type="text" id="video-title" required placeholder="Contoh: Dokumentasi Kegiatan Lapangan" class="w-full px-3 py-2 rounded-xl border border-emerald-800 bg-[#07160f] text-white text-xs outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Link YouTube <span class="text-red-400">*</span></label>
                     <input type="text" id="video-url" required placeholder="Contoh: https://www.youtube.com/watch?v=xxxx" class="w-full px-3 py-2 rounded-xl border border-emerald-800 bg-[#07160f] text-white text-xs outline-none">
-                    <p class="text-[10px] text-slate-400 mt-1">Tempel link video YouTube standar.</p>
                 </div>
                 <div class="pt-3 flex justify-end space-x-2">
                     <button type="button" onclick="closeUploadVideoModal()" class="px-4 py-2 text-xs font-bold text-slate-300 bg-emerald-950 rounded-xl">Batal</button>
@@ -572,13 +571,13 @@
         </div>
     </div>
 
-    <!-- MODAL PRATINJAU FOTO BESAR & TOMBOL DOWNLOAD -->
+    <!-- MODAL PRATINJAU FOTO BESAR -->
     <div id="preview-photo-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4">
         <div class="relative max-w-4xl w-full text-center space-y-3">
             <button onclick="closePreviewPhotoModal()" class="absolute -top-12 right-0 text-white hover:text-amber-400 text-xl font-bold px-3 py-1 bg-black/60 rounded-full border border-amber-500">
                 <i class="fa-solid fa-xmark mr-1"></i> Tutup
             </button>
-            <div class="max-h-[70vh] flex items-center justify-center overflow-hidden rounded-2xl border-2 border-amber-500 bg-black shadow-2xl relative group">
+            <div class="max-h-[70vh] flex items-center justify-center overflow-hidden rounded-2xl border-2 border-amber-500 bg-black shadow-2xl relative">
                 <img id="preview-modal-img" src="" alt="Pratinjau Foto" class="max-h-[70vh] w-auto object-contain">
             </div>
             
@@ -609,7 +608,7 @@
             </div>
 
             <div class="w-56 h-56 mx-auto bg-black rounded-full border-4 border-amber-500 p-2 shadow-2xl relative flex items-center justify-center">
-                <img id="logo-img-src" src="KPA CADAS.jpg" alt="Logo KPA CADAS Parepare" class="w-full h-full object-contain rounded-full" onerror="this.src='https://via.placeholder.com/300/000000/f97316?text=KPA+CADAS'">
+                <img id="logo-img-src" src="KPA CADAS.jpg" alt="Logo KPA CADAS" class="w-full h-full object-contain rounded-full" onerror="this.src='https://via.placeholder.com/300/000000/f97316?text=KPA+CADAS'">
             </div>
 
             <div class="pt-1">
@@ -619,30 +618,11 @@
                 </button>
             </div>
 
-            <div class="bg-[#07160f] p-4 rounded-2xl border border-emerald-800 text-left space-y-3">
-                <h4 class="font-serif font-bold text-sm text-amber-400 border-b border-emerald-800 pb-2 text-center">Bedah Makna Filosofis Emblem</h4>
-                
-                <div class="space-y-2 text-xs text-slate-300">
-                    <div class="flex items-start space-x-2">
-                        <i class="fa-solid fa-compass text-amber-500 mt-0.5"></i>
-                        <span><strong>Kompas & Bintang:</strong> Menjadi petunjuk arah kehidupan serta cita-cita tinggi organisasi.</span>
-                    </div>
-                    <div class="flex items-start space-x-2">
-                        <i class="fa-solid fa-mountain text-amber-500 mt-0.5"></i>
-                        <span><strong>Gunung & Jejak Kaki:</strong> Melambangkan ketangguhan fisik, petualangan di alam bebas, dan jejak kebaikan bagi lingkungan.</span>
-                    </div>
-                    <div class="flex items-start space-x-2">
-                        <i class="fa-solid fa-circle-notch text-amber-500 mt-0.5"></i>
-                        <span><strong>Lingkaran Emas:</strong> Simbol persaudaraan yang tak terputus dan kebulatan tekad menjaga alam semesta.</span>
-                    </div>
-                </div>
-            </div>
-
             <button onclick="closeLogoModal()" class="w-full py-2.5 text-xs font-bold text-slate-300 bg-emerald-900/40 hover:bg-emerald-800/50 rounded-xl">Tutup Modal</button>
         </div>
     </div>
 
-    <!-- MODAL SEWA ALAT -->
+    <!-- MODAL SEWA ALAT OUTDOOR CAMPING -->
     <div id="rental-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-2 sm:p-4">
         <div class="bg-[#081c15] text-white rounded-3xl max-w-4xl w-full max-h-[92vh] overflow-y-auto p-3 sm:p-5 space-y-4 shadow-2xl border-2 border-amber-500 relative">
             <button onclick="closeRentalModal()" class="absolute top-3 right-3 text-slate-400 hover:text-white text-xl font-bold z-30 bg-black/70 w-9 h-9 rounded-full flex items-center justify-center">
@@ -688,8 +668,6 @@
                                 </div>
                                 <span class="text-[10px] text-amber-300 font-normal pl-2 border-l border-amber-500/40">Kapasitas Besar</span>
                             </div>
-                        </div>
-                        <div class="space-y-2 text-xs font-bold">
                             <div class="bg-black/85 backdrop-blur border-2 border-amber-400 pl-1 pr-3 py-1 rounded-full flex items-center justify-between shadow-lg">
                                 <div class="flex items-center space-x-2">
                                     <div class="w-8 h-8 rounded-full bg-amber-400 text-black flex items-center justify-center text-sm shadow"><i class="fa-solid fa-fire-burner"></i></div>
@@ -703,6 +681,37 @@
                                     <span class="text-white font-extrabold uppercase tracking-wide">SLEEPING BAG</span>
                                 </div>
                                 <span class="text-[10px] text-amber-300 font-normal pl-2 border-l border-amber-500/40">Hangat & Nyaman</span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2 text-xs font-bold">
+                            <div class="bg-black/85 backdrop-blur border-2 border-amber-400 pl-1 pr-3 py-1 rounded-full flex items-center justify-between shadow-lg">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-8 h-8 rounded-full bg-amber-400 text-black flex items-center justify-center text-sm shadow"><i class="fa-solid fa-chair"></i></div>
+                                    <span class="text-white font-extrabold uppercase tracking-wide">KURSI LIPAT</span>
+                                </div>
+                                <span class="text-[10px] text-amber-300 font-normal pl-2 border-l border-amber-500/40">Praktis & Ringan</span>
+                            </div>
+                            <div class="bg-black/85 backdrop-blur border-2 border-amber-400 pl-1 pr-3 py-1 rounded-full flex items-center justify-between shadow-lg">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-8 h-8 rounded-full bg-amber-400 text-black flex items-center justify-center text-sm shadow"><i class="fa-solid fa-lightbulb"></i></div>
+                                    <span class="text-white font-extrabold uppercase tracking-wide">LENTERA / LAMPU</span>
+                                </div>
+                                <span class="text-[10px] text-amber-300 font-normal pl-2 border-l border-amber-500/40">Penerangan Malam</span>
+                            </div>
+                            <div class="bg-black/85 backdrop-blur border-2 border-amber-400 pl-1 pr-3 py-1 rounded-full flex items-center justify-between shadow-lg">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-8 h-8 rounded-full bg-amber-400 text-black flex items-center justify-center text-sm shadow"><i class="fa-solid fa-bed"></i></div>
+                                    <span class="text-white font-extrabold uppercase tracking-wide">HAMMOCK</span>
+                                </div>
+                                <span class="text-[10px] text-amber-300 font-normal pl-2 border-l border-amber-500/40">Santai di Alam</span>
+                            </div>
+                            <div class="bg-black/85 backdrop-blur border-2 border-amber-400 pl-1 pr-3 py-1 rounded-full flex items-center justify-between shadow-lg">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-8 h-8 rounded-full bg-amber-400 text-black flex items-center justify-center text-sm shadow"><i class="fa-solid fa-utensils"></i></div>
+                                    <span class="text-white font-extrabold uppercase tracking-wide">MATRAS & COOKING SET</span>
+                                </div>
+                                <span class="text-[10px] text-amber-300 font-normal pl-2 border-l border-amber-500/40">Perlengkapan Lain</span>
                             </div>
                         </div>
                     </div>
@@ -732,7 +741,7 @@
         </div>
     </div>
 
-    <!-- MODAL SERVICE -->
+    <!-- MODAL SERVICE OB SMARTPHONE -->
     <div id="service-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-2 sm:p-4">
         <div class="bg-[#050b14] text-white rounded-3xl max-w-5xl w-full max-h-[95vh] overflow-y-auto p-3 sm:p-5 space-y-4 shadow-2xl border-2 border-cyan-500 relative">
             <button onclick="closeServiceModal()" class="absolute top-3 right-3 text-cyan-400 hover:text-white text-xl font-bold z-30 bg-black/80 w-9 h-9 rounded-full flex items-center justify-center border border-cyan-500">
@@ -762,49 +771,64 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <!-- Jual Beli -->
                         <div class="bg-black/80 border-2 border-cyan-500 rounded-2xl p-4 space-y-3">
                             <div class="flex items-center space-x-2 text-cyan-400 border-b border-cyan-800 pb-2">
-                                <i class="fa-solid fa-mobile-screen-button text-xl"></i>
+                                <i class="fa-solid fa-cart-shopping text-xl"></i>
                                 <h3 class="font-black text-sm uppercase tracking-wide text-white">JUAL BELI HANDPHONE</h3>
                             </div>
                             <ul class="text-xs space-y-2 text-slate-200 font-semibold">
-                                <li class="flex items-center space-x-2"><i class="fa-solid fa-check-circle text-cyan-400"></i><span>HP Baru & Second</span></li>
-                                <li class="flex items-center space-x-2"><i class="fa-solid fa-check-circle text-cyan-400"></i><span>Tukar Tambah</span></li>
-                                <li class="flex items-center space-x-2"><i class="fa-solid fa-check-circle text-cyan-400"></i><span>Cicilan / Cash</span></li>
+                                <li class="flex items-center space-x-2"><i class="fa-solid fa-check-circle text-cyan-400"></i><span>HP Baru & Second Berkualitas</span></li>
+                                <li class="flex items-center space-x-2"><i class="fa-solid fa-check-circle text-cyan-400"></i><span>Terima Tukar Tambah</span></li>
+                                <li class="flex items-center space-x-2"><i class="fa-solid fa-check-circle text-cyan-400"></i><span>Cicilan / Cash Mudah</span></li>
                             </ul>
                         </div>
 
+                        <!-- Service List Sesuai Poster -->
                         <div class="bg-black/80 border-2 border-cyan-500 rounded-2xl p-4 space-y-2">
                             <div class="flex items-center space-x-2 text-cyan-400 border-b border-cyan-800 pb-2">
                                 <i class="fa-solid fa-screwdriver-wrench text-xl"></i>
-                                <h3 class="font-black text-sm uppercase tracking-wide text-white">SERVICE SMARTPHONE</h3>
+                                <h3 class="font-black text-sm uppercase tracking-wide text-white">LAYANAN SERVICE</h3>
                             </div>
-                            <div class="grid grid-cols-2 gap-2 text-[11px] font-bold text-slate-300 pt-1">
-                                <div class="bg-cyan-950/60 p-2 rounded-lg border border-cyan-800"><i class="fa-solid fa-mobile text-cyan-400 mr-1"></i> Ganti LCD</div>
-                                <div class="bg-cyan-950/60 p-2 rounded-lg border border-cyan-800"><i class="fa-solid fa-battery-full text-cyan-400 mr-1"></i> Ganti Baterai</div>
-                                <div class="bg-cyan-950/60 p-2 rounded-lg border border-cyan-800"><i class="fa-solid fa-microchip text-cyan-400 mr-1"></i> Repair IC</div>
-                                <div class="bg-cyan-950/60 p-2 rounded-lg border border-cyan-800"><i class="fa-solid fa-code text-cyan-400 mr-1"></i> Software</div>
+                            <div class="grid grid-cols-1 gap-1.5 text-[11px] font-bold text-slate-300 pt-1">
+                                <div class="bg-cyan-950/60 px-2.5 py-1.5 rounded-lg border border-cyan-800 flex justify-between"><span><i class="fa-solid fa-battery-full text-cyan-400 mr-2"></i>Ganti LCD / Baterai</span><span class="text-[9px] text-cyan-300">Original</span></div>
+                                <div class="bg-cyan-950/60 px-2.5 py-1.5 rounded-lg border border-cyan-800 flex justify-between"><span><i class="fa-solid fa-microchip text-cyan-400 mr-2"></i>Repair IC / Software</span><span class="text-[9px] text-cyan-300">Akurat</span></div>
+                                <div class="bg-cyan-950/60 px-2.5 py-1.5 rounded-lg border border-cyan-800 flex justify-between"><span><i class="fa-solid fa-lock-open text-cyan-400 mr-2"></i>Unlock & Lain-lain</span><span class="text-[9px] text-cyan-300">Tuntas</span></div>
                             </div>
                         </div>
 
+                        <!-- Perbaikan Laptop & Konsol Sesuai Poster -->
                         <div class="bg-black/80 border-2 border-cyan-500 rounded-2xl p-4 space-y-2">
                             <div class="flex items-center space-x-2 text-cyan-400 border-b border-cyan-800 pb-2">
                                 <i class="fa-solid fa-laptop text-xl"></i>
-                                <h3 class="font-black text-sm uppercase tracking-wide text-white">LAPTOP / TV / KONSOL</h3>
+                                <h3 class="font-black text-sm uppercase tracking-wide text-white">PERANGKAT LAINNYA</h3>
                             </div>
-                            <div class="space-y-1.5 text-[11px] font-bold text-slate-300 pt-1">
-                                <div class="flex items-center justify-between bg-cyan-950/60 px-2.5 py-1.5 rounded-lg border border-cyan-800"><span><i class="fa-solid fa-laptop text-cyan-400 mr-2"></i>Perbaikan Laptop</span> <span class="text-[9px] text-cyan-300">Semua Merk</span></div>
-                                <div class="flex items-center justify-between bg-cyan-950/60 px-2.5 py-1.5 rounded-lg border border-cyan-800"><span><i class="fa-solid fa-tv text-cyan-400 mr-2"></i>Perbaikan TV LED</span> <span class="text-[9px] text-cyan-300">Mati/Garis</span></div>
+                            <div class="space-y-1 text-[10px] font-bold text-slate-300 pt-1">
+                                <div class="bg-cyan-950/60 px-2 py-1 rounded border border-cyan-800 flex items-center"><i class="fa-solid fa-mobile-screen text-cyan-400 mr-2"></i>Service Smartphone</div>
+                                <div class="bg-cyan-950/60 px-2 py-1 rounded border border-cyan-800 flex items-center"><i class="fa-solid fa-laptop text-cyan-400 mr-2"></i>Perbaikan Laptop & PC</div>
+                                <div class="bg-cyan-950/60 px-2 py-1 rounded border border-cyan-800 flex items-center"><i class="fa-solid fa-tv text-cyan-400 mr-2"></i>Perbaikan TV LED / LCD</div>
+                                <div class="bg-cyan-950/60 px-2 py-1 rounded border border-cyan-800 flex items-center"><i class="fa-solid fa-gamepad text-cyan-400 mr-2"></i>Perbaikan Konsol / PS</div>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Brand Logos Footer -->
+                    <div class="bg-black/80 border border-cyan-500/50 p-2.5 rounded-xl flex flex-wrap items-center justify-center gap-4 text-xs font-black tracking-widest text-cyan-300 uppercase">
+                        <span class="text-white">APPLE</span> • 
+                        <span class="text-white">SAMSUNG</span> • 
+                        <span class="text-white">XIAOMI</span> • 
+                        <span class="text-white">OPPO</span> • 
+                        <span class="text-white">VIVO</span> • 
+                        <span class="text-white">REALME</span> • 
+                        <span class="text-white">ASUS</span>
                     </div>
 
                     <div class="flex flex-col sm:flex-row items-center justify-between bg-gradient-to-r from-cyan-950 via-black to-blue-950 border-2 border-cyan-400 p-3.5 rounded-2xl gap-3 shadow-2xl">
                         <div class="flex items-center space-x-3 text-center sm:text-left">
                             <div class="w-10 h-10 rounded-xl bg-cyan-500 text-black flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-location-dot"></i></div>
                             <div>
-                                <p class="text-[10px] font-bold text-cyan-300 uppercase tracking-widest">PAREPARE • SULAWESI SELATAN</p>
-                                <p class="text-xs text-slate-300 font-semibold">Bergaransi • Harga Bersaing • Pelayanan Terbaik</p>
+                                <p class="text-[10px] font-bold text-cyan-300 uppercase tracking-widest">KOTA PAREPARE • SULAWESI SELATAN</p>
+                                <p class="text-xs text-slate-300 font-semibold">Bergaransi • Harga Bersaing • Pelayanan Terbaik & Profesional</p>
                             </div>
                         </div>
                         <a href="https://wa.me/6285197466858?text=Halo%20Admin%20OB%20Smartphone,%20saya%20mau%20tanya%20service%20perbaikan%20HP/Laptop" target="_blank" class="px-6 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-white font-black rounded-full text-base flex items-center space-x-2.5 shadow-xl transition border-2 border-white">
@@ -859,7 +883,7 @@
                 <div class="flex items-center space-x-3">
                     <img src="KPA CADAS.jpg" alt="Logo CADAS" class="w-10 h-10 object-contain rounded-xl bg-black border border-amber-500 p-1" onerror="this.src='https://via.placeholder.com/150/000000/f97316?text=CADAS'">
                     <div>
-                        <h3 class="font-serif font-bold text-base text-amber-400">Dashboard Admin Diksar K.P.A CADAS</h3>
+                        <h3 class="font-serif font-bold text-base text-amber-400">Dashboard Admin K.P.A CADAS</h3>
                         <p class="text-[10px] text-emerald-300">Kelola dan lihat data calon anggota terdaftar</p>
                     </div>
                 </div>
@@ -888,7 +912,7 @@
 
         // Galeri Video YouTube Logic dengan Thumbnail Aman
         let galleryVideos = JSON.parse(localStorage.getItem('cadas_videos')) || [
-            { id: 1, title: 'Teaser Diksar K.P.A CADAS Parepare', videoId: 'dQw4w9WgXcQ', date: '12 Okt 2025' }
+            { id: 1, title: 'Teaser Kegiatan K.P.A CADAS Parepare', videoId: 'dQw4w9WgXcQ', date: '12 Okt 2025' }
         ];
 
         function renderGallery() {
@@ -1192,7 +1216,7 @@
         function sendToWA() {
             if (!currentFormData.nama) return;
 
-            const pesanWA = `*FORMULIR PENDAFTARAN DIKSAR K.P.A CADAS PAREPARE*
+            const pesanWA = `*FORMULIR PENDAFTARAN K.P.A CADAS PAREPARE*
 --------------------------------------------------
 *No. Registrasi:* ${currentFormData.regId}
 *Tanggal Daftar:* ${currentFormData.tanggal}
@@ -1213,7 +1237,7 @@
 📝 *MOTIVASI BERGABUNG*
 "${currentFormData.motivasi}"
 --------------------------------------------------
-*Salam lestari! Saya telah menyelesaikan pendaftaran online Diksar K.P.A CADAS.*`;
+*Salam lestari! Saya telah menyelesaikan pendaftaran online K.P.A CADAS.*`;
 
             const urlWA = `https://wa.me/${NOMOR_WA_ADMIN}?text=${encodeURIComponent(pesanWA)}`;
             window.open(urlWA, '_blank');
