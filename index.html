@@ -904,7 +904,7 @@
         const NOMOR_WA_ADMIN = "082343551039";
         let currentFormData = {};
 
-     // Galeri Foto & Video Logic dengan Firestore Realtime Database
+  // Galeri Foto & Video Logic dengan Firestore Realtime Database
         let galleryPhotos = [];
         let galleryVideos = [];
 
@@ -1104,6 +1104,8 @@
                         if (window.db) {
                             await db.collection("cadas_photos").add(newPhoto);
                             closeUploadPhotoModal();
+                            document.getElementById('upload-title').value = '';
+                            fileInput.value = '';
                             alert('Foto berhasil diunggah ke database online!');
                         }
                     } catch (error) {
@@ -1147,7 +1149,6 @@
                 alert('Gagal menyimpan video ke database.');
             }
         }
-
         // Panggil fungsi pemuat database saat halaman dibuka
         window.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
