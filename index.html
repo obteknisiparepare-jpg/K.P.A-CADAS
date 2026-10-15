@@ -1297,6 +1297,36 @@
                 alert('Belum ada data pendaftar untuk diexport.');
             }
         }
-    </script>
+   <!-- Firebase App SDK (Versi Web CDN) -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  // Konfigurasi Firebase KPA CADAS
+  const firebaseConfig = {
+    apiKey: "AIzaSyCG1B_4WkuwJxxhkzcXzrWLlAb5qdil_dc",
+    authDomain: "kpa-cadas.firebaseapp.com",
+    projectId: "kpa-cadas",
+    storageBucket: "kpa-cadas.firebasestorage.app",
+    messagingSenderId: "240677750680",
+    appId: "1:240677750680:web:08131da297be196b894ded",
+    measurementId: "G-PNDLSBYG46"
+  };
+
+  // Inisialisasi Firebase & Firestore Database
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Buat variabel global agar bisa dipakai di skrip galeri utama Kakak
+  window.db = db;
+  window.collection = collection;
+  window.addDoc = addDoc;
+  window.getDocs = getDocs;
+  window.deleteDoc = deleteDoc;
+  window.doc = doc;
+  window.onSnapshot = onSnapshot;
+
+  console.log("Firebase KPA CADAS Berhasil Terhubung!");
+</script>
 </body>
 </html>
