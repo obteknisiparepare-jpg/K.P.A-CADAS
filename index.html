@@ -1083,11 +1083,37 @@
         function openUploadVideoModal() { document.getElementById('upload-video-modal').classList.remove('hidden'); }
         function closeUploadVideoModal() { document.getElementById('upload-video-modal').classList.add('hidden'); }
 
-     function handlePhotoUpload(e) {
+   // Fungsi untuk membuka & menutup Modal Foto
+        function openUploadPhotoModal() { 
+            const modal = document.getElementById('upload-modal');
+            if (modal) modal.classList.remove('hidden'); 
+        }
+        function closeUploadPhotoModal() { 
+            const modal = document.getElementById('upload-modal');
+            if (modal) modal.classList.add('hidden'); 
+        }
+
+        // Fungsi untuk membuka & menutup Modal Video
+        function openUploadVideoModal() { 
+            const modal = document.getElementById('upload-video-modal');
+            if (modal) modal.classList.remove('hidden'); 
+        }
+        function closeUploadVideoModal() { 
+            const modal = document.getElementById('upload-video-modal');
+            if (modal) modal.classList.add('hidden'); 
+        }
+
+        // Fungsi Upload Foto yang Aman & Auto-Close
+        async function handlePhotoUpload(e) {
             e.preventDefault();
-            const title = document.getElementById('upload-title').value;
-            const category = document.getElementById('upload-category').value;
+            const titleInput = document.getElementById('upload-title');
+            const categoryInput = document.getElementById('upload-category');
             const fileInput = document.getElementById('upload-file');
+            
+            if (!titleInput || !fileInput) return;
+
+            const title = titleInput.value;
+            const category = categoryInput ? categoryInput.value : 'Umum';
             
             if (fileInput.files && fileInput.files[0]) {
                 const reader = new FileReader();
@@ -1100,10 +1126,14 @@
                         date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
                     };
                     
-                    // Langsung tutup modal dan bersihkan input agar tidak stuck
+                    // Langsung tutup modal dan bersihkan form agar tidak stuck
                     closeUploadPhotoModal();
-                    document.getElementById('upload-title').value = '';
+                    titleInput.value = '';
                     fileInput.value = '';
+
+                    // Perbarui tampilan lokal agar langsung muncul
+                    galleryPhotos.unshift(newPhoto);
+                    renderGallery();
 
                     // Kirim ke database online Firestore di latar belakang
                     try {
@@ -1114,45 +1144,10 @@
                         console.error("Gagal simpan foto ke Firestore:", error);
                     }
                     
-                    alert('Foto berhasil diunggah ke database online!');
+                    alert('Foto berhasil disimpan!');
                 };
                 reader.readAsDataURL(fileInput.files[0]);
             }
-        }
-
-        async function handleVideoUpload(e) {
-            e.preventDefault();
-            const title = document.getElementById('video-title').value;
-            const rawUrl = document.getElementById('video-url').value.trim();
-
-            const videoId = getYouTubeVideoId(rawUrl);
-
-            if (!videoId) {
-                alert('URL YouTube tidak valid! Harap masukkan link YouTube yang benar.');
-                return;
-            }
-
-            const newVideo = {
-                id: Date.now(),
-                title: title,
-                videoId: videoId,
-                date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
-            };
-
-            // Langsung tutup modal dan bersihkan input
-            closeUploadVideoModal();
-            document.getElementById('video-title').value = '';
-            document.getElementById('video-url').value = '';
-
-            try {
-                if (window.db) {
-                    await db.collection("cadas_videos").add(newVideo);
-                }
-            } catch (error) {
-                console.error("Gagal simpan video ke Firestore:", error);
-            }
-
-            alert('Video YouTube berhasil disimpan ke database online!');
         }
 
             const newVideo = {
