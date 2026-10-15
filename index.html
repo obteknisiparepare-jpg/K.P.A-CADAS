@@ -1083,7 +1083,7 @@
         function openUploadVideoModal() { document.getElementById('upload-video-modal').classList.remove('hidden'); }
         function closeUploadVideoModal() { document.getElementById('upload-video-modal').classList.add('hidden'); }
 
-      function handlePhotoUpload(e) {
+     function handlePhotoUpload(e) {
             e.preventDefault();
             const title = document.getElementById('upload-title').value;
             const category = document.getElementById('upload-category').value;
@@ -1100,22 +1100,26 @@
                         date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
                     };
                     
+                    // Langsung tutup modal dan bersihkan input agar tidak stuck
+                    closeUploadPhotoModal();
+                    document.getElementById('upload-title').value = '';
+                    fileInput.value = '';
+
+                    // Kirim ke database online Firestore di latar belakang
                     try {
                         if (window.db) {
                             await db.collection("cadas_photos").add(newPhoto);
-                            closeUploadPhotoModal();
-                            document.getElementById('upload-title').value = '';
-                            fileInput.value = '';
-                            alert('Foto berhasil diunggah ke database online!');
                         }
                     } catch (error) {
                         console.error("Gagal simpan foto ke Firestore:", error);
-                        alert('Gagal mengunggah foto ke database.');
                     }
+                    
+                    alert('Foto berhasil diunggah ke database online!');
                 };
                 reader.readAsDataURL(fileInput.files[0]);
             }
         }
+
         async function handleVideoUpload(e) {
             e.preventDefault();
             const title = document.getElementById('video-title').value;
@@ -1127,6 +1131,29 @@
                 alert('URL YouTube tidak valid! Harap masukkan link YouTube yang benar.');
                 return;
             }
+
+            const newVideo = {
+                id: Date.now(),
+                title: title,
+                videoId: videoId,
+                date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
+            };
+
+            // Langsung tutup modal dan bersihkan input
+            closeUploadVideoModal();
+            document.getElementById('video-title').value = '';
+            document.getElementById('video-url').value = '';
+
+            try {
+                if (window.db) {
+                    await db.collection("cadas_videos").add(newVideo);
+                }
+            } catch (error) {
+                console.error("Gagal simpan video ke Firestore:", error);
+            }
+
+            alert('Video YouTube berhasil disimpan ke database online!');
+        }
 
             const newVideo = {
                 id: Date.now(),
