@@ -904,7 +904,7 @@
         const NOMOR_WA_ADMIN = "082343551039";
         let currentFormData = {};
 
-  // Galeri Foto & Video Logic dengan Firestore Realtime Database
+        // Galeri Foto & Video Logic dengan Firestore Realtime Database
         let galleryPhotos = [];
         let galleryVideos = [];
 
@@ -1077,13 +1077,7 @@
             document.body.removeChild(link);
         }
 
-        function openUploadPhotoModal() { document.getElementById('upload-modal').classList.remove('hidden'); }
-        function closeUploadPhotoModal() { document.getElementById('upload-modal').classList.add('hidden'); }
-
-        function openUploadVideoModal() { document.getElementById('upload-video-modal').classList.remove('hidden'); }
-        function closeUploadVideoModal() { document.getElementById('upload-video-modal').classList.add('hidden'); }
-
-   // Fungsi untuk membuka & menutup Modal Foto
+        // Modal Controls
         function openUploadPhotoModal() { 
             const modal = document.getElementById('upload-modal');
             if (modal) modal.classList.remove('hidden'); 
@@ -1093,7 +1087,6 @@
             if (modal) modal.classList.add('hidden'); 
         }
 
-        // Fungsi untuk membuka & menutup Modal Video
         function openUploadVideoModal() { 
             const modal = document.getElementById('upload-video-modal');
             if (modal) modal.classList.remove('hidden'); 
@@ -1103,7 +1096,7 @@
             if (modal) modal.classList.add('hidden'); 
         }
 
-        // Fungsi Upload Foto yang Aman & Auto-Close
+        // Handle Photo Upload (Auto-Close & Background Sync)
         async function handlePhotoUpload(e) {
             e.preventDefault();
             const titleInput = document.getElementById('upload-title');
@@ -1126,16 +1119,10 @@
                         date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
                     };
                     
-                    // Langsung tutup modal dan bersihkan form agar tidak stuck
                     closeUploadPhotoModal();
                     titleInput.value = '';
                     fileInput.value = '';
 
-                    // Perbarui tampilan lokal agar langsung muncul
-                    galleryPhotos.unshift(newPhoto);
-                    renderGallery();
-
-                    // Kirim ke database online Firestore di latar belakang
                     try {
                         if (window.db) {
                             await db.collection("cadas_photos").add(newPhoto);
@@ -1144,11 +1131,28 @@
                         console.error("Gagal simpan foto ke Firestore:", error);
                     }
                     
-                    alert('Foto berhasil disimpan!');
+                    alert('Foto berhasil diunggah ke database online!');
                 };
                 reader.readAsDataURL(fileInput.files[0]);
             }
         }
+
+        // Handle Video Upload (Auto-Close & Background Sync)
+        async function handleVideoUpload(e) {
+            e.preventDefault();
+            const titleInput = document.getElementById('video-title');
+            const urlInput = document.getElementById('video-url');
+            
+            if (!titleInput || !urlInput) return;
+
+            const title = titleInput.value;
+            const rawUrl = urlInput.value.trim();
+            const videoId = getYouTubeVideoId(rawUrl);
+
+            if (!videoId) {
+                alert('URL YouTube tidak valid! Harap masukkan link YouTube yang benar.');
+                return;
+            }
 
             const newVideo = {
                 id: Date.now(),
@@ -1157,19 +1161,21 @@
                 date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
             };
 
+            closeUploadVideoModal();
+            titleInput.value = '';
+            urlInput.value = '';
+
             try {
                 if (window.db) {
                     await db.collection("cadas_videos").add(newVideo);
-                    closeUploadVideoModal();
-                    document.getElementById('video-title').value = '';
-                    document.getElementById('video-url').value = '';
-                    alert('Video YouTube berhasil disimpan ke database online!');
                 }
             } catch (error) {
                 console.error("Gagal simpan video ke Firestore:", error);
-                alert('Gagal menyimpan video ke database.');
             }
+
+            alert('Video YouTube berhasil disimpan ke database online!');
         }
+
         // Panggil fungsi pemuat database saat halaman dibuka
         window.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
@@ -1177,6 +1183,7 @@
                 loadVideosFromFirestore();
             }, 1000);
         });
+
         function downloadCardAsImage() {
             const card = document.getElementById('printable-card');
             html2canvas(card, { useCORS: true, scale: 2 }).then(canvas => {
@@ -1361,7 +1368,7 @@
             }
         }
 
-  function exportData() {
+        function exportData() {
             if (currentFormData && currentFormData.nama) {
                 alert('Data pendaftar berhasil diexport.');
             } else {
@@ -1370,12 +1377,11 @@
         }
     </script>
 
-    <!-- Firebase App & Firestore SDK (Versi Compat - Aman untuk Tombol Menu Global) -->
+    <!-- Firebase App & Firestore SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
     <script>
-      // Konfigurasi Firebase KPA CADAS
       const firebaseConfig = {
         apiKey: "AIzaSyCG1B_4WkuwJxxhkzcXzrWLlAb5qdil_dc",
         authDomain: "kpa-cadas.firebaseapp.com",
@@ -1386,11 +1392,8 @@
         measurementId: "G-PNDLSBYG46"
       };
 
-      // Inisialisasi Firebase & Firestore Database
       firebase.initializeApp(firebaseConfig);
       const db = firebase.firestore();
-
-      // Simpan ke variabel global agar bisa dipakai di skrip galeri utama
       window.db = db;
       console.log("Firebase KPA CADAS Berhasil Terhubung!");
     </script>
