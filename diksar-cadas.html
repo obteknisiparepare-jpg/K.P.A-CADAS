@@ -1290,41 +1290,38 @@
             }
         }
 
-        function exportData() {
+      function exportData() {
             if (currentFormData && currentFormData.nama) {
                 alert('Data pendaftar berhasil diexport.');
             } else {
                 alert('Belum ada data pendaftar untuk diexport.');
             }
         }
-     // Konfigurasi Firebase KPA CADAS
-  const firebaseConfig = {
-    apiKey: "AIzaSyCG1B_4WkuwJxxhkzcXzrWLlAb5qdil_dc",
-    authDomain: "kpa-cadas.firebaseapp.com",
-    projectId: "kpa-cadas",
-    storageBucket: "kpa-cadas.firebasestorage.app",
-    messagingSenderId: "240677750680",
-    appId: "1:240677750680:web:08131da297be196b894ded",
-    measurementId: "G-PNDLSBYG46"
-  };
+    </script>
 
-  // Inisialisasi Firebase & Firestore Database
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+    <!-- Firebase App & Firestore SDK (Versi Compat - Aman untuk Tombol Menu Global) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
-  // Buat variabel global agar bisa dipakai di skrip galeri utama Kakak
-  window.db = db;
-  window.collection = collection;
-  window.addDoc = addDoc;
-  window.getDocs = getDocs;
-  window.deleteDoc = deleteDoc;
-  window.doc = doc;
-  window.onSnapshot = onSnapshot;
+    <script>
+      // Konfigurasi Firebase KPA CADAS
+      const firebaseConfig = {
+        apiKey: "AIzaSyCG1B_4WkuwJxxhkzcXzrWLlAb5qdil_dc",
+        authDomain: "kpa-cadas.firebaseapp.com",
+        projectId: "kpa-cadas",
+        storageBucket: "kpa-cadas.firebasestorage.app",
+        messagingSenderId: "240677750680",
+        appId: "1:240677750680:web:08131da297be196b894ded",
+        measurementId: "G-PNDLSBYG46"
+      };
 
-  console.log("Firebase KPA CADAS Berhasil Terhubung!");
-</script>
-</body>
-</html>
+      // Inisialisasi Firebase & Firestore Database
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
 
+      // Simpan ke variabel global agar bisa dipakai di skrip galeri utama
+      window.db = db;
+      console.log("Firebase KPA CADAS Berhasil Terhubung!");
+    </script>
 </body>
 </html>
