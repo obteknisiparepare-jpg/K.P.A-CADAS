@@ -904,16 +904,37 @@
         const NOMOR_WA_ADMIN = "082343551039";
         let currentFormData = {};
 
-        // Galeri Foto Logic
-        let galleryPhotos = JSON.parse(localStorage.getItem('cadas_photos')) || [
-            { id: 1, title: 'Latihan Navigasi Darat', category: 'Navigasi', url: 'https://images.unsplash.com/photo-1501555088652-021faa106b9b?auto=format&fit=crop&w=800&q=80', date: '10 Okt 2025' },
-            { id: 2, title: 'Aksi Penghijauan & Konservasi', category: 'Konservasi', url: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80', date: '05 Sep 2025' }
-        ];
+     // Galeri Foto & Video Logic dengan Firestore Realtime Database
+        let galleryPhotos = [];
+        let galleryVideos = [];
 
-        // Galeri Video YouTube Logic dengan Thumbnail Aman
-        let galleryVideos = JSON.parse(localStorage.getItem('cadas_videos')) || [
-            { id: 1, title: 'Teaser Kegiatan K.P.A CADAS Parepare', videoId: 'dQw4w9WgXcQ', date: '12 Okt 2025' }
-        ];
+        // Ambil data foto dari Firestore saat halaman dimuat
+        function loadPhotosFromFirestore() {
+            if (!window.db) return;
+            db.collection("cadas_photos").orderBy("id", "desc").onSnapshot((snapshot) => {
+                galleryPhotos = [];
+                snapshot.forEach((doc) => {
+                    galleryPhotos.push({ firebaseId: doc.id, ...doc.data() });
+                });
+                renderGallery();
+            }, (error) => {
+                console.log("Error loading photos:", error);
+            });
+        }
+
+        // Ambil data video dari Firestore saat halaman dimuat
+        function loadVideosFromFirestore() {
+            if (!window.db) return;
+            db.collection("cadas_videos").orderBy("id", "desc").onSnapshot((snapshot) => {
+                galleryVideos = [];
+                snapshot.forEach((doc) => {
+                    galleryVideos.push({ firebaseId: doc.id, ...doc.data() });
+                });
+                renderVideos();
+            }, (error) => {
+                console.log("Error loading videos:", error);
+            });
+        }
 
         function renderGallery() {
             const grid = document.getElementById('gallery-grid');
@@ -931,7 +952,7 @@
 
             grid.innerHTML = galleryPhotos.map((photo, index) => `
                 <div class="bg-[#0e241b] rounded-2xl overflow-hidden shadow-md border border-emerald-800/50 group relative hover:border-amber-500 transition-all duration-300">
-                    <button onclick="deletePhoto(${index}); event.stopPropagation();" class="absolute top-2 right-2 z-20 w-8 h-8 bg-red-600/90 hover:bg-red-600 text-white rounded-full flex items-center justify-center shadow-lg transition" title="Hapus Foto">
+                    <button onclick="deletePhoto('${photo.firebaseId || index}'); event.stopPropagation();" class="absolute top-2 right-2 z-20 w-8 h-8 bg-red-600/90 hover:bg-red-600 text-white rounded-full flex items-center justify-center shadow-lg transition" title="Hapus Foto">
                         <i class="fa-solid fa-trash-can text-xs"></i>
                     </button>
 
@@ -977,7 +998,7 @@
 
                 return `
                     <div class="bg-[#0e241b] rounded-2xl overflow-hidden shadow-md border border-emerald-800/50 group relative hover:border-amber-500 transition-all duration-300">
-                        <button onclick="deleteVideo(${index})" class="absolute top-2 right-2 z-20 w-8 h-8 bg-red-600/90 hover:bg-red-600 text-white rounded-full flex items-center justify-center shadow-lg transition" title="Hapus Video">
+                        <button onclick="deleteVideo('${video.firebaseId || index}')" class="absolute top-2 right-2 z-20 w-8 h-8 bg-red-600/90 hover:bg-red-600 text-white rounded-full flex items-center justify-center shadow-lg transition" title="Hapus Video">
                             <i class="fa-solid fa-trash-can text-xs"></i>
                         </button>
 
@@ -1000,19 +1021,29 @@
             }).join('');
         }
 
-        function deletePhoto(index) {
+        async function deletePhoto(firebaseId) {
             if (confirm('Apakah Anda yakin ingin menghapus foto dokumentasi ini?')) {
-                galleryPhotos.splice(index, 1);
-                localStorage.setItem('cadas_photos', JSON.stringify(galleryPhotos));
-                renderGallery();
+                try {
+                    if (window.db && typeof firebaseId === 'string' && firebaseId.length > 5) {
+                        await db.collection("cadas_photos").doc(firebaseId).delete();
+                    }
+                    alert('Foto berhasil dihapus!');
+                } catch (error) {
+                    console.error("Gagal menghapus foto:", error);
+                }
             }
         }
 
-        function deleteVideo(index) {
+        async function deleteVideo(firebaseId) {
             if (confirm('Apakah Anda yakin ingin menghapus video ini?')) {
-                galleryVideos.splice(index, 1);
-                localStorage.setItem('cadas_videos', JSON.stringify(galleryVideos));
-                renderVideos();
+                try {
+                    if (window.db && typeof firebaseId === 'string' && firebaseId.length > 5) {
+                        await db.collection("cadas_videos").doc(firebaseId).delete();
+                    }
+                    alert('Video berhasil dihapus!');
+                } catch (error) {
+                    console.error("Gagal menghapus video:", error);
+                }
             }
         }
 
@@ -1060,7 +1091,7 @@
             
             if (fileInput.files && fileInput.files[0]) {
                 const reader = new FileReader();
-                reader.onload = function(evt) {
+                reader.onload = async function(evt) {
                     const newPhoto = {
                         id: Date.now(),
                         title: title,
@@ -1068,17 +1099,23 @@
                         url: evt.target.result,
                         date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
                     };
-                    galleryPhotos.unshift(newPhoto);
-                    localStorage.setItem('cadas_photos', JSON.stringify(galleryPhotos));
-                    renderGallery();
-                    closeUploadPhotoModal();
-                    alert('Foto berhasil diunggah ke galeri dokumentasi!');
+                    
+                    try {
+                        if (window.db) {
+                            await db.collection("cadas_photos").add(newPhoto);
+                            closeUploadPhotoModal();
+                            alert('Foto berhasil diunggah ke database online!');
+                        }
+                    } catch (error) {
+                        console.error("Gagal simpan foto ke Firestore:", error);
+                        alert('Gagal mengunggah foto ke database.');
+                    }
                 };
                 reader.readAsDataURL(fileInput.files[0]);
             }
         }
 
-        function handleVideoUpload(e) {
+        async function handleVideoUpload(e) {
             e.preventDefault();
             const title = document.getElementById('video-title').value;
             const rawUrl = document.getElementById('video-url').value.trim();
@@ -1097,15 +1134,27 @@
                 date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
             };
 
-            galleryVideos.unshift(newVideo);
-            localStorage.setItem('cadas_videos', JSON.stringify(galleryVideos));
-            renderVideos();
-            closeUploadVideoModal();
-            document.getElementById('video-title').value = '';
-            document.getElementById('video-url').value = '';
-            alert('Video YouTube berhasil ditambahkan!');
+            try {
+                if (window.db) {
+                    await db.collection("cadas_videos").add(newVideo);
+                    closeUploadVideoModal();
+                    document.getElementById('video-title').value = '';
+                    document.getElementById('video-url').value = '';
+                    alert('Video YouTube berhasil disimpan ke database online!');
+                }
+            } catch (error) {
+                console.error("Gagal simpan video ke Firestore:", error);
+                alert('Gagal menyimpan video ke database.');
+            }
         }
 
+        // Panggil fungsi pemuat database saat halaman dibuka
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                loadPhotosFromFirestore();
+                loadVideosFromFirestore();
+            }, 1000);
+        });
         function downloadCardAsImage() {
             const card = document.getElementById('printable-card');
             html2canvas(card, { useCORS: true, scale: 2 }).then(canvas => {
