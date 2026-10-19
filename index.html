@@ -16,12 +16,12 @@
                 extend: {
                     colors: {
                         cadas: {
-                            dark: '#081c15',
-                            medium: '#0f382c',
-                            light: '#1a5241',
-                            orange: '#f97316',
-                            gold: '#ea580c',
-                            bg: '#05130e'
+                            dark: '#05070a',
+                            medium: '#0c1017',
+                            light: '#161f2c',
+                            purple: '#a855f7',
+                            neon: '#c084fc',
+                            bg: '#05070a'
                         }
                     },
                     fontFamily: {
@@ -41,6 +41,108 @@
             #printable-card { position: absolute; left: 0; top: 0; width: 100%; border: none; box-shadow: none; }
             .no-print { display: none !important; }
         }
+
+        /* LOADING SCREEN ANIMATION STYLING */
+        #loading-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: #05070a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .loading-logo-3d {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 3px solid #a855f7;
+            box-shadow: 0 0 40px rgba(168, 85, 247, 0.8), inset 0 0 20px rgba(168, 85, 247, 0.5);
+            animation: pulse-glow 1.8s infinite alternate;
+            background: black;
+            padding: 4px;
+        }
+
+        @keyframes pulse-glow {
+            0% { transform: scale(0.95); box-shadow: 0 0 25px rgba(168, 85, 247, 0.6); }
+            100% { transform: scale(1.08); box-shadow: 0 0 55px rgba(192, 132, 252, 0.95), 0 0 20px rgba(168, 85, 247, 0.8); }
+        }
+
+        /* CUSTOM UI STYLE MATCHING ONION FIXIT REFERENCE EXACTLY */
+        .cyber-banner {
+            background: #000000;
+            border: 2px solid #581c87;
+            border-radius: 18px;
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* CHAMFERED / CUT CORNER CARD DESIGN */
+        .chamfer-card {
+            background: linear-gradient(180deg, rgba(22, 27, 38, 0.95) 0%, rgba(10, 13, 20, 0.98) 100%);
+            border: 1px solid rgba(168, 85, 247, 0.25);
+            clip-path: polygon(
+                16px 0%, 
+                calc(100% - 16px) 0%, 
+                100% 16px, 
+                100% calc(100% - 16px), 
+                calc(100% - 16px) 100%, 
+                16px 100%, 
+                0% calc(100% - 16px), 
+                0% 16px
+            );
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .chamfer-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.8), transparent);
+        }
+
+        .chamfer-card:hover {
+            border-color: rgba(192, 132, 252, 0.8);
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.4);
+            transform: translateY(-3px);
+            background: linear-gradient(180deg, rgba(30, 36, 51, 0.98) 0%, rgba(15, 18, 28, 0.98) 100%);
+        }
+
+        /* CIRCLE LOGO EMBLEM ONION FIXIT STYLE */
+        .center-circle-ring {
+            border: 3px solid rgba(168, 85, 247, 0.5);
+            box-shadow: 0 0 35px rgba(168, 85, 247, 0.35), inset 0 0 25px rgba(168, 85, 247, 0.2);
+            background: radial-gradient(circle, rgba(12, 16, 23, 0.95) 0%, rgba(5, 7, 10, 1) 100%);
+        }
+
+        /* GRADIENT & GLOW TEXT MATCHING ONION FIXIT LOGO TEXT */
+        .cyber-logo-title {
+            background: linear-gradient(180deg, #ffffff 0%, #d8b4fe 50%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0px 0px 8px rgba(168, 85, 247, 0.8));
+        }
+
+        /* CIRCUIT CONNECTOR LINES */
+        .circuit-line-left, .circuit-line-right {
+            position: absolute;
+            stroke: rgba(168, 85, 247, 0.35);
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .purple-glow-text {
+            text-shadow: 0 0 12px rgba(168, 85, 247, 0.6), 0 0 20px rgba(192, 132, 252, 0.4);
+        }
+
         .banner-glow {
             text-shadow: 0 0 15px rgba(0,0,0,0.9), 0 2px 6px rgba(0,0,0,1);
         }
@@ -52,45 +154,68 @@
         }
     </style>
 </head>
-<body class="bg-[#0b1a13] text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-cadas-orange selection:text-white">
+<body class="bg-[#05070a] text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-purple-600 selection:text-white">
 
-    <!-- HEADER -->
-    <header class="sticky top-0 z-50 bg-[#07160f]/95 backdrop-blur-md text-white border-b border-amber-500/20 shadow-2xl">
+    <!-- LOADING SCREEN / SPLASH SCREEN 3D FULL HD -->
+    <div id="loading-screen">
+        <div class="relative flex flex-col items-center space-y-5 text-center p-6">
+            <img src="KPA CADAS.jpg" alt="Logo KPA CADAS" class="loading-logo-3d object-contain rounded-full" onerror="this.src='https://via.placeholder.com/150/000000/a855f7?text=CADAS'">
+            <div class="space-y-1.5">
+                <h2 class="font-sans font-black text-2xl sm:text-3xl text-white tracking-widest uppercase cyber-logo-title">K.P.A CADAS</h2>
+                <p class="text-[10px] font-bold text-purple-300 uppercase tracking-widest">Cinta Alam Dan Semesta • Parepare</p>
+            </div>
+            <div class="w-40 h-1.5 bg-purple-950 rounded-full overflow-hidden border border-purple-800/50 mt-2">
+                <div class="h-full bg-gradient-to-r from-purple-500 to-purple-300 animate-pulse w-full"></div>
+            </div>
+            <span class="text-[9px] text-slate-400 tracking-wider uppercase">Memuat Sistem Petualangan...</span>
+        </div>
+    </div>
+
+    <!-- HEADER NAVIGATION -->
+    <header class="sticky top-0 z-50 bg-[#070a0f]/95 backdrop-blur-md text-white border-b border-purple-900/40 shadow-2xl">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             
             <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
                 <div class="relative">
-                    <img src="KPA CADAS.jpg" alt="Logo KPA CADAS" class="w-12 h-12 object-contain rounded-full border-2 border-amber-500 p-0.5 bg-black shadow-lg" onerror="this.src='https://via.placeholder.com/150/000000/f97316?text=CADAS'">
+                    <img src="KPA CADAS.jpg" alt="Logo KPA CADAS" class="w-12 h-12 object-contain rounded-full border-2 border-purple-500 p-0.5 bg-black shadow-lg" onerror="this.src='https://via.placeholder.com/150/000000/a855f7?text=CADAS'">
                 </div>
                 <div>
                     <div class="flex items-center space-x-2">
-                        <h1 class="font-serif font-black text-lg sm:text-xl tracking-wider text-amber-500 leading-none">K.P.A CADAS</h1>
-                        <span class="text-[9px] font-bold text-amber-400 border border-amber-500/40 px-1.5 py-0.5 rounded bg-amber-500/10">PAREPARE</span>
+                        <h1 class="font-serif font-black text-lg sm:text-xl tracking-wider text-purple-400 leading-none">K.P.A CADAS</h1>
+                        <span class="text-[9px] font-bold text-purple-300 border border-purple-500/40 px-1.5 py-0.5 rounded bg-purple-500/10">PAREPARE</span>
                     </div>
-                    <p class="text-[9px] sm:text-[10px] text-emerald-400 font-bold tracking-wider uppercase mt-1">CINTA ALAM DAN SEMESTA • SULAWESI SELATAN</p>
+                    <p class="text-[9px] sm:text-[10px] text-purple-300 font-bold tracking-wider uppercase mt-1">CINTA ALAM DAN SEMESTA • SULAWESI SELATAN</p>
                 </div>
             </div>
             
             <!-- NAV MENU HEADER -->
             <nav class="hidden lg:flex items-center space-x-1.5">
-                <button onclick="switchTab('home')" id="nav-home" class="px-3 py-2 rounded-full text-xs font-bold transition-all bg-amber-500 hover:bg-amber-600 text-black shadow-lg flex items-center space-x-1">
+                <button onclick="switchTab('home')" id="nav-home" class="px-3 py-2 rounded-full text-xs font-bold transition-all bg-purple-600 hover:bg-purple-500 text-white shadow-lg flex items-center space-x-1">
                     <i class="fa-solid fa-compass"></i>
                     <span>Beranda</span>
                 </button>
-                <button onclick="switchTab('register')" id="nav-register" class="px-3 py-2 rounded-xl text-xs font-semibold transition-all text-emerald-200 hover:text-white flex items-center space-x-1">
-                    <i class="fa-solid fa-file-lines text-amber-500/80"></i>
+                <button onclick="switchTab('register')" id="nav-register" class="px-3 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white flex items-center space-x-1">
+                    <i class="fa-solid fa-file-lines text-purple-400"></i>
                     <span>Formulir</span>
                 </button>
-                <button onclick="switchTab('gallery')" id="nav-gallery" class="px-3 py-2 rounded-xl text-xs font-semibold transition-all text-emerald-200 hover:text-white flex items-center space-x-1">
-                    <i class="fa-solid fa-images text-amber-500/80"></i>
+                <button onclick="switchTab('trails')" id="nav-trails" class="px-3 py-2 rounded-xl text-xs font-semibold transition-all text-purple-300 hover:text-purple-200 flex items-center space-x-1 bg-purple-950/40 border border-purple-500/30">
+                    <i class="fa-solid fa-mountain-sun text-purple-400"></i>
+                    <span>Fitur Peta Pendakian</span>
+                </button>
+                <a href="https://earth.google.com" target="_blank" class="px-3 py-2 rounded-xl text-xs font-semibold transition-all text-cyan-300 hover:text-cyan-200 hover:bg-cyan-950/40 border border-cyan-500/30 flex items-center space-x-1">
+                    <i class="fa-solid fa-earth-americas text-cyan-400"></i>
+                    <span>Google Earth</span>
+                </a>
+                <button onclick="switchTab('gallery')" id="nav-gallery" class="px-3 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white flex items-center space-x-1">
+                    <i class="fa-solid fa-images text-purple-400"></i>
                     <span>Dokumentasi</span>
                 </button>
-                <button onclick="switchTab('ethics')" id="nav-ethics" class="px-3 py-2 rounded-xl text-xs font-semibold transition-all text-emerald-200 hover:text-white flex items-center space-x-1">
-                    <i class="fa-solid fa-book-open text-amber-500/80"></i>
+                <button onclick="switchTab('ethics')" id="nav-ethics" class="px-3 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white flex items-center space-x-1">
+                    <i class="fa-solid fa-book-open text-purple-400"></i>
                     <span>Kode Etik</span>
                 </button>
-                <button onclick="switchTab('kta')" id="nav-kta" class="px-3 py-2 rounded-xl text-xs font-semibold transition-all text-emerald-200 hover:text-white flex items-center space-x-1">
-                    <i class="fa-solid fa-id-card text-amber-500/80"></i>
+                <button onclick="switchTab('kta')" id="nav-kta" class="px-3 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white flex items-center space-x-1">
+                    <i class="fa-solid fa-id-card text-purple-400"></i>
                     <span>Cek KTA</span>
                 </button>
                 <button onclick="openRentalModal()" class="px-3 py-2 rounded-xl text-xs font-bold transition-all text-amber-400 hover:bg-amber-500/10 border border-amber-500/40 flex items-center space-x-1 bg-amber-500/5">
@@ -101,280 +226,374 @@
                     <i class="fa-solid fa-screwdriver-wrench text-cyan-400"></i>
                     <span>Service HP</span>
                 </button>
-                <button onclick="openLogoModal()" class="px-3 py-2 rounded-xl text-xs font-bold transition-all text-emerald-200 hover:text-white flex items-center space-x-1">
-                    <i class="fa-solid fa-download text-amber-500/80"></i>
+                <button onclick="openLogoModal()" class="px-3 py-2 rounded-xl text-xs font-bold transition-all text-slate-300 hover:text-white flex items-center space-x-1">
+                    <i class="fa-solid fa-download text-purple-400"></i>
                     <span>Logo</span>
                 </button>
-                <button onclick="openAdminModal()" id="nav-admin" class="px-3 py-2 rounded-xl text-xs font-semibold transition-all text-emerald-300 hover:text-white flex items-center space-x-1">
-                    <i class="fa-solid fa-lock text-emerald-400"></i>
+                <button onclick="openAdminModal()" id="nav-admin" class="px-3 py-2 rounded-xl text-xs font-semibold transition-all text-purple-300 hover:text-white flex items-center space-x-1">
+                    <i class="fa-solid fa-lock text-purple-400"></i>
                     <span>Admin</span>
                 </button>
             </nav>
 
             <div class="lg:hidden flex items-center space-x-1">
-                <button onclick="switchTab('gallery')" class="p-2 rounded-xl text-amber-500 hover:bg-emerald-900/50" title="Dokumentasi">
+                <button onclick="switchTab('trails')" class="p-2 rounded-xl text-purple-400 hover:bg-purple-950/50" title="Fitur Peta Pendakian">
+                    <i class="fa-solid fa-mountain-sun text-lg"></i>
+                </button>
+                <a href="https://earth.google.com" target="_blank" class="p-2 rounded-xl text-cyan-400 hover:bg-cyan-950/50" title="Google Earth">
+                    <i class="fa-solid fa-earth-americas text-lg"></i>
+                </a>
+                <button onclick="switchTab('gallery')" class="p-2 rounded-xl text-purple-400 hover:bg-purple-950/50" title="Dokumentasi">
                     <i class="fa-solid fa-images text-lg"></i>
                 </button>
-                <button onclick="switchTab('kta')" class="p-2 rounded-xl text-amber-500 hover:bg-emerald-900/50" title="Cek KTA">
+                <button onclick="switchTab('kta')" class="p-2 rounded-xl text-purple-400 hover:bg-purple-950/50" title="Cek KTA">
                     <i class="fa-solid fa-id-card text-lg"></i>
                 </button>
-                <button onclick="openRentalModal()" class="p-2 rounded-xl text-amber-500 hover:bg-emerald-900/50" title="Sewa Alat">
+                <button onclick="openRentalModal()" class="p-2 rounded-xl text-amber-500 hover:bg-amber-950/50" title="Sewa Alat">
                     <i class="fa-solid fa-campground text-lg"></i>
                 </button>
-                <button onclick="openServiceModal()" class="p-2 rounded-xl text-cyan-400 hover:bg-emerald-900/50" title="Service HP">
+                <button onclick="openServiceModal()" class="p-2 rounded-xl text-cyan-400 hover:bg-cyan-950/50" title="Service HP">
                     <i class="fa-solid fa-screwdriver-wrench text-lg"></i>
                 </button>
-                <button onclick="toggleMobileMenu()" class="p-2 rounded-xl text-amber-500 hover:bg-emerald-900/50">
+                <button onclick="toggleMobileMenu()" class="p-2 rounded-xl text-purple-400 hover:bg-purple-950/50">
                     <i class="fa-solid fa-bars text-xl"></i>
                 </button>
             </div>
         </div>
         
         <!-- MOBILE MENU -->
-        <div id="mobile-menu" class="hidden lg:hidden bg-[#07160f] border-t border-amber-500/20 px-4 pt-2 pb-4 space-y-2">
-            <button onclick="switchTab('home'); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-white hover:bg-emerald-900/50">Beranda</button>
-            <button onclick="switchTab('register'); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-white hover:bg-emerald-900/50">Formulir Pendaftaran</button>
-            <button onclick="switchTab('gallery'); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-white hover:bg-emerald-900/50"><i class="fa-solid fa-images mr-2"></i>Dokumentasi & Galeri Foto</button>
-            <button onclick="switchTab('ethics'); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-amber-400 hover:bg-emerald-900/50"><i class="fa-solid fa-book-open mr-2"></i>Kode Etik & Tata Tertib</button>
-            <button onclick="switchTab('kta'); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-amber-400 hover:bg-emerald-900/50"><i class="fa-solid fa-id-card mr-2"></i>Cek KTA Digital Anggota</button>
-            <button onclick="openRentalModal(); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-amber-400 hover:bg-emerald-900/50"><i class="fa-solid fa-campground mr-2"></i>Sewa Alat Outdoor Camping</button>
-            <button onclick="openServiceModal(); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-cyan-400 hover:bg-emerald-900/50"><i class="fa-solid fa-screwdriver-wrench mr-2"></i>OB Smartphone (Service HP/PC/TV)</button>
-            <button onclick="openLogoModal(); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-emerald-300 hover:bg-emerald-900/50"><i class="fa-solid fa-download mr-2"></i>Logo & Unduh Lambang</button>
-            <button onclick="openAdminModal(); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-emerald-300 hover:bg-emerald-900/50"><i class="fa-solid fa-lock mr-2"></i>Panel Admin</button>
+        <div id="mobile-menu" class="hidden lg:hidden bg-[#070a0f] border-t border-purple-900/40 px-4 pt-2 pb-4 space-y-2">
+            <button onclick="switchTab('home'); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-white hover:bg-purple-950/50">Beranda</button>
+            <button onclick="switchTab('register'); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-white hover:bg-purple-950/50">Formulir Pendaftaran</button>
+            <button onclick="switchTab('trails'); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-purple-300 hover:bg-purple-950/50 bg-purple-950/20 border border-purple-500/30"><i class="fa-solid fa-mountain-sun mr-2"></i>Fitur Peta Pendakian (Latimojong & Bawakaraeng)</button>
+            <a href="https://earth.google.com" target="_blank" class="block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-cyan-300 hover:bg-cyan-950/50"><i class="fa-solid fa-earth-americas mr-2"></i>Buka Google Earth 3D</a>
+            <button onclick="switchTab('gallery'); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-white hover:bg-purple-950/50"><i class="fa-solid fa-images mr-2"></i>Dokumentasi & Galeri Foto</button>
+            <button onclick="switchTab('ethics'); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-purple-300 hover:bg-purple-950/50"><i class="fa-solid fa-book-open mr-2"></i>Kode Etik & Tata Tertib</button>
+            <button onclick="switchTab('kta'); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-purple-300 hover:bg-purple-950/50"><i class="fa-solid fa-id-card mr-2"></i>Cek KTA Digital Anggota</button>
+            <button onclick="openRentalModal(); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-amber-400 hover:bg-amber-950/50"><i class="fa-solid fa-campground mr-2"></i>Sewa Alat Outdoor Camping</button>
+            <button onclick="openServiceModal(); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-cyan-400 hover:bg-cyan-950/50"><i class="fa-solid fa-screwdriver-wrench mr-2"></i>OB Smartphone (Service HP/PC/TV)</button>
+            <button onclick="openLogoModal(); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-purple-300 hover:bg-purple-950/50"><i class="fa-solid fa-download mr-2"></i>Logo & Unduh Lambang</button>
+            <button onclick="openAdminModal(); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-purple-300 hover:bg-purple-950/50"><i class="fa-solid fa-lock mr-2"></i>Panel Admin</button>
         </div>
     </header>
 
     <main class="flex-grow">
         
-        <!-- Home Section -->
-        <section id="view-home" class="view-section">
-            <div class="relative bg-cover bg-center py-16 sm:py-24 overflow-hidden" style="background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=80');">
-                <div class="absolute inset-0 bg-gradient-to-b from-[#07160f]/90 via-[#07160f]/80 to-[#0b1a13]"></div>
+        <!-- HOME SECTION -->
+        <section id="view-home" class="view-section py-6 sm:py-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
                 
-                <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    
-                    <!-- BOX EMBLEM LOGO -->
-                    <div class="max-w-md mx-auto my-4">
-                        <div onclick="openLogoModal()" class="relative rounded-3xl bg-[#081a12] border-4 border-amber-500 p-6 shadow-2xl cursor-pointer group hover:border-amber-400 transition-all">
-                            <div class="relative w-64 h-64 mx-auto mb-4">
-                                <img id="hero-logo-img" src="KPA CADAS.jpg" alt="Logo KPA CADAS" class="w-full h-full object-contain rounded-full border-4 border-amber-500 bg-black p-2 shadow-inner group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://via.placeholder.com/300/000000/f97316?text=KPA+CADAS'">
-                                <div class="absolute bottom-1 right-2 bg-amber-500 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full shadow-lg flex items-center space-x-1 group-hover:bg-amber-400">
-                                    <i class="fa-solid fa-download"></i>
-                                    <span>UNDUH LOGO</span>
-                                </div>
+                <!-- TOP BANNER WITH MOUNTAIN BACKGROUND -->
+                <div class="cyber-banner p-4 sm:p-6 flex flex-col lg:flex-row items-center justify-between gap-6" style="background-image: linear-gradient(90deg, rgba(5,7,10,0.92) 0%, rgba(22,12,40,0.75) 50%, rgba(5,7,10,0.92) 100%), url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=80'); background-size: cover; background-position: center;">
+                    <div class="flex items-center space-x-4 z-10">
+                        <img src="KPA CADAS.jpg" alt="Logo KPA CADAS" class="w-16 h-16 sm:w-20 sm:h-20 object-contain rounded-full border-2 border-purple-500 bg-black p-1 shadow-2xl cursor-pointer" onclick="openLogoModal()">
+                        <div class="space-y-0.5">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-purple-500 font-bold text-2xl">—</span>
+                                <h2 class="font-sans font-black text-3xl sm:text-4xl text-white tracking-widest uppercase purple-glow-text">K.P.A CADAS</h2>
+                                <span class="text-purple-500 font-bold text-2xl">—</span>
                             </div>
-
-                            <div class="space-y-1">
-                                <h3 class="font-serif font-black text-xl sm:text-2xl text-amber-400 tracking-wide">EMBLEM RESMI KPA CADAS</h3>
-                                <p class="text-xs font-bold text-emerald-300 uppercase tracking-widest">KOTA PAREPARE, SULAWESI SELATAN</p>
-                                <p class="text-[11px] text-slate-300 italic pt-2">Klik untuk melihat bedah makna filosofis lambang & unduh logo</p>
-                            </div>
+                            <p class="text-[10px] sm:text-xs font-extrabold text-purple-300 tracking-widest uppercase">CINTA ALAM DAN SEMESTA • KOTA PAREPARE</p>
                         </div>
                     </div>
 
-                    <div class="pt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <button onclick="switchTab('register')" class="w-full sm:w-auto px-6 py-3.5 bg-amber-500 hover:bg-amber-600 text-black font-black rounded-2xl shadow-xl transition flex items-center justify-center space-x-2 text-sm">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                            <span>Daftar Sekarang</span>
-                        </button>
-                        <button onclick="switchTab('kta')" class="w-full sm:w-auto px-6 py-3.5 bg-[#0e241b] hover:bg-emerald-900 text-amber-400 font-bold rounded-2xl border-2 border-amber-500/50 shadow-xl transition flex items-center justify-center space-x-2 text-sm">
-                            <i class="fa-solid fa-id-card"></i>
-                            <span>Cek KTA Digital</span>
-                        </button>
-                        <button onclick="switchTab('gallery')" class="w-full sm:w-auto px-6 py-3.5 bg-[#0e241b] hover:bg-emerald-900 text-amber-400 font-bold rounded-2xl border-2 border-amber-500/50 shadow-xl transition flex items-center justify-center space-x-2 text-sm">
-                            <i class="fa-solid fa-images"></i>
-                            <span>Dokumentasi & Galeri</span>
-                        </button>
-                        <button onclick="switchTab('ethics')" class="w-full sm:w-auto px-6 py-3.5 bg-[#0e241b] hover:bg-emerald-900 text-amber-400 font-bold rounded-2xl border-2 border-amber-500/50 shadow-xl transition flex items-center justify-center space-x-2 text-sm">
-                            <i class="fa-solid fa-book-open"></i>
-                            <span>Kode Etik</span>
-                        </button>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Profile & Program -->
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    <div class="space-y-5">
-                        <div class="inline-block px-3 py-1 bg-amber-500/10 text-amber-400 rounded-lg text-xs font-extrabold uppercase tracking-wider border border-amber-500/20">Tentang K.P.A CADAS</div>
-                        <h2 class="font-serif text-2xl sm:text-4xl font-bold text-white">Membentuk Generasi Tangguh & Peduli Semesta</h2>
-                        <p class="text-slate-300 text-sm leading-relaxed">
-                            <strong class="text-amber-400">Kelompok Pecinta Alam Cinta Alam Dan Semesta (K.P.A CADAS) Parepare</strong> merupakan organisasi pecinta alam yang berdedikasi tinggi dalam membina kebersamaan, keterampilan hidup di alam bebas, navigasi darat, survival, hingga aksi nyata konservasi lingkungan.
-                        </p>
-                        
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-                            <div onclick="openProgramModal('Navigasi & Survival', 'Pelatihan teknis lapangan meliputi orientasi medan, pembacaan peta kompas, teknik bertahan hidup (survival) di alam bebas, serta manajemen perjalanan dan pertolongan pertama.')" class="bg-[#0e241b] p-4 rounded-2xl shadow-md border border-emerald-800/50 flex flex-col justify-center items-start cursor-pointer hover:border-amber-500 hover:shadow-xl transition-all group">
-                                <i class="fa-solid fa-compass text-2xl text-amber-500 group-hover:scale-110 transition-transform mb-2"></i>
-                                <h4 class="font-bold text-white text-xs">Navigasi & Survival</h4>
-                                <p class="text-[10px] text-slate-400 mt-0.5">Pelatihan Teknis Lapangan</p>
-                            </div>
-                            <div onclick="openProgramModal('Konservasi Alam', 'Aksi nyata pelestarian lingkungan seperti penghijauan kembali (reboisasi), pembersihan jalur pendakian, edukasi pelestarian flora-fauna, dan penanggulangan sampah di alam bebas.')" class="bg-[#0e241b] p-4 rounded-2xl shadow-md border border-emerald-800/50 flex flex-col justify-center items-start cursor-pointer hover:border-amber-500 hover:shadow-xl transition-all group">
-                                <i class="fa-solid fa-leaf text-2xl text-emerald-400 group-hover:scale-110 transition-transform mb-2"></i>
-                                <h4 class="font-bold text-white text-xs">Konservasi Alam</h4>
-                                <p class="text-[10px] text-slate-400 mt-0.5">Penghijauan & Kebersihan</p>
-                            </div>
-                            <div onclick="openRentalModal()" class="bg-[#0e241b] p-4 rounded-2xl shadow-md border-2 border-amber-500/40 flex flex-col justify-center items-start cursor-pointer hover:border-amber-400 hover:shadow-xl transition-all group">
-                                <i class="fa-solid fa-campground text-2xl text-amber-400 group-hover:scale-110 transition-transform mb-2"></i>
-                                <h4 class="font-bold text-amber-400 text-xs">Sewa Alat Outdoor</h4>
-                                <p class="text-[10px] text-slate-300 mt-0.5">Lengkap, Murah, Siap Pakai</p>
-                            </div>
+                    <!-- SOCIAL & CONTACT INFOS TOP RIGHT -->
+                    <div class="z-10 flex flex-col space-y-2 text-right text-xs font-bold text-slate-200">
+                        <div class="flex items-center justify-end space-x-2">
+                            <i class="fa-brands fa-facebook text-purple-400"></i>
+                            <span class="tracking-wider">KPA CADAS PAREPARE</span>
                         </div>
-
-                    </div>
-
-                    <div class="space-y-4 bg-[#0e241b] p-8 rounded-3xl border border-emerald-800/50">
-                        <h3 class="font-serif font-bold text-xl text-amber-400 border-b border-emerald-800 pb-3">Visi & Misi Organisasi</h3>
-                        <div class="space-y-3 text-xs text-slate-300">
-                            <div class="flex items-start space-x-2">
-                                <i class="fa-solid fa-check text-amber-500 mt-0.5"></i>
-                                <span>Menumbuhkan keimanan dan ketakwaan kepada Tuhan Yang Maha Esa melalui kekaguman akan alam ciptaan-Nya.</span>
-                            </div>
-                            <div class="flex items-start space-x-2">
-                                <i class="fa-solid fa-check text-amber-500 mt-0.5"></i>
-                                <span>Membina fisik, mental, dan kedisiplinan anggota yang tangguh serta beretika lingkungan.</span>
-                            </div>
-                            <div class="flex items-start space-x-2">
-                                <i class="fa-solid fa-check text-amber-500 mt-0.5"></i>
-                                <span>Berperan aktif dalam kegiatan kemanusiaan, penanggulangan bencana, dan konservasi alam.</span>
-                            </div>
+                        <div class="flex items-center justify-end space-x-2">
+                            <i class="fa-brands fa-tiktok text-purple-400"></i>
+                            <span class="tracking-wider">KPA CADAS PAREPARE</span>
+                        </div>
+                        <div class="flex items-center justify-end space-x-2">
+                            <i class="fa-brands fa-whatsapp text-purple-400"></i>
+                            <span class="tracking-wider">082343551039</span>
+                        </div>
+                        <div class="flex items-center justify-end space-x-2">
+                            <i class="fa-solid fa-globe text-purple-400"></i>
+                            <span class="tracking-wider text-purple-300">kpa-cadas.firebaseapp.com</span>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- SECTION: PETA DIGITAL & SEKRETARIAT (GOOGLE MAPS 3D) -->
-            <section class="py-12 bg-[#07160f] border-t border-emerald-950">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+                <!-- MAIN DASHBOARD HUB -->
+                <div class="relative max-w-6xl mx-auto my-12">
                     
-                    <div class="text-center max-w-2xl mx-auto space-y-2">
-                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-amber-400 bg-amber-500/10 border border-amber-500/30 px-3 py-1 rounded-full">Lokasi & Sekretariat</span>
-                        <h2 class="font-serif text-2xl sm:text-3xl font-bold text-white">Peta Digital & Titik Kumpul K.P.A CADAS</h2>
-                        <p class="text-xs sm:text-sm text-slate-300">
-                            Kunjungi sekretariat resmi kami di Kota Parepare, Sulawesi Selatan, atau pantau titik kumpul utama kegiatan pendakian.
-                        </p>
-                    </div>
-
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+                    <svg class="hidden lg:block absolute inset-0 w-full h-full pointer-events-none" style="z-index: 0;">
+                        <!-- Left Lines -->
+                        <path d="M 320 100 L 480 100 L 520 250" class="circuit-line-left" />
+                        <path d="M 320 260 L 520 260" class="circuit-line-left" />
+                        <path d="M 320 420 L 480 420 L 520 270" class="circuit-line-left" />
                         
-                        <!-- Informasi Alamat -->
-                        <div class="bg-[#0e241b] p-6 rounded-3xl border border-emerald-800/50 space-y-4 shadow-xl">
-                            <div class="flex items-center space-x-3 text-amber-400">
-                                <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/40 flex items-center justify-center text-lg">
-                                    <i class="fa-solid fa-location-dot"></i>
+                        <!-- Right Lines -->
+                        <path d="M 830 100 L 670 100 L 630 250" class="circuit-line-right" />
+                        <path d="M 830 260 L 630 260" class="circuit-line-right" />
+                        <path d="M 830 420 L 670 420 L 630 270" class="circuit-line-right" />
+                    </svg>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center relative z-10">
+                        
+                        <!-- LEFT COLUMN: 3 CARDS -->
+                        <div class="space-y-6">
+                            <div onclick="switchTab('trails')" class="chamfer-card p-6 cursor-pointer group text-center">
+                                <div class="w-12 h-12 mx-auto mb-3 text-purple-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                                    <i class="fa-solid fa-mountain-sun"></i>
                                 </div>
-                                <h3 class="font-serif font-bold text-base text-white">Sekretariat Utama</h3>
+                                <h3 class="font-bold text-sm text-white tracking-wide uppercase">Fitur Peta Pendakian</h3>
+                                <p class="text-[11px] text-slate-400 mt-2 leading-relaxed">Akses peta interaktif Google My Maps Latimojong atau panduan rute Wikiloc Bawakaraeng via Bulubalea secara lengkap.</p>
                             </div>
+
+                            <div onclick="openLogoModal()" class="chamfer-card p-6 cursor-pointer group text-center">
+                                <div class="w-12 h-12 mx-auto mb-3 text-purple-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                </div>
+                                <h3 class="font-bold text-sm text-white tracking-wide uppercase">K.P.A CADAS PAREPARE</h3>
+                                <p class="text-[11px] text-slate-400 mt-2 leading-relaxed">Cinta Alam Dan Semesta — Klik untuk melihat bedah makna filosofis lambang & unduh logo resmi organisasi.</p>
+                            </div>
+
+                            <div onclick="switchTab('ethics')" class="chamfer-card p-6 cursor-pointer group text-center">
+                                <div class="w-12 h-12 mx-auto mb-3 text-purple-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                                    <i class="fa-solid fa-book-open"></i>
+                                </div>
+                                <h3 class="font-bold text-sm text-white tracking-wide uppercase">Kode Etik & Tata Tertib</h3>
+                                <p class="text-[11px] text-slate-400 mt-2 leading-relaxed">Pedoman dasar perilaku, etika kegiatan alam bebas, serta aturan pendidikan dasar (DIKSAR) anggota.</p>
+                            </div>
+                        </div>
+
+                        <!-- CENTER COLUMN: LOGO EMBLEM -->
+                        <div class="flex flex-col items-center justify-center py-4">
+                            <div onclick="openLogoModal()" class="relative w-80 h-80 sm:w-96 sm:h-96 rounded-full center-circle-ring p-6 cursor-pointer group flex flex-col items-center justify-center text-center space-y-3 transition-all hover:scale-105">
+                                
+                                <div class="absolute inset-2 rounded-full border-2 border-purple-500/30 border-dashed animate-spin-slow"></div>
+                                <div class="absolute inset-5 rounded-full border border-purple-400/20"></div>
+
+                                <div class="relative w-36 h-36 sm:w-44 sm:h-44 mx-auto z-10">
+                                    <img src="KPA CADAS.jpg" alt="Logo KPA CADAS" class="w-full h-full object-contain rounded-full border-2 border-purple-400 bg-black p-1 shadow-2xl group-hover:scale-105 transition-transform" onerror="this.src='https://via.placeholder.com/300/000000/a855f7?text=KPA+CADAS'">
+                                </div>
+
+                                <div class="relative z-10 space-y-1 mt-1">
+                                    <div class="flex items-center justify-center space-x-2">
+                                        <span class="w-4 h-[2px] bg-purple-500"></span>
+                                        <h3 class="font-sans font-black text-2xl sm:text-3xl tracking-wider uppercase cyber-logo-title">K.P.A CADAS</h3>
+                                        <span class="w-4 h-[2px] bg-purple-500"></span>
+                                    </div>
+                                    <p class="text-[9px] sm:text-[10px] font-mono font-bold text-purple-300 uppercase tracking-widest text-shadow">
+                                        CINTA ALAM DAN SEMESTA
+                                    </p>
+                                    <p class="text-[8px] text-slate-400 uppercase tracking-widest pt-0.5">
+                                        PAREPARE • SULAWESI SELATAN
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT COLUMN: 3 CARDS -->
+                        <div class="space-y-6">
+                            <div onclick="switchTab('register')" class="chamfer-card p-6 cursor-pointer group text-center">
+                                <div class="w-12 h-12 mx-auto mb-3 text-purple-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                                    <i class="fa-solid fa-file-lines"></i>
+                                </div>
+                                <h3 class="font-bold text-sm text-white tracking-wide uppercase">Pendaftaran Online</h3>
+                                <p class="text-[11px] text-slate-400 mt-2 leading-relaxed">Formulir Resmi Pendaftaran Calon Anggota Baru: Silakan isi Data Diri Anda dengan lengkap dan benar.</p>
+                            </div>
+
+                            <div onclick="switchTab('kta')" class="chamfer-card p-6 cursor-pointer group text-center">
+                                <div class="w-12 h-12 mx-auto mb-3 text-purple-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                                    <i class="fa-solid fa-id-card"></i>
+                                </div>
+                                <h3 class="font-bold text-sm text-white tracking-wide uppercase">Cek KTA Digital</h3>
+                                <p class="text-[11px] text-slate-400 mt-2 leading-relaxed">Masukkan Nomor Induk Anggota (NIA) atau Nama Lengkap untuk menampilkan kartu digital resmi.</p>
+                            </div>
+
+                            <div onclick="openRentalModal()" class="chamfer-card p-6 cursor-pointer group text-center">
+                                <div class="w-12 h-12 mx-auto mb-3 text-purple-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                                    <i class="fa-solid fa-campground"></i>
+                                </div>
+                                <h3 class="font-bold text-sm text-white tracking-wide uppercase">Layanan Tambahan</h3>
+                                <p class="text-[11px] text-slate-400 mt-2 leading-relaxed">Sewa Alat Outdoor Camping (Tenda, Carrier, Kompor) & Service Smartphone Bergaransi di Parepare.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- QUICK NAVIGATION BUTTONS -->
+                <div class="pt-4 flex flex-wrap items-center justify-center gap-3">
+                    <button onclick="switchTab('register')" class="px-6 py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl shadow-lg transition flex items-center space-x-2 text-xs">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                        <span>Daftar Sekarang</span>
+                    </button>
+                    <button onclick="switchTab('trails')" class="px-6 py-3 bg-[#161f2c] hover:bg-purple-950 text-purple-300 font-bold rounded-xl border border-purple-500/40 shadow-lg transition flex items-center space-x-2 text-xs">
+                        <i class="fa-solid fa-mountain-sun"></i>
+                        <span>Peta Pendakian</span>
+                    </button>
+                    <button onclick="openRentalModal()" class="px-6 py-3 bg-[#161f2c] hover:bg-purple-950 text-amber-400 font-bold rounded-xl border border-amber-500/40 shadow-lg transition flex items-center space-x-2 text-xs">
+                        <i class="fa-solid fa-campground"></i>
+                        <span>Sewa Alat Outdoor</span>
+                    </button>
+                    <button onclick="openServiceModal()" class="px-6 py-3 bg-[#161f2c] hover:bg-purple-950 text-cyan-400 font-bold rounded-xl border border-cyan-500/40 shadow-lg transition flex items-center space-x-2 text-xs">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                        <span>Service HP</span>
+                    </button>
+                    <button onclick="switchTab('gallery')" class="px-6 py-3 bg-[#161f2c] hover:bg-purple-950 text-purple-300 font-bold rounded-xl border border-purple-500/40 shadow-lg transition flex items-center space-x-2 text-xs">
+                        <i class="fa-solid fa-images"></i>
+                        <span>Galeri Foto</span>
+                    </button>
+                </div>
+
+                <!-- GOOGLE MAPS SECRETARIAT SECTION -->
+                <div class="pt-8">
+                    <div class="bg-[#0c1017] p-6 rounded-3xl border border-purple-900/40 space-y-4 shadow-xl">
+                        <div class="flex items-center space-x-3 text-purple-400">
+                            <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/40 flex items-center justify-center text-lg">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <h3 class="font-serif font-bold text-base text-white">Sekretariat Utama & Titik Kumpul K.P.A CADAS</h3>
+                        </div>
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+                            <div>
+                                <p class="text-xs text-slate-300 leading-relaxed">
+                                    <strong class="text-purple-400">K.P.A CADAS Parepare</strong><br>
+                                    Kota Parepare, Sulawesi Selatan.<br><br>
+                                    Silakan kunjungi sekretariat kami atau hubungi admin melalui WhatsApp untuk informasi kegiatan dan pendaftaran Diksar.
+                                </p>
+                                <div class="pt-3">
+                                    <a href="https://wa.me/6282343551039?text=Halo%20Admin%20KPA%20CADAS,%20saya%20mau%20berkunjung%20ke%20sekretariat." target="_blank" class="w-full py-2.5 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl text-xs flex items-center justify-center space-x-2 shadow transition">
+                                        <i class="fa-brands fa-whatsapp text-base"></i>
+                                        <span>Hubungi Admin / Panduan Arah</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="lg:col-span-2 rounded-2xl overflow-hidden border border-purple-500/40 h-64">
+                                <iframe 
+                                    src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d50847.2258756!2d119.6200!3d-4.0150!2m3!1f30!2f60!3f0!3m2!1i1024!2i768!4f35!5e1!3m2!1sen!2sid!4v1650000000000!5m2!1sen!2sid" 
+                                    width="100%" 
+                                    height="100%" 
+                                    style="border:0;" 
+                                    allowfullscreen="" 
+                                    loading="lazy" 
+                                    referrerpolicy="no-referrer-when-downgrade"
+                                    class="w-full h-full">
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION FITUR PETA GABUNGAN -->
+        <section id="view-trails" class="view-section hidden py-10 sm:py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+                <div class="bg-[#0c1017] text-white rounded-3xl p-6 sm:p-8 border-b-4 border-purple-500 shadow-xl text-center space-y-3">
+                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-purple-300 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/30">Pusat Navigasi & Jalur Pendakian</span>
+                    <h2 class="font-serif text-2xl sm:text-3xl font-bold">PILIH JALUR PENDAKIAN GUNUNG</h2>
+                    <p class="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto">
+                        Akses peta interaktif Google My Maps Latimojong atau panduan rute Wikiloc Bawakaraeng via Bulubalea secara lengkap dan transparan.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-[#0c1017] p-6 rounded-3xl border-2 border-purple-500/60 shadow-xl space-y-4 flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="w-12 h-12 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl font-bold">
+                                <i class="fa-solid fa-mountain"></i>
+                            </div>
+                            <h3 class="font-serif font-bold text-xl text-purple-400">Peta Jalur Latimojong</h3>
                             <p class="text-xs text-slate-300 leading-relaxed">
-                                <strong class="text-amber-400">K.P.A CADAS Parepare</strong><br>
-                                Kota Parepare, Sulawesi Selatan.<br>
-                                (Silakan hubungi admin via WhatsApp terlebih dahulu untuk konfirmasi kunjungan).
+                                Peta satelit Google My Maps interaktif lengkap dengan rute, pos peristirahatan, dan titik penting pendakian Gunung Latimojong.
                             </p>
-                            <div class="pt-2">
-                                <a href="https://wa.me/6282343551039?text=Halo%20Admin%20KPA%20CADAS,%20saya%20mau%20berkunjung%20ke%20sekretariat." target="_blank" class="w-full py-2.5 bg-amber-500 hover:bg-amber-400 text-black font-extrabold rounded-xl text-xs flex items-center justify-center space-x-2 shadow transition">
-                                    <i class="fa-brands fa-whatsapp text-base"></i>
-                                    <span>Hubungi Admin / Panduan Arah</span>
-                                </a>
+                        </div>
+                        <div class="pt-2 flex gap-3">
+                            <button onclick="showMap('latimojong')" class="flex-grow py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl text-xs text-center shadow transition">
+                                <i class="fa-solid fa-map-location-dot mr-1"></i> Lihat Peta Latimojong
+                            </button>
+                            <a href="https://www.google.com/maps/d/u/0/viewer?mid=1uT9im4r_M1oAwIK0spRM1O9UgPK6BIs" target="_blank" class="px-4 py-3 bg-[#070a0f] hover:bg-purple-950 text-purple-300 border border-purple-500/40 rounded-xl text-xs flex items-center justify-center">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#0c1017] p-6 rounded-3xl border-2 border-purple-500/60 shadow-xl space-y-4 flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="w-12 h-12 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl font-bold">
+                                <i class="fa-solid fa-route"></i>
                             </div>
+                            <h3 class="font-serif font-bold text-xl text-purple-400">Wikiloc Bawakaraeng (Bulubalea)</h3>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                Panduan rute pendakian detail Gunung Bawakaraeng via jalur Bulubalea langsung dari platform Wikiloc untuk navigasi lapangan akurat.
+                            </p>
                         </div>
-
-                        <!-- Embed Google Maps Tampilan 3D -->
-                        <div class="lg:col-span-2 bg-[#0e241b] rounded-3xl overflow-hidden border-2 border-amber-500/40 shadow-2xl h-80 sm:h-96 relative">
-                            <iframe 
-                                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d50847.2258756!2d119.6200!3d-4.0150!2m3!1f30!2f60!3f0!3m2!1i1024!2i768!4f35!5e1!3m2!1sen!2sid!4v1650000000000!5m2!1sen!2sid" 
-                                width="100%" 
-                                height="100%" 
-                                style="border:0;" 
-                                allowfullscreen="" 
-                                loading="lazy" 
-                                referrerpolicy="no-referrer-when-downgrade"
-                                class="w-full h-full">
-                            </iframe>
+                        <div class="pt-2 flex gap-3">
+                            <button onclick="showMap('bawakaraeng')" class="flex-grow py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl text-xs text-center shadow transition">
+                                <i class="fa-solid fa-map-location-dot mr-1"></i> Lihat Peta Bawakaraeng
+                            </button>
+                            <a href="https://www.wikiloc.com/running-trails/bawakaraeng-via-bulubalea-223946458" target="_blank" class="px-4 py-3 bg-[#070a0f] hover:bg-purple-950 text-purple-300 border border-purple-500/40 rounded-xl text-xs flex items-center justify-center">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </a>
                         </div>
-
                     </div>
-
                 </div>
-            </section>
 
-            <!-- Tahapan Kegiatan -->
-            <div id="jadwal" class="bg-[#07160f] py-16 border-y border-emerald-900/50">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="text-center max-w-2xl mx-auto mb-12 space-y-2">
-                        <span class="text-xs font-extrabold uppercase tracking-widest text-amber-400 bg-amber-500/10 border border-amber-500/30 px-3 py-1 rounded-full">Tahapan Kegiatan</span>
-                        <h2 class="font-serif text-2xl sm:text-3xl font-bold text-white">Alur Pendaftaran & Pelatihan Anggota</h2>
+                <div class="bg-[#0c1017] rounded-3xl overflow-hidden border-2 border-purple-500 shadow-2xl p-4 space-y-4">
+                    <div class="flex justify-between items-center border-b border-purple-900 pb-3">
+                        <h4 id="map-title" class="font-serif font-bold text-base text-purple-400"><i class="fa-solid fa-map mr-2"></i> Menampilkan: Peta Jalur Latimojong</h4>
+                        <span id="map-status" class="text-[10px] bg-purple-500/20 text-purple-300 px-2.5 py-1 rounded-full border border-purple-500/30">Google My Maps Mode</span>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                        <div onclick="switchTab('register')" class="bg-[#0e241b] p-6 rounded-2xl border border-emerald-800/50 relative cursor-pointer hover:border-amber-500 hover:shadow-2xl transition-all group">
-                            <div class="w-10 h-10 rounded-xl bg-amber-500 text-black flex items-center justify-center mb-4 text-base font-serif">01</div>
-                            <h3 class="font-bold text-white text-base mb-1 group-hover:text-amber-400 transition-colors">Pendaftaran Online</h3>
-                            <p class="text-xs text-slate-400">Mengisi biodata lengkap melalui formulir online ini.</p>
-                            <span class="mt-4 inline-block text-[10px] font-extrabold text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-arrow-right mr-1"></i>Isi Form Sekarang</span>
-                        </div>
-
-                        <div onclick="openProgramModal('02. Screening & Berkas', 'Tahapan pemeriksaan fisik dasar, tes wawancara motivasi, verifikasi kelengkapan administrasi/berkas, serta cek kesehatan calon anggota sebelum mengikuti kegiatan lapangan.')" class="bg-[#0e241b] p-6 rounded-2xl border border-emerald-800/50 relative cursor-pointer hover:border-amber-500 hover:shadow-2xl transition-all group">
-                            <div class="w-10 h-10 rounded-xl bg-amber-500 text-black flex items-center justify-center mb-4 text-base font-serif">02</div>
-                            <h3 class="font-bold text-white text-base mb-1 group-hover:text-amber-400 transition-colors">Screening & Berkas</h3>
-                            <p class="text-xs text-slate-400">Verifikasi fisik, wawancara motivasi, dan tes kesehatan.</p>
-                            <span class="mt-4 inline-block text-[10px] font-extrabold text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-circle-info mr-1"></i>Lihat Detail</span>
-                        </div>
-
-                        <div onclick="openProgramModal('03. Materi Ruang (Indoor)', 'Penyampaian modul dan teori dasar kepecintaan alaman di dalam kelas. Meliputi Navigasi Darat, Survival, Management Perjalanan, P3K, Etika Lingkungan, dan Keorganisasian.')" class="bg-[#0e241b] p-6 rounded-2xl border border-emerald-800/50 relative cursor-pointer hover:border-amber-500 hover:shadow-2xl transition-all group">
-                            <div class="w-10 h-10 rounded-xl bg-amber-500 text-black flex items-center justify-center mb-4 text-base font-serif">03</div>
-                            <h3 class="font-bold text-white text-base mb-1 group-hover:text-amber-400 transition-colors">Materi Ruang (Indoor)</h3>
-                            <p class="text-xs text-slate-400">Penyampaian teori navigasi, survival, dan etika lingkungan.</p>
-                            <span class="mt-4 inline-block text-[10px] font-extrabold text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-circle-info mr-1"></i>Lihat Detail</span>
-                        </div>
-
-                        <div onclick="openProgramModal('04. Kegiatan Lapangan', 'Praktik langsung seluruh teori di medan sebenarnya. Meliputi pembacaan peta lokasi nyata, aplikasi survival, pembentukan fisik dan mental, serta pengukuhan anggota resmi.')" class="bg-[#0e241b] p-6 rounded-2xl border-l-4 border-l-amber-500 border-y border-r border-emerald-800/50 relative cursor-pointer hover:border-amber-500 hover:shadow-2xl transition-all group">
-                            <div class="w-10 h-10 rounded-xl bg-amber-500 text-black font-black flex items-center justify-center mb-4 text-base font-serif">04</div>
-                            <h3 class="font-bold text-white text-base mb-1 group-hover:text-amber-400 transition-colors">Kegiatan Lapangan</h3>
-                            <p class="text-xs text-slate-400">Aplikasi teori di alam bebas dan pengukuhan anggota resmi.</p>
-                            <span class="mt-4 inline-block text-[10px] font-extrabold text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-circle-info mr-1"></i>Lihat Detail</span>
-                        </div>
+                    <div id="map-container" class="w-full h-[70vh] rounded-2xl overflow-hidden bg-[#070a0f] relative">
+                        <iframe id="active-map-frame"
+                            src="https://www.google.com/maps/d/u/0/embed?mid=1uT9im4r_M1oAwIK0spRM1O9UgPK6BIs&ehbc=2E312F" 
+                            width="100%" 
+                            height="100%" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade"
+                            class="w-full h-full">
+                        </iframe>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Register Section -->
+        <!-- REGISTER SECTION -->
         <section id="view-register" class="view-section hidden py-10 sm:py-16">
             <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="bg-[#0e241b] rounded-3xl shadow-2xl border border-amber-500/30 overflow-hidden text-slate-200">
-                    
-                    <div class="bg-[#07160f] p-6 sm:p-8 relative border-b-4 border-amber-500">
+                <div class="bg-[#0c1017] rounded-3xl shadow-2xl border border-purple-500/30 overflow-hidden text-slate-200">
+                    <div class="bg-[#070a0f] p-6 sm:p-8 relative border-b-4 border-purple-500">
                         <div class="flex items-center space-x-4">
-                            <img src="KPA CADAS.jpg" alt="Logo KPA CADAS" class="w-16 h-16 object-contain rounded-2xl bg-black border-2 border-amber-500 p-1 shadow-md cursor-pointer" onclick="openLogoModal()" onerror="this.src='https://via.placeholder.com/150/000000/f97316?text=CADAS'">
+                            <img src="KPA CADAS.jpg" alt="Logo KPA CADAS" class="w-16 h-16 object-contain rounded-2xl bg-black border-2 border-purple-500 p-1 shadow-md cursor-pointer" onclick="openLogoModal()">
                             <div>
-                                <span class="text-[10px] font-extrabold uppercase tracking-wider text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-full border border-amber-500/30">Formulir Resmi Pendaftaran</span>
+                                <span class="text-[10px] font-extrabold uppercase tracking-wider text-purple-300 bg-purple-500/10 px-2.5 py-1 rounded-full border border-purple-500/30">Formulir Resmi Pendaftaran</span>
                                 <h2 class="font-serif text-xl sm:text-2xl font-bold mt-1 text-white">Pendaftaran K.P.A CADAS Parepare</h2>
-                                <p class="text-emerald-300 text-xs">Silakan isi Data Diri Anda dengan lengkap dan benar.</p>
+                                <p class="text-purple-300 text-xs">Silakan isi Data Diri Anda dengan lengkap dan benar.</p>
                             </div>
                         </div>
                     </div>
 
                     <form id="form-registration" onsubmit="handleFormSubmit(event)" class="p-6 sm:p-8 space-y-6">
-                        
                         <div class="space-y-4">
-                            <div class="border-b border-emerald-800 pb-2 flex items-center space-x-2">
-                                <div class="w-7 h-7 rounded-lg bg-amber-500 text-black flex items-center justify-center font-bold text-xs">1</div>
-                                <h3 class="font-bold text-base text-amber-400">Data Diri Calon Anggota</h3>
+                            <div class="border-b border-purple-900 pb-2 flex items-center space-x-2">
+                                <div class="w-7 h-7 rounded-lg bg-purple-600 text-white flex items-center justify-center font-bold text-xs">1</div>
+                                <h3 class="font-bold text-base text-purple-400">Data Diri Calon Anggota</h3>
                             </div>
 
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div class="sm:col-span-2">
                                     <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Nama Lengkap <span class="text-red-400">*</span></label>
-                                    <input type="text" id="reg-nama" required placeholder="Contoh: Andi Muhammad Faisal" class="w-full px-4 py-3 rounded-xl border border-emerald-800 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm bg-[#07160f] text-white">
+                                    <input type="text" id="reg-nama" required placeholder="Contoh: Andi Muhammad Faisal" class="w-full px-4 py-3 rounded-xl border border-purple-900 focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm bg-[#070a0f] text-white">
                                 </div>
                                 <div>
                                     <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Nama Lapangan / Panggilan <span class="text-red-400">*</span></label>
-                                    <input type="text" id="reg-panggilan" required placeholder="Contoh: Elang" class="w-full px-4 py-3 rounded-xl border border-emerald-800 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm bg-[#07160f] text-white">
+                                    <input type="text" id="reg-panggilan" required placeholder="Contoh: Elang" class="w-full px-4 py-3 rounded-xl border border-purple-900 focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm bg-[#070a0f] text-white">
                                 </div>
                                 <div>
                                     <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Jenis Kelamin <span class="text-red-400">*</span></label>
-                                    <select id="reg-gender" required class="w-full px-4 py-3 rounded-xl border border-emerald-800 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm bg-[#07160f] text-white">
+                                    <select id="reg-gender" required class="w-full px-4 py-3 rounded-xl border border-purple-900 focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm bg-[#070a0f] text-white">
                                         <option value="">-- Pilih Jenis Kelamin --</option>
                                         <option value="Laki-laki">Laki-laki</option>
                                         <option value="Perempuan">Perempuan</option>
@@ -382,244 +601,214 @@
                                 </div>
                                 <div class="sm:col-span-2">
                                     <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Tempat / Tanggal Lahir <span class="text-red-400">*</span></label>
-                                    <input type="text" id="reg-ttl" required placeholder="Contoh: Parepare, 14 Mei 2004" class="w-full px-4 py-3 rounded-xl border border-emerald-800 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm bg-[#07160f] text-white">
+                                    <input type="text" id="reg-ttl" required placeholder="Contoh: Parepare, 14 Mei 2004" class="w-full px-4 py-3 rounded-xl border border-purple-900 focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm bg-[#070a0f] text-white">
                                 </div>
                                 <div class="sm:col-span-2">
                                     <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Alamat Domisili <span class="text-red-400">*</span></label>
-                                    <textarea id="reg-alamat" required rows="2" placeholder="Alamat lengkap saat ini di Parepare / sekitarnya..." class="w-full px-4 py-3 rounded-xl border border-emerald-800 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm bg-[#07160f] text-white"></textarea>
+                                    <textarea id="reg-alamat" required rows="2" placeholder="Alamat lengkap saat ini di Parepare / sekitarnya..." class="w-full px-4 py-3 rounded-xl border border-purple-900 focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm bg-[#070a0f] text-white"></textarea>
                                 </div>
                                 <div>
                                     <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Nomor WhatsApp / HP <span class="text-red-400">*</span></label>
-                                    <input type="tel" id="reg-wa" required placeholder="Contoh: 081234567890" class="w-full px-4 py-3 rounded-xl border border-emerald-800 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm bg-[#07160f] text-white">
+                                    <input type="tel" id="reg-wa" required placeholder="Contoh: 081234567890" class="w-full px-4 py-3 rounded-xl border border-purple-900 focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm bg-[#070a0f] text-white">
                                 </div>
                                 <div>
                                     <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Riwayat Penyakit (Jika Ada)</label>
-                                    <input type="text" id="reg-penyakit" placeholder="Asma, Alergi, Maag / Tidak Ada" class="w-full px-4 py-3 rounded-xl border border-emerald-800 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm bg-[#07160f] text-white">
+                                    <input type="text" id="reg-penyakit" placeholder="Asma, Alergi, Maag / Tidak Ada" class="w-full px-4 py-3 rounded-xl border border-purple-900 focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm bg-[#070a0f] text-white">
                                 </div>
                                 <div class="sm:col-span-2">
                                     <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Upload Foto Setengah Badan (Pasfoto KTA) <span class="text-red-400">*</span></label>
-                                    <input type="file" id="reg-foto" accept="image/*" required class="w-full text-xs text-slate-300 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-black hover:file:bg-amber-400 cursor-pointer bg-[#07160f] rounded-xl border border-emerald-800 p-2">
+                                    <input type="file" id="reg-foto" accept="image/*" required class="w-full text-xs text-slate-300 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-purple-600 file:text-white hover:file:bg-purple-500 cursor-pointer bg-[#070a0f] rounded-xl border border-purple-900 p-2">
                                 </div>
                             </div>
                         </div>
 
                         <div class="space-y-4 pt-2">
-                            <div class="border-b border-emerald-800 pb-2 flex items-center space-x-2">
-                                <div class="w-7 h-7 rounded-lg bg-amber-500 text-black flex items-center justify-center font-bold text-xs">2</div>
-                                <h3 class="font-bold text-base text-amber-400">Kontak Darurat (Keluarga / Orang Tua)</h3>
+                            <div class="border-b border-purple-900 pb-2 flex items-center space-x-2">
+                                <div class="w-7 h-7 rounded-lg bg-purple-600 text-white flex items-center justify-center font-bold text-xs">2</div>
+                                <h3 class="font-bold text-base text-purple-400">Kontak Darurat (Keluarga / Orang Tua)</h3>
                             </div>
 
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Nama Wali / Orang Tua <span class="text-red-400">*</span></label>
-                                    <input type="text" id="reg-darurat-nama" required placeholder="Contoh: Nama Orang Tua" class="w-full px-4 py-3 rounded-xl border border-emerald-800 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm bg-[#07160f] text-white">
+                                    <input type="text" id="reg-darurat-nama" required placeholder="Contoh: Nama Orang Tua" class="w-full px-4 py-3 rounded-xl border border-purple-900 focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm bg-[#070a0f] text-white">
                                 </div>
                                 <div>
                                     <label class="block text-xs font-bold uppercase text-slate-300 mb-1">No. HP Kontak Darurat <span class="text-red-400">*</span></label>
-                                    <input type="tel" id="reg-darurat-hp" required placeholder="Contoh: 085299887766" class="w-full px-4 py-3 rounded-xl border border-emerald-800 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm bg-[#07160f] text-white">
+                                    <input type="tel" id="reg-darurat-hp" required placeholder="Contoh: 085299887766" class="w-full px-4 py-3 rounded-xl border border-purple-900 focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm bg-[#070a0f] text-white">
                                 </div>
                             </div>
                         </div>
 
                         <div class="space-y-4 pt-2">
-                            <div class="border-b border-emerald-800 pb-2 flex items-center space-x-2">
-                                <div class="w-7 h-7 rounded-lg bg-amber-500 text-black flex items-center justify-center font-bold text-xs">3</div>
-                                <h3 class="font-bold text-base text-amber-400">Alasan & Motivasi</h3>
+                            <div class="border-b border-purple-900 pb-2 flex items-center space-x-2">
+                                <div class="w-7 h-7 rounded-lg bg-purple-600 text-white flex items-center justify-center font-bold text-xs">3</div>
+                                <h3 class="font-bold text-base text-purple-400">Alasan & Motivasi</h3>
                             </div>
 
                             <div>
                                 <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Alasan Bergabung / Motivasi Mengikuti K.P.A CADAS <span class="text-red-400">*</span></label>
-                                <textarea id="reg-motivasi" required rows="3" placeholder="Tuliskan motivasi Anda bergabung dengan K.P.A CADAS Parepare..." class="w-full px-4 py-3 rounded-xl border border-emerald-800 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm bg-[#07160f] text-white"></textarea>
+                                <textarea id="reg-motivasi" required rows="3" placeholder="Tuliskan motivasi Anda bergabung dengan K.P.A CADAS Parepare..." class="w-full px-4 py-3 rounded-xl border border-purple-900 focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm bg-[#070a0f] text-white"></textarea>
                             </div>
                         </div>
 
                         <div class="pt-2">
                             <label class="flex items-start space-x-3 cursor-pointer">
-                                <input type="checkbox" id="reg-check" required class="mt-1 w-4 h-4 text-amber-500 rounded border-emerald-800 bg-[#07160f] focus:ring-amber-500">
+                                <input type="checkbox" id="reg-check" required class="mt-1 w-4 h-4 text-purple-600 rounded border-purple-900 bg-[#070a0f] focus:ring-purple-500">
                                 <span class="text-xs text-slate-300">Saya menyatakan bahwa seluruh Data Diri di atas adalah benar. Saya bersedia mematuhi seluruh tata tertib kegiatan, menjaga kedisiplinan, serta mengikuti instruksi Instruktur/Senior demi keselamatan dan kelancaran kegiatan K.P.A CADAS Parepare.</span>
                             </label>
                         </div>
 
-                        <div class="pt-4 border-t border-emerald-800 flex items-center justify-end space-x-3">
-                            <button type="button" onclick="switchTab('home')" class="px-5 py-2.5 rounded-xl text-xs font-bold text-slate-400 hover:bg-emerald-900/50 transition">Batal</button>
-                            <button type="submit" class="px-8 py-3 bg-amber-500 hover:bg-amber-600 text-black font-extrabold rounded-xl shadow-lg transition flex items-center space-x-2 text-sm">
+                        <div class="pt-4 border-t border-purple-900 flex items-center justify-end space-x-3">
+                            <button type="button" onclick="switchTab('home')" class="px-5 py-2.5 rounded-xl text-xs font-bold text-slate-400 hover:bg-purple-950/50 transition">Batal</button>
+                            <button type="submit" class="px-8 py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl shadow-lg transition flex items-center space-x-2 text-sm">
                                 <i class="fa-brands fa-whatsapp text-base"></i>
                                 <span>Kirim Via WhatsApp</span>
                             </button>
                         </div>
-
                     </form>
                 </div>
             </div>
         </section>
 
-        <!-- GALLERY / DOKUMENTASI SECTION -->
+        <!-- GALLERY SECTION -->
         <section id="view-gallery" class="view-section hidden py-10 sm:py-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-                
-                <!-- BAGIAN GALERI FOTO -->
                 <div class="space-y-6">
-                    <div class="bg-[#0e241b] text-white rounded-3xl p-6 sm:p-8 border-b-4 border-amber-500 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="bg-[#0c1017] text-white rounded-3xl p-6 sm:p-8 border-b-4 border-purple-500 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
                         <div class="space-y-2 text-center md:text-left">
-                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/30">Arsip & Dokumentasi Foto</span>
+                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-purple-300 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/30">Arsip & Dokumentasi Foto</span>
                             <h2 class="font-serif text-2xl sm:text-3xl font-bold">Galeri Foto Kegiatan K.P.A CADAS</h2>
-                            <p class="text-xs sm:text-sm text-emerald-200 font-light max-w-xl">
+                            <p class="text-xs sm:text-sm text-purple-200 font-light max-w-xl">
                                 Kumpulan dokumentasi foto kegiatan pendakian, navigasi darat, survival, dan aksi konservasi alam. Klik foto untuk memperbesar atau ikon sampah untuk menghapus.
                             </p>
                         </div>
                         <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-                            <button onclick="openUploadPhotoModal()" class="px-5 py-3 bg-amber-500 hover:bg-amber-600 text-black font-extrabold rounded-2xl shadow-lg transition flex items-center justify-center space-x-2 text-xs">
+                            <button onclick="openUploadPhotoModal()" class="px-5 py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-2xl shadow-lg transition flex items-center justify-center space-x-2 text-xs">
                                 <i class="fa-solid fa-cloud-arrow-up text-sm"></i>
                                 <span>Unggah Foto Kegiatan</span>
                             </button>
-                            <a href="https://drive.google.com" target="_blank" class="px-5 py-3 bg-[#07160f] hover:bg-emerald-950 text-white font-bold rounded-2xl border border-amber-500/40 transition flex items-center justify-center space-x-2 text-xs">
-                                <i class="fa-brands fa-google-drive text-amber-400 text-sm"></i>
+                            <a href="https://drive.google.com" target="_blank" class="px-5 py-3 bg-[#070a0f] hover:bg-purple-950 text-white font-bold rounded-2xl border border-purple-500/40 transition flex items-center justify-center space-x-2 text-xs">
+                                <i class="fa-brands fa-google-drive text-purple-400 text-sm"></i>
                                 <span>Google Drive Resmi</span>
                             </a>
                         </div>
                     </div>
 
-                    <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                        <!-- Dynamic Photos -->
-                    </div>
+                    <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
                 </div>
 
-                <!-- BAGIAN GALERI VIDEO (YOUTUBE EMBED) -->
-                <div class="space-y-6 pt-6 border-t border-emerald-900">
-                    <div class="bg-[#0e241b] text-white rounded-3xl p-6 sm:p-8 border-b-4 border-amber-500 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="space-y-6 pt-6 border-t border-purple-900">
+                    <div class="bg-[#0c1017] text-white rounded-3xl p-6 sm:p-8 border-b-4 border-purple-500 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
                         <div class="space-y-2 text-center md:text-left">
-                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/30">Arsip Video Kegiatan</span>
+                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-purple-300 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/30">Arsip Video Kegiatan</span>
                             <h2 class="font-serif text-2xl sm:text-3xl font-bold">Video Dokumentasi YouTube</h2>
-                            <p class="text-xs sm:text-sm text-emerald-200 font-light max-w-xl">
+                            <p class="text-xs sm:text-sm text-purple-200 font-light max-w-xl">
                                 Jelajahi keseruan petualangan, aksi nyata konservasi alam, dan momen persaudaraan terbaik K.P.A CADAS Parepare!
                             </p>
                         </div>
                         <div>
-                            <button onclick="openUploadVideoModal()" class="px-5 py-3 bg-amber-500 hover:bg-amber-600 text-black font-extrabold rounded-2xl shadow-lg transition flex items-center justify-center space-x-2 text-xs">
+                            <button onclick="openUploadVideoModal()" class="px-5 py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-2xl shadow-lg transition flex items-center justify-center space-x-2 text-xs">
                                 <i class="fa-solid fa-video text-sm"></i>
                                 <span>Tambah Video YouTube</span>
                             </button>
                         </div>
                     </div>
 
-                    <div id="video-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- Dynamic Videos -->
-                    </div>
+                    <div id="video-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
                 </div>
-
             </div>
         </section>
 
-        <!-- ETHICS / KODE ETIK SECTION -->
+        <!-- ETHICS SECTION -->
         <section id="view-ethics" class="view-section hidden py-10 sm:py-16">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-                
-                <div class="bg-[#0e241b] text-white rounded-3xl p-6 sm:p-8 border-b-4 border-amber-500 shadow-xl text-center space-y-3">
-                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/30">Dokumen Resmi Organisasi</span>
+                <div class="bg-[#0c1017] text-white rounded-3xl p-6 sm:p-8 border-b-4 border-purple-500 shadow-xl text-center space-y-3">
+                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-purple-300 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/30">Dokumen Resmi Organisasi</span>
                     <h2 class="font-serif text-2xl sm:text-3xl font-bold">Tata Tertib & Kode Etik Pecinta Alam</h2>
-                    <p class="text-xs sm:text-sm text-emerald-200 font-light max-w-2xl mx-auto">
+                    <p class="text-xs sm:text-sm text-purple-200 font-light max-w-2xl mx-auto">
                         "Cinta Alam dan Semesta" — Pedoman dasar perilaku, etika kegiatan alam bebas, serta pendidikan dasar (DIKSAR) K.P.A CADAS Parepare.
                     </p>
                 </div>
 
-                <div class="bg-[#0e241b] rounded-3xl p-6 sm:p-8 border border-emerald-800/50 shadow-2xl space-y-6 text-xs sm:text-sm text-slate-300 leading-relaxed">
-                    
-                    <div class="space-y-2 border-b border-emerald-900 pb-4">
-                        <h3 class="font-serif font-bold text-base text-amber-400">BAB I - KETENTUAN UMUM</h3>
-                        <p><strong>Pasal 1 (Pengertian):</strong> K.P.A CADAS adalah organisasi yang bergerak dalam bidang kepecintaalaman, pelestarian lingkungan, pendidikan, dan kegiatan alam bebas. Kegiatan meliputi pendakian gunung, penjelajahan, perkemahan, pendidikan dasar, konservasi, dan kegiatan sejenis.</p>
-                        <p><strong>Pasal 2 (Tujuan):</strong> Membentuk anggota yang berkarakter, disiplin, bertanggung jawab, menumbuhkan kecintaan terhadap alam dan semesta, menjaga kelestarian lingkungan, serta mengembangkan keterampilan dan keselamatan.</p>
+                <div class="bg-[#0c1017] rounded-3xl p-6 sm:p-8 border border-purple-900/50 shadow-2xl space-y-6 text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    <div class="space-y-2 border-b border-purple-950 pb-4">
+                        <h3 class="font-serif font-bold text-base text-purple-400">BAB I - KETENTUAN UMUM</h3>
+                        <p><strong>Pasal 1 (Pengertian):</strong> K.P.A CADAS adalah organisasi yang bergerak dalam bidang kepecintaalaman, pelestarian lingkungan, pendidikan, dan kegiatan alam bebas.</p>
+                        <p><strong>Pasal 2 (Tujuan):</strong> Membentuk anggota yang berkarakter, disiplin, bertanggung jawab, menumbuhkan kecintaan terhadap alam dan semesta.</p>
                     </div>
 
-                    <div class="space-y-2 border-b border-emerald-900 pb-4">
-                        <h3 class="font-serif font-bold text-base text-amber-400">BAB II - TATA TERTIB ORGANISASI</h3>
-                        <p><strong>Pasal 3 (Kewajiban Anggota):</strong> Menjunjung tinggi nama baik organisasi, mematuhi AD/ART, menghormati sesama anggota, pembina, dan masyarakat, menjaga kekompakan, serta melaksanakan tugas dengan jujur dan bertanggung jawab.</p>
-                        <p><strong>Pasal 4 (Larangan Anggota):</strong> Dilarang melakukan kekerasan fisik, perundungan, penghinaan, membawa/menggunakan narkotika, mengonsumsi minuman keras saat kegiatan/bertugas, membahayakan keselamatan orang lain, merusak fasilitas umum, serta menyebarkan informasi palsu.</p>
+                    <div class="space-y-2 border-b border-purple-950 pb-4">
+                        <h3 class="font-serif font-bold text-base text-purple-400">BAB II - TATA TERTIB ORGANISASI</h3>
+                        <p><strong>Pasal 3 (Kewajiban Anggota):</strong> Menjunjung tinggi nama baik organisasi, mematuhi AD/ART, menghormati sesama anggota, pembina, dan masyarakat.</p>
+                        <p><strong>Pasal 4 (Larangan Anggota):</strong> Dilarang melakukan kekerasan fisik, perundungan, penghinaan, membawa/menggunakan narkotika, mengonsumsi minuman keras saat kegiatan.</p>
                     </div>
 
-                    <div class="space-y-2 border-b border-emerald-900 pb-4">
-                        <h3 class="font-serif font-bold text-base text-amber-400">BAB III - KODE ETIK PECINTA ALAM</h3>
-                        <p><strong>Pasal 5 (Etika terhadap Alam):</strong> Tidak meninggalkan sampah di gunung/hutan/sungai, tidak merusak flora-fauna yang dilindungi, tidak membuat api sembarangan, tidak mencoret batu/pohon, serta mengutamakan prinsip <em>Leave No Trace</em>.</p>
-                        <p><strong>Pasal 6 (Etika terhadap Sesama):</strong> Mengutamakan persaudaraan, membantu yang membutuhkan pertolongan, menghormati adat istiadat dan budaya setempat, serta tidak melakukan diskriminasi.</p>
-                        <p><strong>Pasal 7 (Etika dalam Berkegiatan):</strong> Mengutamakan keselamatan daripada puncak, mematuhi arahan pemimpin kegiatan dan prosedur keselamatan, memeriksa kondisi fisik dan cuaca, serta menjaga komunikasi dan kerja sama.</p>
-                    </div>
-
-                    <div class="space-y-2 border-b border-emerald-900 pb-4">
-                        <h3 class="font-serif font-bold text-base text-amber-400">BAB IV & V - TATA TERTIB DIKSAR & KEPEMIMPINAN</h3>
-                        <p><strong>Pasal 8 & 9 (Pendidikan Dasar):</strong> Peserta wajib mengikuti pengarahan, pemeriksaan perlengkapan, dan instruksi keselamatan. Instruktur dilarang melakukan kekerasan fisik atau perpeloncoan, serta wajib memastikan ketersediaan logistik, komunikasi darurat, dan evakuasi.</p>
-                        <p><strong>Pasal 10 (Pemimpin Kegiatan):</strong> Bertanggung jawab atas perencanaan, pembagian tugas, pengawasan keselamatan, dan keputusan yang mengutamakan keselamatan seluruh peserta.</p>
-                    </div>
-
-                    <div class="space-y-2 border-b border-emerald-900 pb-4">
-                        <h3 class="font-serif font-bold text-base text-amber-400">BAB VI & VII - SANKSI & PENUTUP</h3>
-                        <p><strong>Pasal 11 & 12 (Sanksi & Prosedur):</strong> Pelanggaran ditangani secara adil berupa teguran lisan, tertulis, pembinaan ulang, pembatasan kegiatan, hingga pemberhentian keanggotaan berdasarkan pemeriksaan objektif.</p>
-                        <p><strong>Penutup:</strong> Peraturan ini menjadi pedoman bagi seluruh anggota K.P.A CADAS Parepare demi menjaga kemanusiaan dan kelestarian alam.</p>
+                    <div class="space-y-2 border-b border-purple-950 pb-4">
+                        <h3 class="font-serif font-bold text-base text-purple-400">BAB III - KODE ETIK PECINTA ALAM</h3>
+                        <p><strong>Pasal 5 (Etika terhadap Alam):</strong> Tidak meninggalkan sampah di gunung/hutan/sungai, tidak merusak flora-fauna yang dilindungi, serta mengutamakan prinsip <em>Leave No Trace</em>.</p>
                     </div>
 
                     <div class="pt-2 text-center">
-                        <button onclick="switchTab('home')" class="px-6 py-2.5 bg-amber-500 hover:bg-amber-400 text-black font-extrabold rounded-xl text-xs transition shadow">
+                        <button onclick="switchTab('home')" class="px-6 py-2.5 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl text-xs transition shadow">
                             Kembali ke Beranda
                         </button>
                     </div>
-
                 </div>
-
             </div>
         </section>
 
         <!-- KTA DIGITAL SECTION -->
         <section id="view-kta" class="view-section hidden py-10 sm:py-16">
             <div class="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-                
-                <div class="bg-[#0e241b] text-white rounded-3xl p-6 sm:p-8 border-b-4 border-amber-500 shadow-xl text-center space-y-3">
-                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/30">Identitas Resmi Anggota</span>
+                <div class="bg-[#0c1017] text-white rounded-3xl p-6 sm:p-8 border-b-4 border-purple-500 shadow-xl text-center space-y-3">
+                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-purple-300 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/30">Identitas Resmi Anggota</span>
                     <h2 class="font-serif text-2xl sm:text-3xl font-bold">Kartu Tanda Anggota (KTA) Digital</h2>
-                    <p class="text-xs sm:text-sm text-emerald-200 font-light max-w-md mx-auto">
+                    <p class="text-xs sm:text-sm text-purple-200 font-light max-w-md mx-auto">
                         Masukkan Nomor Induk Anggota (NIA) atau Nama Lengkap yang telah terdaftar di formulir pendaftaran untuk menampilkan kartu digital resmi K.P.A CADAS Parepare.
                     </p>
                 </div>
 
-                <!-- Form Pencarian NIA -->
-                <div class="bg-[#0e241b] rounded-3xl p-6 sm:p-8 border border-emerald-800/50 shadow-2xl space-y-4">
+                <div class="bg-[#0c1017] rounded-3xl p-6 sm:p-8 border border-purple-900/50 shadow-2xl space-y-4">
                     <div class="flex gap-2">
-                        <input type="text" id="kta-search-input" placeholder="Masukkan NIA (Cth: CADAS-2026-...) atau Nama..." class="w-full px-4 py-3 rounded-xl border border-emerald-800 bg-[#07160f] text-white text-xs sm:text-sm outline-none focus:ring-2 focus:ring-amber-500">
-                        <button onclick="searchKTA()" class="px-6 py-3 bg-amber-500 hover:bg-amber-400 text-black font-extrabold rounded-xl text-xs shadow transition flex items-center space-x-1">
+                        <input type="text" id="kta-search-input" placeholder="Masukkan NIA (Cth: CADAS-2026-...) atau Nama..." class="w-full px-4 py-3 rounded-xl border border-purple-900 bg-[#070a0f] text-white text-xs sm:text-sm outline-none focus:ring-2 focus:ring-purple-500">
+                        <button onclick="searchKTA()" class="px-6 py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl text-xs shadow transition flex items-center space-x-1">
                             <i class="fa-solid fa-magnifying-glass"></i>
                             <span>Cari</span>
                         </button>
                     </div>
                 </div>
 
-                <!-- Hasil Kartu KTA Digital -->
                 <div id="kta-result-card" class="hidden space-y-4">
-                    <div id="kta-card-capture" class="bg-gradient-to-br from-emerald-950 via-[#081c15] to-black rounded-3xl p-6 sm:p-8 border-2 border-amber-500 shadow-2xl relative overflow-hidden space-y-6">
-                        <div class="absolute top-0 right-0 transform translate-x-6 -translate-y-6 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none"></div>
+                    <div id="kta-card-capture" class="bg-gradient-to-br from-purple-950 via-[#0c1017] to-black rounded-3xl p-6 sm:p-8 border-2 border-purple-500 shadow-2xl relative overflow-hidden space-y-6">
+                        <div class="absolute top-0 right-0 transform translate-x-6 -translate-y-6 w-32 h-32 bg-purple-500/10 rounded-full blur-2xl pointer-events-none"></div>
 
-                        <div class="flex items-center space-x-4 border-b border-emerald-800/80 pb-4">
-                            <img src="KPA CADAS.jpg" alt="Logo CADAS" class="w-14 h-14 object-contain rounded-2xl bg-black border-2 border-amber-500 p-1 shadow-md">
+                        <div class="flex items-center space-x-4 border-b border-purple-900/80 pb-4">
+                            <img src="KPA CADAS.jpg" alt="Logo CADAS" class="w-14 h-14 object-contain rounded-2xl bg-black border-2 border-purple-500 p-1 shadow-md">
                             <div>
-                                <h3 class="font-serif font-black text-sm sm:text-base text-amber-400">K.P.A CADAS PAREPARE</h3>
-                                <p class="text-[9px] font-bold text-emerald-300 uppercase tracking-widest">Cinta Alam Dan Semesta</p>
-                                <span class="inline-block mt-1 text-[9px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded border border-amber-500/40 font-mono">KTA RESMI ANGGOTA</span>
+                                <h3 class="font-serif font-black text-sm sm:text-base text-purple-400">K.P.A CADAS PAREPARE</h3>
+                                <p class="text-[9px] font-bold text-purple-300 uppercase tracking-widest">Cinta Alam Dan Semesta</p>
+                                <span class="inline-block mt-1 text-[9px] bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded border border-purple-500/40 font-mono">KTA RESMI ANGGOTA</span>
                             </div>
                         </div>
 
                         <div class="flex flex-col sm:flex-row items-center gap-6">
-                            <div class="w-28 h-36 bg-black rounded-2xl border-2 border-amber-500 overflow-hidden shadow-inner flex items-center justify-center relative flex-shrink-0">
+                            <div class="w-28 h-36 bg-black rounded-2xl border-2 border-purple-500 overflow-hidden shadow-inner flex items-center justify-center relative flex-shrink-0">
                                 <img id="kta-foto" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" alt="Foto Anggota" class="w-full h-full object-cover">
                             </div>
                             <div class="space-y-2 text-xs text-slate-200 w-full">
                                 <div>
                                     <span class="text-[10px] text-slate-400 uppercase tracking-wider block">Nomor Induk Anggota (NIA) / ID</span>
-                                    <span id="kta-nia" class="font-mono font-black text-amber-400 text-sm tracking-wider">-</span>
+                                    <span id="kta-nia" class="font-mono font-black text-purple-400 text-sm tracking-wider">-</span>
                                 </div>
                                 <div>
                                     <span class="text-[10px] text-slate-400 uppercase tracking-wider block">Nama Lengkap & Panggilan</span>
                                     <span id="kta-nama" class="font-bold text-white text-sm">-</span>
                                 </div>
-                                <div class="grid grid-cols-2 gap-2 pt-1 border-t border-emerald-900">
+                                <div class="grid grid-cols-2 gap-2 pt-1 border-t border-purple-950">
                                     <div>
                                         <span class="text-[9px] text-slate-400 block">Status Pendaftar</span>
-                                        <span id="kta-status" class="font-semibold text-emerald-300">Calon Anggota</span>
+                                        <span id="kta-status" class="font-semibold text-purple-300">Calon Anggota</span>
                                     </div>
                                     <div>
                                         <span class="text-[9px] text-slate-400 block">Riwayat Medis</span>
@@ -629,45 +818,42 @@
                             </div>
                         </div>
 
-                        <div class="pt-2 border-t border-emerald-900 flex justify-between items-center text-[10px] text-slate-400">
+                        <div class="pt-2 border-t border-purple-950 flex justify-between items-center text-[10px] text-slate-400">
                             <span id="kta-tanggal">Terdaftar: -</span>
-                            <span class="text-amber-400 font-bold">SALAM LESTARI</span>
+                            <span class="text-purple-400 font-bold">SALAM LESTARI</span>
                         </div>
                     </div>
 
-                    <!-- Tombol Unduh KTA Digital -->
-                    <button onclick="downloadKTACard()" class="w-full py-3.5 bg-amber-500 hover:bg-amber-400 text-black font-extrabold rounded-2xl shadow-xl transition flex items-center justify-center space-x-2 text-sm">
+                    <button onclick="downloadKTACard()" class="w-full py-3.5 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-2xl shadow-xl transition flex items-center justify-center space-x-2 text-sm">
                         <i class="fa-solid fa-download text-base"></i>
                         <span>Unduh KTA Digital (.PNG)</span>
                     </button>
                 </div>
-
             </div>
         </section>
 
-        <!-- Success Section -->
+        <!-- SUCCESS SECTION -->
         <section id="view-success" class="view-section hidden py-12 sm:py-16">
             <div class="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-                
-                <div id="printable-card" class="bg-white text-slate-800 rounded-3xl shadow-2xl border-2 border-amber-500 p-6 sm:p-8 space-y-6 text-left relative overflow-hidden">
-                    <div class="flex items-center space-x-4 border-b-2 border-emerald-900 pb-4">
-                        <img src="KPA CADAS.jpg" alt="Logo KPA CADAS" class="w-16 h-16 object-contain rounded-xl bg-black border border-amber-500 p-1 shadow-md" onerror="this.src='https://via.placeholder.com/150/000000/f97316?text=CADAS'">
+                <div id="printable-card" class="bg-white text-slate-800 rounded-3xl shadow-2xl border-2 border-purple-500 p-6 sm:p-8 space-y-6 text-left relative overflow-hidden">
+                    <div class="flex items-center space-x-4 border-b-2 border-purple-950 pb-4">
+                        <img src="KPA CADAS.jpg" alt="Logo KPA CADAS" class="w-16 h-16 object-contain rounded-xl bg-black border border-purple-500 p-1 shadow-md">
                         <div>
-                            <h3 class="font-serif font-black text-base sm:text-lg text-emerald-950 leading-tight">K.P.A CADAS PAREPARE</h3>
-                            <p class="text-[10px] font-bold text-amber-600 uppercase tracking-wider">Cinta Alam Dan Semesta - Sulawesi Selatan</p>
+                            <h3 class="font-serif font-black text-base sm:text-lg text-slate-900 leading-tight">K.P.A CADAS PAREPARE</h3>
+                            <p class="text-[10px] font-bold text-purple-600 uppercase tracking-wider">Cinta Alam Dan Semesta - Sulawesi Selatan</p>
                             <p class="text-[10px] text-slate-500 font-semibold mt-0.5">Bukti Tanda Pendaftaran</p>
                         </div>
                     </div>
 
-                    <div class="bg-[#07160f] text-white p-4 rounded-2xl text-center border-2 border-amber-500">
-                        <span class="text-[10px] uppercase font-bold tracking-widest text-amber-400">Nomor Registrasi Pendaftaran</span>
-                        <div id="success-reg-id" class="text-2xl sm:text-3xl font-mono font-black text-amber-400 tracking-widest mt-1">CADAS-2026-0001</div>
+                    <div class="bg-[#070a0f] text-white p-4 rounded-2xl text-center border-2 border-purple-500">
+                        <span class="text-[10px] uppercase font-bold tracking-widest text-purple-400">Nomor Registrasi Pendaftaran</span>
+                        <div id="success-reg-id" class="text-2xl sm:text-3xl font-mono font-black text-purple-400 tracking-widest mt-1">CADAS-2026-0001</div>
                     </div>
 
                     <div class="space-y-2 text-xs text-slate-700 bg-slate-50 p-4 rounded-xl border border-slate-200">
                         <div class="flex justify-between border-b border-slate-200 pb-1">
                             <span class="text-slate-500">Nama Lengkap:</span>
-                            <span id="card-nama" class="font-bold text-emerald-950"></span>
+                            <span id="card-nama" class="font-bold text-slate-950"></span>
                         </div>
                         <div class="flex justify-between border-b border-slate-200 pb-1">
                             <span class="text-slate-500">Nama Panggilan:</span>
@@ -704,7 +890,7 @@
                     </button>
 
                     <div class="flex gap-3">
-                        <button onclick="window.print()" class="w-1/2 py-3 bg-amber-500 hover:bg-amber-600 text-black font-bold rounded-2xl shadow transition flex items-center justify-center space-x-2 text-xs">
+                        <button onclick="window.print()" class="w-1/2 py-3 bg-purple-600 hover:bg-purple-500 text-white font-bold rounded-2xl shadow transition flex items-center justify-center space-x-2 text-xs">
                             <i class="fa-solid fa-print"></i>
                             <span>Cetak Bukti</span>
                         </button>
@@ -714,27 +900,27 @@
                         </button>
                     </div>
                 </div>
-
             </div>
         </section>
 
     </main>
 
-    <!-- MODAL: UPLOAD FOTO KE GALERI -->
+    <!-- MODALS -->
+    <!-- UPLOAD FOTO MODAL -->
     <div id="upload-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-[#0e241b] text-white rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl border-2 border-amber-500">
-            <div class="flex items-center justify-between border-b border-emerald-800 pb-3">
-                <h3 class="font-serif font-bold text-base text-amber-400"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>Unggah Foto Dokumentasi</h3>
+        <div class="bg-[#0c1017] text-white rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl border-2 border-purple-500">
+            <div class="flex items-center justify-between border-b border-purple-900 pb-3">
+                <h3 class="font-serif font-bold text-base text-purple-400"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>Unggah Foto Dokumentasi</h3>
                 <button onclick="closeUploadPhotoModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <form onsubmit="handlePhotoUpload(event)" class="space-y-3">
                 <div>
                     <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Judul Foto <span class="text-red-400">*</span></label>
-                    <input type="text" id="upload-title" required placeholder="Contoh: Latihan Navigasi Darat" class="w-full px-3 py-2 rounded-xl border border-emerald-800 bg-[#07160f] text-white text-xs outline-none">
+                    <input type="text" id="upload-title" required placeholder="Contoh: Latihan Navigasi Darat" class="w-full px-3 py-2 rounded-xl border border-purple-900 bg-[#070a0f] text-white text-xs outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Kategori <span class="text-red-400">*</span></label>
-                    <select id="upload-category" required class="w-full px-3 py-2 rounded-xl border border-emerald-800 bg-[#07160f] text-white text-xs outline-none">
+                    <select id="upload-category" required class="w-full px-3 py-2 rounded-xl border border-purple-900 bg-[#070a0f] text-white text-xs outline-none">
                         <option value="Diksar">Diksar</option>
                         <option value="Navigasi">Navigasi Darat</option>
                         <option value="Survival">Survival</option>
@@ -743,57 +929,57 @@
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Pilih File Foto <span class="text-red-400">*</span></label>
-                    <input type="file" id="upload-file" accept="image/*" required class="w-full text-xs text-slate-300 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-black hover:file:bg-amber-400 cursor-pointer">
+                    <input type="file" id="upload-file" accept="image/*" required class="w-full text-xs text-slate-300 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-purple-600 file:text-white hover:file:bg-purple-500 cursor-pointer">
                 </div>
                 <div class="pt-3 flex justify-end space-x-2">
-                    <button type="button" onclick="closeUploadPhotoModal()" class="px-4 py-2 text-xs font-bold text-slate-300 bg-emerald-950 rounded-xl">Batal</button>
-                    <button type="submit" class="px-5 py-2 text-xs font-bold text-black bg-amber-500 hover:bg-amber-400 rounded-xl shadow">Simpan Foto</button>
+                    <button type="button" onclick="closeUploadPhotoModal()" class="px-4 py-2 text-xs font-bold text-slate-300 bg-purple-950 rounded-xl">Batal</button>
+                    <button type="submit" class="px-5 py-2 text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 rounded-xl shadow">Simpan Foto</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- MODAL: TAMBAH VIDEO YOUTUBE -->
+    <!-- UPLOAD VIDEO MODAL -->
     <div id="upload-video-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-[#0e241b] text-white rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl border-2 border-amber-500">
-            <div class="flex items-center justify-between border-b border-emerald-800 pb-3">
-                <h3 class="font-serif font-bold text-base text-amber-400"><i class="fa-solid fa-video mr-2"></i>Tambah Video YouTube</h3>
+        <div class="bg-[#0c1017] text-white rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl border-2 border-purple-500">
+            <div class="flex items-center justify-between border-b border-purple-900 pb-3">
+                <h3 class="font-serif font-bold text-base text-purple-400"><i class="fa-solid fa-video mr-2"></i>Tambah Video YouTube</h3>
                 <button onclick="closeUploadVideoModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <form onsubmit="handleVideoUpload(event)" class="space-y-3">
                 <div>
                     <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Judul Video <span class="text-red-400">*</span></label>
-                    <input type="text" id="video-title" required placeholder="Contoh: Dokumentasi Kegiatan Lapangan" class="w-full px-3 py-2 rounded-xl border border-emerald-800 bg-[#07160f] text-white text-xs outline-none">
+                    <input type="text" id="video-title" required placeholder="Contoh: Dokumentasi Kegiatan Lapangan" class="w-full px-3 py-2 rounded-xl border border-purple-900 bg-[#070a0f] text-white text-xs outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Link YouTube <span class="text-red-400">*</span></label>
-                    <input type="text" id="video-url" required placeholder="Contoh: https://www.youtube.com/watch?v=xxxx" class="w-full px-3 py-2 rounded-xl border border-emerald-800 bg-[#07160f] text-white text-xs outline-none">
+                    <input type="text" id="video-url" required placeholder="Contoh: https://www.youtube.com/watch?v=xxxx" class="w-full px-3 py-2 rounded-xl border border-purple-900 bg-[#070a0f] text-white text-xs outline-none">
                 </div>
                 <div class="pt-3 flex justify-end space-x-2">
-                    <button type="button" onclick="closeUploadVideoModal()" class="px-4 py-2 text-xs font-bold text-slate-300 bg-emerald-950 rounded-xl">Batal</button>
-                    <button type="submit" class="px-5 py-2 text-xs font-bold text-black bg-amber-500 hover:bg-amber-400 rounded-xl shadow">Simpan Video</button>
+                    <button type="button" onclick="closeUploadVideoModal()" class="px-4 py-2 text-xs font-bold text-slate-300 bg-purple-950 rounded-xl">Batal</button>
+                    <button type="submit" class="px-5 py-2 text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 rounded-xl shadow">Simpan Video</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- MODAL PRATINJAU FOTO BESAR -->
+    <!-- PREVIEW PHOTO MODAL -->
     <div id="preview-photo-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4">
         <div class="relative max-w-4xl w-full text-center space-y-3">
-            <button onclick="closePreviewPhotoModal()" class="absolute -top-12 right-0 text-white hover:text-amber-400 text-xl font-bold px-3 py-1 bg-black/60 rounded-full border border-amber-500">
+            <button onclick="closePreviewPhotoModal()" class="absolute -top-12 right-0 text-white hover:text-purple-400 text-xl font-bold px-3 py-1 bg-black/60 rounded-full border border-purple-500">
                 <i class="fa-solid fa-xmark mr-1"></i> Tutup
             </button>
-            <div class="max-h-[70vh] flex items-center justify-center overflow-hidden rounded-2xl border-2 border-amber-500 bg-black shadow-2xl relative">
+            <div class="max-h-[70vh] flex items-center justify-center overflow-hidden rounded-2xl border-2 border-purple-500 bg-black shadow-2xl relative">
                 <img id="preview-modal-img" src="" alt="Pratinjau Foto" class="max-h-[70vh] w-auto object-contain">
             </div>
             
-            <div class="flex flex-col sm:flex-row items-center justify-between text-left bg-[#0e241b] p-4 rounded-2xl border border-emerald-800 shadow-lg gap-3">
+            <div class="flex flex-col sm:flex-row items-center justify-between text-left bg-[#0c1017] p-4 rounded-2xl border border-purple-900 shadow-lg gap-3">
                 <div>
-                    <span id="preview-modal-category" class="text-[10px] font-extrabold uppercase tracking-wider text-amber-400 bg-amber-500/10 px-2.5 py-0.5 rounded-full"></span>
+                    <span id="preview-modal-category" class="text-[10px] font-extrabold uppercase tracking-wider text-purple-300 bg-purple-500/10 px-2.5 py-0.5 rounded-full"></span>
                     <h3 id="preview-modal-title" class="font-bold text-white text-base mt-1"></h3>
                     <p id="preview-modal-date" class="text-xs text-slate-400"></p>
                 </div>
-                <button onclick="downloadCurrentPreviewPhoto()" class="w-full sm:w-auto px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-black font-extrabold rounded-xl text-xs flex items-center justify-center space-x-2 shadow-lg transition">
+                <button onclick="downloadCurrentPreviewPhoto()" class="w-full sm:w-auto px-5 py-2.5 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl text-xs flex items-center justify-center space-x-2 shadow-lg transition">
                     <i class="fa-solid fa-download"></i>
                     <span>Unduh Foto Ini</span>
                 </button>
@@ -801,36 +987,36 @@
         </div>
     </div>
 
-    <!-- MODAL LOGO -->
+    <!-- LOGO MODAL -->
     <div id="logo-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
-        <div class="bg-[#0e241b] text-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 text-center space-y-5 shadow-2xl border-2 border-amber-500 relative">
+        <div class="bg-[#0c1017] text-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 text-center space-y-5 shadow-2xl border-2 border-purple-500 relative">
             <button onclick="closeLogoModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl font-bold bg-black/40 w-8 h-8 rounded-full flex items-center justify-center">
                 <i class="fa-solid fa-xmark"></i>
             </button>
             
             <div class="space-y-1">
-                <span class="text-[10px] font-extrabold uppercase tracking-widest text-black bg-amber-500 px-3 py-1 rounded-full">Identitas Resmi</span>
-                <h3 class="font-serif font-black text-2xl text-amber-400 pt-2">Logo K.P.A CADAS Parepare</h3>
+                <span class="text-[10px] font-extrabold uppercase tracking-widest text-white bg-purple-600 px-3 py-1 rounded-full">Identitas Resmi</span>
+                <h3 class="font-serif font-black text-2xl text-purple-400 pt-2">Logo K.P.A CADAS Parepare</h3>
             </div>
 
-            <div class="w-56 h-56 mx-auto bg-black rounded-full border-4 border-amber-500 p-2 shadow-2xl relative flex items-center justify-center">
-                <img id="logo-img-src" src="KPA CADAS.jpg" alt="Logo KPA CADAS" class="w-full h-full object-contain rounded-full" onerror="this.src='https://via.placeholder.com/300/000000/f97316?text=KPA+CADAS'">
+            <div class="w-56 h-56 mx-auto bg-black rounded-full border-4 border-purple-500 p-2 shadow-2xl relative flex items-center justify-center">
+                <img id="logo-img-src" src="KPA CADAS.jpg" alt="Logo KPA CADAS" class="w-full h-full object-contain rounded-full" onerror="this.src='https://via.placeholder.com/300/000000/a855f7?text=KPA+CADAS'">
             </div>
 
             <div class="pt-1">
-                <button onclick="downloadLogoDirect()" class="w-full py-3.5 bg-amber-500 hover:bg-amber-400 text-black font-extrabold rounded-2xl shadow-lg transition flex items-center justify-center space-x-2 text-sm">
+                <button onclick="downloadLogoDirect()" class="w-full py-3.5 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-2xl shadow-lg transition flex items-center justify-center space-x-2 text-sm">
                     <i class="fa-solid fa-download text-base"></i>
                     <span>Unduh Logo K.P.A CADAS (.jpg)</span>
                 </button>
             </div>
 
-            <button onclick="closeLogoModal()" class="w-full py-2.5 text-xs font-bold text-slate-300 bg-emerald-900/40 hover:bg-emerald-800/50 rounded-xl">Tutup Modal</button>
+            <button onclick="closeLogoModal()" class="w-full py-2.5 text-xs font-bold text-slate-300 bg-purple-950/40 hover:bg-purple-900/50 rounded-xl">Tutup Modal</button>
         </div>
     </div>
 
-    <!-- MODAL SEWA ALAT OUTDOOR CAMPING -->
+    <!-- SEWA ALAT MODAL -->
     <div id="rental-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-2 sm:p-4">
-        <div class="bg-[#081c15] text-white rounded-3xl max-w-4xl w-full max-h-[92vh] overflow-y-auto p-3 sm:p-5 space-y-4 shadow-2xl border-2 border-amber-500 relative">
+        <div class="bg-[#0c1017] text-white rounded-3xl max-w-4xl w-full max-h-[92vh] overflow-y-auto p-3 sm:p-5 space-y-4 shadow-2xl border-2 border-amber-500 relative">
             <button onclick="closeRentalModal()" class="absolute top-3 right-3 text-slate-400 hover:text-white text-xl font-bold z-30 bg-black/70 w-9 h-9 rounded-full flex items-center justify-center">
                 <i class="fa-solid fa-xmark"></i>
             </button>
@@ -947,7 +1133,7 @@
         </div>
     </div>
 
-    <!-- MODAL SERVICE OB SMARTPHONE -->
+    <!-- SERVICE MODAL -->
     <div id="service-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-2 sm:p-4">
         <div class="bg-[#050b14] text-white rounded-3xl max-w-5xl w-full max-h-[95vh] overflow-y-auto p-3 sm:p-5 space-y-4 shadow-2xl border-2 border-cyan-500 relative">
             <button onclick="closeServiceModal()" class="absolute top-3 right-3 text-cyan-400 hover:text-white text-xl font-bold z-30 bg-black/80 w-9 h-9 rounded-full flex items-center justify-center border border-cyan-500">
@@ -977,7 +1163,6 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <!-- Jual Beli -->
                         <div class="bg-black/80 border-2 border-cyan-500 rounded-2xl p-4 space-y-3">
                             <div class="flex items-center space-x-2 text-cyan-400 border-b border-cyan-800 pb-2">
                                 <i class="fa-solid fa-cart-shopping text-xl"></i>
@@ -990,7 +1175,6 @@
                             </ul>
                         </div>
 
-                        <!-- Layanan Service -->
                         <div class="bg-black/80 border-2 border-cyan-500 rounded-2xl p-4 space-y-2">
                             <div class="flex items-center space-x-2 text-cyan-400 border-b border-cyan-800 pb-2">
                                 <i class="fa-solid fa-screwdriver-wrench text-xl"></i>
@@ -1003,7 +1187,6 @@
                             </div>
                         </div>
 
-                        <!-- Perangkat Lainnya -->
                         <div class="bg-black/80 border-2 border-cyan-500 rounded-2xl p-4 space-y-2">
                             <div class="flex items-center space-x-2 text-cyan-400 border-b border-cyan-800 pb-2">
                                 <i class="fa-solid fa-laptop text-xl"></i>
@@ -1018,7 +1201,6 @@
                         </div>
                     </div>
 
-                    <!-- Brand Logos Footer -->
                     <div class="bg-black/80 border border-cyan-500/50 p-2.5 rounded-xl flex flex-wrap items-center justify-center gap-4 text-xs font-black tracking-widest text-cyan-300 uppercase">
                         <span class="text-white">APPLE</span> • 
                         <span class="text-white">SAMSUNG</span> • 
@@ -1054,62 +1236,59 @@
         </div>
     </div>
 
-    <!-- Modal Info Program -->
-    <div id="program-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-[#0e241b] text-white rounded-3xl max-w-md w-full p-6 text-center space-y-4 shadow-2xl border-2 border-amber-500 relative">
-            <button onclick="closeProgramModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg font-bold"><i class="fa-solid fa-xmark"></i></button>
-            <div class="w-14 h-14 bg-amber-500 text-black rounded-2xl flex items-center justify-center mx-auto text-2xl shadow-md"><i class="fa-solid fa-circle-info"></i></div>
-            <div>
-                <h3 id="program-modal-title" class="font-serif font-bold text-xl text-amber-400"></h3>
-                <p id="program-modal-desc" class="text-xs text-slate-300 mt-2 leading-relaxed whitespace-pre-line"></p>
-            </div>
-            <button onclick="closeProgramModal()" class="w-full py-2.5 text-xs font-bold text-black bg-amber-500 hover:bg-amber-600 rounded-xl shadow">Tutup</button>
-        </div>
-    </div>
-
     <!-- ADMIN MODAL -->
     <div id="admin-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div id="admin-pin-box" class="bg-[#0e241b] text-white rounded-3xl max-w-sm w-full p-6 text-center space-y-4 shadow-2xl border-2 border-amber-500">
-            <div class="w-14 h-14 bg-amber-500 text-black rounded-2xl flex items-center justify-center mx-auto text-2xl shadow-md"><i class="fa-solid fa-lock"></i></div>
+        <div id="admin-pin-box" class="bg-[#0c1017] text-white rounded-3xl max-w-sm w-full p-6 text-center space-y-4 shadow-2xl border-2 border-purple-500">
+            <div class="w-14 h-14 bg-purple-600 text-white rounded-2xl flex items-center justify-center mx-auto text-2xl shadow-md"><i class="fa-solid fa-lock"></i></div>
             <div>
-                <h3 class="font-serif font-bold text-lg text-amber-400">Panel Admin K.P.A CADAS</h3>
+                <h3 class="font-serif font-bold text-lg text-purple-400">Panel Admin K.P.A CADAS</h3>
                 <p class="text-xs text-slate-400 mt-1">Masukkan Kata Kunci Keamanan untuk mengakses data pendaftar.</p>
             </div>
             <div>
-                <input type="text" id="admin-pin-input" placeholder="Kata Kunci Admin (SALAM LESTARI)" class="w-full text-center tracking-wider text-base font-bold px-4 py-3 rounded-xl border border-emerald-800 bg-[#07160f] text-white focus:outline-none focus:ring-2 focus:ring-amber-500">
+                <input type="text" id="admin-pin-input" placeholder="Kata Kunci Admin (SALAM LESTARI)" class="w-full text-center tracking-wider text-base font-bold px-4 py-3 rounded-xl border border-purple-900 bg-[#070a0f] text-white focus:outline-none focus:ring-2 focus:ring-purple-500">
             </div>
             <div class="flex space-x-2">
-                <button onclick="closeAdminModal()" class="w-1/2 py-2.5 text-xs font-bold text-slate-400 bg-emerald-900/40 rounded-xl">Batal</button>
-                <button onclick="verifyAdminPIN()" class="w-1/2 py-2.5 text-xs font-bold text-black bg-amber-500 hover:bg-amber-600 rounded-xl shadow">Masuk</button>
+                <button onclick="closeAdminModal()" class="w-1/2 py-2.5 text-xs font-bold text-slate-400 bg-purple-950/40 rounded-xl">Batal</button>
+                <button onclick="verifyAdminPIN()" class="w-1/2 py-2.5 text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 rounded-xl shadow">Masuk</button>
             </div>
         </div>
 
-        <div id="admin-dashboard-box" class="bg-[#0e241b] rounded-3xl max-w-5xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden hidden border-2 border-amber-500">
-            <div class="bg-[#07160f] text-white p-5 flex items-center justify-between border-b-2 border-amber-500">
+        <div id="admin-dashboard-box" class="bg-[#0c1017] rounded-3xl max-w-5xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden hidden border-2 border-purple-500">
+            <div class="bg-[#070a0f] text-white p-5 flex items-center justify-between border-b-2 border-purple-500">
                 <div class="flex items-center space-x-3">
-                    <img src="KPA CADAS.jpg" alt="Logo CADAS" class="w-10 h-10 object-contain rounded-xl bg-black border border-amber-500 p-1" onerror="this.src='https://via.placeholder.com/150/000000/f97316?text=CADAS'">
+                    <img src="KPA CADAS.jpg" alt="Logo CADAS" class="w-10 h-10 object-contain rounded-xl bg-black border border-purple-500 p-1">
                     <div>
-                        <h3 class="font-serif font-bold text-base text-amber-400">Dashboard Admin K.P.A CADAS</h3>
-                        <p class="text-[10px] text-emerald-300">Kelola dan lihat data calon anggota terdaftar</p>
+                        <h3 class="font-serif font-bold text-base text-purple-400">Dashboard Admin K.P.A CADAS</h3>
+                        <p class="text-[10px] text-purple-300">Kelola dan lihat data calon anggota terdaftar</p>
                     </div>
                 </div>
-                <button onclick="closeAdminModal()" class="text-white hover:text-amber-500 text-xl font-bold"><i class="fa-solid fa-xmark"></i></button>
+                <button onclick="closeAdminModal()" class="text-white hover:text-purple-400 text-xl font-bold"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div class="p-6 overflow-y-auto space-y-4 flex-grow bg-[#0b1a13]">
+            <div class="p-6 overflow-y-auto space-y-4 flex-grow bg-[#05070a]">
                 <div class="flex justify-between items-center">
                     <p class="text-xs font-bold text-slate-300">Daftar Pendaftar Masuk</p>
-                    <button onclick="exportData()" class="px-3 py-1.5 bg-emerald-600 text-white rounded-lg text-xs font-bold shadow hover:bg-emerald-700">Export CSV</button>
+                    <button onclick="exportData()" class="px-3 py-1.5 bg-purple-600 text-white rounded-lg text-xs font-bold shadow hover:bg-purple-500">Export CSV</button>
                 </div>
                 <div id="admin-data-container" class="space-y-3"></div>
             </div>
         </div>
     </div>
 
-    <!-- Scripts Javascript -->
+    <!-- JAVASCRIPT & FIREBASE -->
     <script>
+        // HIDE LOADING SCREEN WHEN PAGE LOADED
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const loader = document.getElementById('loading-screen');
+                if (loader) {
+                    loader.style.opacity = '0';
+                    loader.style.visibility = 'hidden';
+                }
+            }, 1600); // 1.6 detik animasi splash screen
+        });
+
         const NOMOR_WA_ADMIN = "082343551039";
         let currentFormData = {};
-
         let galleryPhotos = [];
         let galleryVideos = [];
 
@@ -1145,8 +1324,8 @@
 
             if (galleryPhotos.length === 0) {
                 grid.innerHTML = `
-                    <div class="col-span-full text-center py-12 text-slate-400 text-xs border border-dashed border-emerald-800 rounded-2xl bg-[#07160f]/50">
-                        <i class="fa-solid fa-images text-4xl mb-2 text-emerald-600 block"></i>
+                    <div class="col-span-full text-center py-12 text-slate-400 text-xs border border-dashed border-purple-900 rounded-2xl bg-[#070a0f]/50">
+                        <i class="fa-solid fa-images text-4xl mb-2 text-purple-500 block"></i>
                         Belum ada foto dokumentasi yang diunggah.
                     </div>
                 `;
@@ -1154,20 +1333,20 @@
             }
 
             grid.innerHTML = galleryPhotos.map((photo, index) => `
-                <div class="bg-[#0e241b] rounded-2xl overflow-hidden shadow-md border border-emerald-800/50 group relative hover:border-amber-500 transition-all duration-300">
+                <div class="bg-[#0c1017] rounded-2xl overflow-hidden shadow-md border border-purple-900/50 group relative hover:border-purple-500 transition-all duration-300">
                     <button onclick="deletePhoto('${photo.firebaseId || index}'); event.stopPropagation();" class="absolute top-2 right-2 z-20 w-8 h-8 bg-red-600/90 hover:bg-red-600 text-white rounded-full flex items-center justify-center shadow-lg transition" title="Hapus Foto">
                         <i class="fa-solid fa-trash-can text-xs"></i>
                     </button>
 
                     <div onclick="openPreviewPhotoModal(${index})" class="relative overflow-hidden h-48 bg-black flex items-center justify-center cursor-pointer">
                         <img src="${photo.url}" alt="${photo.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-amber-400 font-bold text-xs gap-2">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-purple-400 font-bold text-xs gap-2">
                             <i class="fa-solid fa-magnifying-glass-plus text-base"></i>
                             <span>Klik untuk memperbesar</span>
                         </div>
                     </div>
                     <div class="p-4" onclick="openPreviewPhotoModal(${index})" style="cursor: pointer;">
-                        <span class="text-[10px] font-extrabold uppercase tracking-wider text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full">${photo.category}</span>
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider text-purple-300 bg-purple-500/10 px-2 py-0.5 rounded-full">${photo.category}</span>
                         <h4 class="font-bold text-white text-sm mt-2 line-clamp-1">${photo.title}</h4>
                         <p class="text-[10px] text-slate-400 mt-1">${photo.date}</p>
                     </div>
@@ -1187,8 +1366,8 @@
 
             if (galleryVideos.length === 0) {
                 grid.innerHTML = `
-                    <div class="col-span-full text-center py-12 text-slate-400 text-xs border border-dashed border-emerald-800 rounded-2xl bg-[#07160f]/50">
-                        <i class="fa-solid fa-video text-4xl mb-2 text-emerald-600 block"></i>
+                    <div class="col-span-full text-center py-12 text-slate-400 text-xs border border-dashed border-purple-900 rounded-2xl bg-[#070a0f]/50">
+                        <i class="fa-solid fa-video text-4xl mb-2 text-purple-500 block"></i>
                         Belum ada video YouTube yang ditambahkan.
                     </div>
                 `;
@@ -1200,7 +1379,7 @@
                 const youtubeWatchUrl = `https://www.youtube.com/watch?v=${video.videoId}`;
 
                 return `
-                    <div class="bg-[#0e241b] rounded-2xl overflow-hidden shadow-md border border-emerald-800/50 group relative hover:border-amber-500 transition-all duration-300">
+                    <div class="bg-[#0c1017] rounded-2xl overflow-hidden shadow-md border border-purple-900/50 group relative hover:border-purple-500 transition-all duration-300">
                         <button onclick="deleteVideo('${video.firebaseId || index}')" class="absolute top-2 right-2 z-20 w-8 h-8 bg-red-600/90 hover:bg-red-600 text-white rounded-full flex items-center justify-center shadow-lg transition" title="Hapus Video">
                             <i class="fa-solid fa-trash-can text-xs"></i>
                         </button>
@@ -1209,7 +1388,7 @@
                             <img src="${thumbnailUrl}" alt="${video.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 opacity-90 group-hover:opacity-100" onerror="this.src='https://via.placeholder.com/480x360/000000/ffffff?text=Video+YouTube'">
                             
                             <div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/10 transition-all">
-                                <div class="w-14 h-14 bg-red-600 group-hover:bg-red-500 text-white rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
+                                <div class="w-14 h-14 bg-purple-600 group-hover:bg-purple-500 text-white rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
                                     <i class="fa-solid fa-play text-xl ml-1"></i>
                                 </div>
                             </div>
@@ -1253,12 +1432,10 @@
         function openPreviewPhotoModal(index) {
             const photo = galleryPhotos[index];
             if (!photo) return;
-
             document.getElementById('preview-modal-img').src = photo.url;
             document.getElementById('preview-modal-title').innerText = photo.title;
             document.getElementById('preview-modal-category').innerText = photo.category;
             document.getElementById('preview-modal-date').innerText = photo.date;
-
             document.getElementById('preview-photo-modal').classList.remove('hidden');
         }
 
@@ -1271,7 +1448,6 @@
             const imgElement = document.getElementById('preview-modal-img');
             const titleElement = document.getElementById('preview-modal-title');
             if (!imgElement.src) return;
-
             const link = document.createElement('a');
             link.href = imgElement.src;
             link.download = (titleElement.innerText || 'Dokumentasi_KPA_CADAS') + '.jpg';
@@ -1280,30 +1456,16 @@
             document.body.removeChild(link);
         }
 
-        function openUploadPhotoModal() { 
-            const modal = document.getElementById('upload-modal');
-            if (modal) modal.classList.remove('hidden'); 
-        }
-        function closeUploadPhotoModal() { 
-            const modal = document.getElementById('upload-modal');
-            if (modal) modal.classList.add('hidden'); 
-        }
-
-        function openUploadVideoModal() { 
-            const modal = document.getElementById('upload-video-modal');
-            if (modal) modal.classList.remove('hidden'); 
-        }
-        function closeUploadVideoModal() { 
-            const modal = document.getElementById('upload-video-modal');
-            if (modal) modal.classList.add('hidden'); 
-        }
+        function openUploadPhotoModal() { document.getElementById('upload-modal').classList.remove('hidden'); }
+        function closeUploadPhotoModal() { document.getElementById('upload-modal').classList.add('hidden'); }
+        function openUploadVideoModal() { document.getElementById('upload-video-modal').classList.remove('hidden'); }
+        function closeUploadVideoModal() { document.getElementById('upload-video-modal').classList.add('hidden'); }
 
         async function handlePhotoUpload(e) {
             e.preventDefault();
             const titleInput = document.getElementById('upload-title');
             const categoryInput = document.getElementById('upload-category');
             const fileInput = document.getElementById('upload-file');
-            
             if (!titleInput || !fileInput) return;
 
             const title = titleInput.value;
@@ -1319,19 +1481,12 @@
                         url: evt.target.result,
                         date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
                     };
-                    
                     closeUploadPhotoModal();
                     titleInput.value = '';
                     fileInput.value = '';
-
                     try {
-                        if (window.db) {
-                            await db.collection("cadas_photos").add(newPhoto);
-                        }
-                    } catch (error) {
-                        console.error("Gagal simpan foto ke Firestore:", error);
-                    }
-                    
+                        if (window.db) { await db.collection("cadas_photos").add(newPhoto); }
+                    } catch (error) { console.error("Gagal simpan foto:", error); }
                     alert('Foto berhasil diunggah ke database online!');
                 };
                 reader.readAsDataURL(fileInput.files[0]);
@@ -1342,15 +1497,12 @@
             e.preventDefault();
             const titleInput = document.getElementById('video-title');
             const urlInput = document.getElementById('video-url');
-            
             if (!titleInput || !urlInput) return;
 
             const title = titleInput.value;
-            const rawUrl = urlInput.value.trim();
-            const videoId = getYouTubeVideoId(rawUrl);
-
+            const videoId = getYouTubeVideoId(urlInput.value.trim());
             if (!videoId) {
-                alert('URL YouTube tidak valid! Harap masukkan link YouTube yang benar.');
+                alert('URL YouTube tidak valid!');
                 return;
             }
 
@@ -1360,40 +1512,26 @@
                 videoId: videoId,
                 date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
             };
-
             closeUploadVideoModal();
             titleInput.value = '';
             urlInput.value = '';
-
             try {
-                if (window.db) {
-                    await db.collection("cadas_videos").add(newVideo);
-                }
-            } catch (error) {
-                console.error("Gagal simpan video ke Firestore:", error);
-            }
-
-            alert('Video YouTube berhasil disimpan ke database online!');
+                if (window.db) { await db.collection("cadas_videos").add(newVideo); }
+            } catch (error) { console.error("Gagal simpan video:", error); }
+            alert('Video YouTube berhasil disimpan!');
         }
 
         async function searchKTA() {
             const query = document.getElementById('kta-search-input').value.trim().toLowerCase();
             const resultCard = document.getElementById('kta-result-card');
-            
             if (!query) {
-                alert('Silakan masukkan NIA atau Nama Anggota terlebih dahulu!');
+                alert('Silakan masukkan NIA atau Nama Anggota!');
                 return;
             }
-
             try {
-                if (!window.db) {
-                    alert('Database belum terhubung.');
-                    return;
-                }
-
+                if (!window.db) { alert('Database belum terhubung.'); return; }
                 const snapshot = await db.collection("cadas_pendaftar").get();
                 let foundData = null;
-
                 snapshot.forEach(doc => {
                     const data = doc.data();
                     if ((data.nama && data.nama.toLowerCase().includes(query)) || 
@@ -1402,36 +1540,26 @@
                         foundData = data;
                     }
                 });
-
                 if (foundData) {
                     document.getElementById('kta-nia').innerText = foundData.regId || 'CADAS-2026';
                     document.getElementById('kta-nama').innerText = `${foundData.nama} (${foundData.panggilan})`;
                     document.getElementById('kta-status').innerText = 'Calon Anggota Aktif';
                     document.getElementById('kta-penyakit').innerText = foundData.penyakit || 'Tidak Ada';
                     document.getElementById('kta-tanggal').innerText = 'Terdaftar: ' + (foundData.tanggal || '-');
-                    
-                    if (foundData.foto) {
-                        document.getElementById('kta-foto').src = foundData.foto;
-                    }
-
+                    if (foundData.foto) { document.getElementById('kta-foto').src = foundData.foto; }
                     resultCard.classList.remove('hidden');
                 } else {
-                    alert('Data anggota/pendaftar dengan kata kunci tersebut tidak ditemukan di database.');
+                    alert('Data pendaftar tidak ditemukan.');
                     resultCard.classList.add('hidden');
                 }
-            } catch (error) {
-                console.error("Error mencari KTA:", error);
-                alert('Gagal mengambil data dari database.');
-            }
+            } catch (error) { console.error("Error KTA:", error); }
         }
 
         function downloadKTACard() {
             const cardArea = document.getElementById('kta-card-capture');
-            const niaText = document.getElementById('kta-nia').innerText;
-
             html2canvas(cardArea, { useCORS: true, scale: 2 }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = `KTA_Digital_${niaText || 'CADAS'}.png`;
+                link.download = `KTA_Digital_CADAS.png`;
                 link.href = canvas.toDataURL('image/png');
                 document.body.appendChild(link);
                 link.click();
@@ -1450,7 +1578,7 @@
             const card = document.getElementById('printable-card');
             html2canvas(card, { useCORS: true, scale: 2 }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = `Bukti_Pendaftaran_${currentFormData.regId || 'CADAS'}.png`;
+                link.download = `Bukti_Pendaftaran.png`;
                 link.href = canvas.toDataURL('image/png');
                 document.body.appendChild(link);
                 link.click();
@@ -1484,12 +1612,40 @@
             const captureArea = document.getElementById('service-poster-capture');
             html2canvas(captureArea, { useCORS: true, scale: 2 }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'Brosur_OB_Smartphone_Service_Parepare.png';
+                link.download = 'Brosur_OB_Smartphone_Service.png';
                 link.href = canvas.toDataURL('image/png');
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
             });
+        }
+
+        function showMap(type) {
+            const container = document.getElementById('map-container');
+            const title = document.getElementById('map-title');
+            const status = document.getElementById('map-status');
+
+            if(type === 'latimojong') {
+                title.innerHTML = `<i class="fa-solid fa-map mr-2"></i> Menampilkan: Peta Jalur Latimojong`;
+                status.innerText = `Google My Maps Mode`;
+                container.innerHTML = `<iframe src="https://www.google.com/maps/d/u/0/embed?mid=1uT9im4r_M1oAwIK0spRM1O9UgPK6BIs&ehbc=2E312F" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>`;
+            } else if(type === 'bawakaraeng') {
+                title.innerHTML = `<i class="fa-solid fa-route mr-2"></i> Menampilkan: Wikiloc Bawakaraeng via Bulubalea`;
+                status.innerText = `Wikiloc Trail Mode`;
+                container.innerHTML = `
+                    <div class="w-full h-full flex flex-col items-center justify-center p-6 text-center space-y-4 bg-[#070a0f]">
+                        <div class="w-16 h-16 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-3xl">
+                            <i class="fa-solid fa-route"></i>
+                        </div>
+                        <h3 class="font-serif font-bold text-lg text-white">Wikiloc: Bawakaraeng via Bulubalea</h3>
+                        <p class="text-xs text-slate-300 max-w-md">
+                            Peta jalur rute pendakian detail Bawakaraeng via Bulubalea siap dipantau langsung di platform resmi Wikiloc.
+                        </p>
+                        <a href="https://www.wikiloc.com/running-trails/bawakaraeng-via-bulubalea-223946458" target="_blank" class="px-6 py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl text-xs shadow-lg transition">
+                            <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> Buka Wikiloc Fullscreen
+                        </a>
+                    </div>`;
+            }
         }
 
         function openLogoModal() { document.getElementById('logo-modal').classList.remove('hidden'); }
@@ -1498,16 +1654,6 @@
         function closeRentalModal() { document.getElementById('rental-modal').classList.add('hidden'); }
         function openServiceModal() { document.getElementById('service-modal').classList.remove('hidden'); }
         function closeServiceModal() { document.getElementById('service-modal').classList.add('hidden'); }
-
-        function openProgramModal(title, desc) {
-            document.getElementById('program-modal-title').innerText = title;
-            document.getElementById('program-modal-desc').innerText = desc;
-            document.getElementById('program-modal').classList.remove('hidden');
-        }
-
-        function closeProgramModal() {
-            document.getElementById('program-modal').classList.add('hidden');
-        }
 
         function switchTab(tabId) {
             document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
@@ -1520,21 +1666,18 @@
         }
 
         function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
+            document.getElementById('mobile-menu').classList.toggle('hidden');
         }
 
         function handleFormSubmit(e) {
             e.preventDefault();
-            
             const fotoInput = document.getElementById('reg-foto');
             let fotoBase64 = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80";
 
             if (fotoInput && fotoInput.files && fotoInput.files[0]) {
                 const reader = new FileReader();
                 reader.onload = async function(evt) {
-                    fotoBase64 = evt.target.result;
-                    processRegistrationData(fotoBase64);
+                    processRegistrationData(evt.target.result);
                 };
                 reader.readAsDataURL(fotoInput.files[0]);
             } else {
@@ -1567,12 +1710,8 @@
             document.getElementById('card-tanggal').innerText = currentFormData.tanggal;
 
             try {
-                if (window.db) {
-                    await db.collection("cadas_pendaftar").add(currentFormData);
-                }
-            } catch (error) {
-                console.error("Gagal menyimpan data pendaftaran ke Firestore:", error);
-            }
+                if (window.db) { await db.collection("cadas_pendaftar").add(currentFormData); }
+            } catch (error) { console.error("Gagal simpan:", error); }
 
             switchTab('success');
             sendToWA();
@@ -1580,7 +1719,6 @@
 
         function sendToWA() {
             if (!currentFormData.nama) return;
-
             const pesanWA = `*FORMULIR PENDAFTARAN K.P.A CADAS PAREPARE*
 --------------------------------------------------
 *No. Registrasi:* ${currentFormData.regId}
@@ -1604,8 +1742,7 @@
 --------------------------------------------------
 *Salam lestari! Saya telah menyelesaikan pendaftaran online K.P.A CADAS.*`;
 
-            const urlWA = `https://wa.me/${NOMOR_WA_ADMIN}?text=${encodeURIComponent(pesanWA)}`;
-            window.open(urlWA, '_blank');
+            window.open(`https://wa.me/${NOMOR_WA_ADMIN}?text=${encodeURIComponent(pesanWA)}`, '_blank');
         }
 
         function openAdminModal() {
@@ -1614,49 +1751,34 @@
             document.getElementById('admin-dashboard-box').classList.add('hidden');
             document.getElementById('admin-pin-input').value = '';
         }
-
-        function closeAdminModal() {
-            document.getElementById('admin-modal').classList.add('hidden');
-        }
+        function closeAdminModal() { document.getElementById('admin-modal').classList.add('hidden'); }
 
         function verifyAdminPIN() {
-            const pin = document.getElementById('admin-pin-input').value.trim();
-            if (pin.toUpperCase() === 'SALAM LESTARI') {
+            if (document.getElementById('admin-pin-input').value.trim().toUpperCase() === 'SALAM LESTARI') {
                 document.getElementById('admin-pin-box').classList.add('hidden');
                 document.getElementById('admin-dashboard-box').classList.remove('hidden');
                 loadAdminData();
-            } else {
-                alert('PIN / Kata Kunci Salah! Gunakan: SALAM LESTARI');
-            }
+            } else { alert('PIN Salah! Gunakan: SALAM LESTARI'); }
         }
 
         async function loadAdminData() {
             const container = document.getElementById('admin-data-container');
-            container.innerHTML = `<p class="text-xs text-slate-400">Memuat data pendaftar dari database...</p>`;
-
+            container.innerHTML = `<p class="text-xs text-slate-400">Memuat data...</p>`;
             try {
                 if (!window.db) return;
                 const snapshot = await db.collection("cadas_pendaftar").get();
                 let html = '';
-                
                 if (snapshot.empty) {
-                    container.innerHTML = `
-                        <div class="text-center py-10 text-slate-400 text-xs border border-dashed border-emerald-800/60 rounded-2xl bg-[#07160f]/50">
-                            <i class="fa-solid fa-inbox text-3xl mb-2 text-emerald-600 block"></i>
-                            <p class="font-semibold text-slate-300">Belum ada data pendaftar terbaru</p>
-                            <p class="text-[11px] text-slate-500 mt-1">Data calon anggota akan muncul di sini setelah mengisi formulir online.</p>
-                        </div>
-                    `;
+                    container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">Belum ada data pendaftar.</p>`;
                     return;
                 }
-
                 snapshot.forEach(doc => {
                     const data = doc.data();
                     html += `
-                        <div class="bg-[#0e241b] p-4 rounded-xl shadow border border-emerald-800 text-xs space-y-2 text-slate-200">
-                            <div class="flex justify-between font-bold text-amber-400">
+                        <div class="bg-[#0c1017] p-4 rounded-xl shadow border border-purple-900 text-xs space-y-2 text-slate-200">
+                            <div class="flex justify-between font-bold text-purple-400">
                                 <span>${data.regId || 'ID'} - ${data.nama} (${data.panggilan})</span>
-                                <span class="text-emerald-400">${data.gender}</span>
+                                <span class="text-purple-300">${data.gender}</span>
                             </div>
                             <p class="text-slate-400">No. WA: ${data.wa} | Domisili: ${data.alamat}</p>
                             <p class="text-slate-300 italic">Motivasi: "${data.motivasi}"</p>
@@ -1664,21 +1786,15 @@
                     `;
                 });
                 container.innerHTML = html;
-            } catch (error) {
-                console.error("Gagal memuat data admin:", error);
-                container.innerHTML = `<p class="text-xs text-red-400">Gagal memuat data dari server.</p>`;
-            }
+            } catch (error) { console.error(error); }
         }
 
-        function exportData() {
-            alert('Fitur export data pendaftar aktif.');
-        }
+        function exportData() { alert('Fitur export data aktif.'); }
     </script>
 
-    <!-- Firebase App & Firestore SDK -->
+    <!-- FIREBASE SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-
     <script>
       const firebaseConfig = {
         apiKey: "AIzaSyCG1B_4WkuwJxxhkzcXzrWLlAb5qdil_dc",
@@ -1689,11 +1805,8 @@
         appId: "1:240677750680:web:08131da297be196b894ded",
         measurementId: "G-PNDLSBYG46"
       };
-
       firebase.initializeApp(firebaseConfig);
-      const db = firebase.firestore();
-      window.db = db;
-      console.log("Firebase KPA CADAS Berhasil Terhubung!");
+      window.db = firebase.firestore();
     </script>
 </body>
 </html>
