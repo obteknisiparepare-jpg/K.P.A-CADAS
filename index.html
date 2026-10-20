@@ -2,8 +2,8 @@
 <html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <!-- ATURAN VIEWPORT DIPAKSA KE UKURAN DESKTOP (1200px) AGAR TAMPILAN HP SAMA PERSIS SEPERTI DI PC -->
-    <meta name="viewport" content="width=1200">
+    <!-- VIEWPORT DIKEMBALIKAN KE DEVICE-WIDTH AGAR HP OTOMATIS MENYESUAIKAN LAYAR -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pendaftaran Diksar, Sewa Alat Outdoor, Service HP & Cuaca Pendakian | Parepare</title>
     <link rel="icon" type="image/jpeg" href="KPA CADAS.jpg">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -149,7 +149,7 @@
         }
     </style>
 </head>
-<body class="bg-[#05070a] text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-purple-600 selection:text-white overflow-x-auto" style="min-width: 1200px;">
+<body class="bg-[#05070a] text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-purple-600 selection:text-white overflow-x-hidden">
 
     <!-- LOADING SCREEN -->
     <div id="loading-screen">
@@ -183,7 +183,8 @@
                 </div>
             </div>
             
-            <nav class="flex items-center space-x-1.5">
+            <!-- DESKTOP NAV -->
+            <nav class="hidden lg:flex items-center space-x-1.5">
                 <button onclick="switchTab('home')" id="nav-home" class="px-3 py-2 rounded-full text-xs font-bold transition-all bg-purple-600 hover:bg-purple-500 text-white shadow-lg flex items-center space-x-1">
                     <i class="fa-solid fa-compass"></i>
                     <span>Beranda</span>
@@ -229,6 +230,40 @@
                     <span>Admin</span>
                 </button>
             </nav>
+
+            <!-- MOBILE NAV ICONS & HAMBURGER -->
+            <div class="lg:hidden flex items-center space-x-1">
+                <button onclick="switchTab('trails')" class="p-2 rounded-xl text-purple-400 hover:bg-purple-950/50" title="Peta & Cuaca">
+                    <i class="fa-solid fa-cloud-sun text-base"></i>
+                </button>
+                <button onclick="switchTab('kta')" class="p-2 rounded-xl text-purple-400 hover:bg-purple-950/50" title="Cek KTA">
+                    <i class="fa-solid fa-id-card text-base"></i>
+                </button>
+                <button onclick="openRentalModal()" class="p-2 rounded-xl text-amber-500 hover:bg-amber-950/50" title="Sewa Alat">
+                    <i class="fa-solid fa-campground text-base"></i>
+                </button>
+                <button onclick="openServiceModal()" class="p-2 rounded-xl text-cyan-400 hover:bg-cyan-950/50" title="Service HP">
+                    <i class="fa-solid fa-screwdriver-wrench text-base"></i>
+                </button>
+                <button onclick="toggleMobileMenu()" class="p-2 rounded-xl text-purple-400 hover:bg-purple-950/50">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- MOBILE DROPDOWN MENU -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-[#070a0f] border-t border-purple-900/40 px-4 pt-3 pb-5 space-y-2.5">
+            <button onclick="switchTab('home'); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-xs font-semibold text-white hover:bg-purple-950/50"><i class="fa-solid fa-compass mr-2 text-purple-400"></i>Beranda</button>
+            <button onclick="switchTab('register'); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-xs font-semibold text-white hover:bg-purple-950/50"><i class="fa-solid fa-file-lines mr-2 text-purple-400"></i>Formulir Pendaftaran</button>
+            <button onclick="switchTab('trails'); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-xs font-semibold text-purple-300 hover:bg-purple-950/50 bg-purple-950/20 border border-purple-500/30"><i class="fa-solid fa-cloud-sun mr-2 text-purple-400"></i>Peta & Cek Cuaca Gunung</button>
+            <a href="https://earth.google.com" target="_blank" class="block w-full text-left px-4 py-2.5 rounded-xl text-xs font-semibold text-cyan-300 hover:bg-cyan-950/50"><i class="fa-solid fa-earth-americas mr-2 text-cyan-400"></i>Buka Google Earth 3D</a>
+            <button onclick="switchTab('gallery'); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-xs font-semibold text-white hover:bg-purple-950/50"><i class="fa-solid fa-images mr-2 text-purple-400"></i>Dokumentasi & Galeri Foto</button>
+            <button onclick="switchTab('ethics'); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-xs font-semibold text-purple-300 hover:bg-purple-950/50"><i class="fa-solid fa-book-open mr-2 text-purple-400"></i>Kode Etik & Tata Tertib</button>
+            <button onclick="switchTab('kta'); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-xs font-semibold text-purple-300 hover:bg-purple-950/50"><i class="fa-solid fa-id-card mr-2 text-purple-400"></i>Cek KTA Digital Anggota</button>
+            <button onclick="openRentalModal(); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-xs font-semibold text-amber-400 hover:bg-amber-950/50"><i class="fa-solid fa-campground mr-2 text-amber-400"></i>Sewa Alat Outdoor Camping</button>
+            <button onclick="openServiceModal(); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-xs font-semibold text-cyan-400 hover:bg-cyan-950/50"><i class="fa-solid fa-screwdriver-wrench mr-2 text-cyan-400"></i>OB Smartphone (Service HP/PC/TV)</button>
+            <button onclick="openLogoModal(); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-xs font-semibold text-purple-300 hover:bg-purple-950/50"><i class="fa-solid fa-download mr-2 text-purple-400"></i>Logo & Unduh Lambang</button>
+            <button onclick="openAdminModal(); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-xs font-semibold text-purple-300 hover:bg-purple-950/50"><i class="fa-solid fa-lock mr-2 text-purple-400"></i>Panel Admin</button>
         </div>
     </header>
 
@@ -238,33 +273,33 @@
         <section id="view-home" class="view-section py-6 sm:py-10">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-10">
                 
-                <div class="cyber-banner p-4 sm:p-6 flex flex-row items-center justify-between gap-6" style="background-image: linear-gradient(90deg, rgba(5,7,10,0.92) 0%, rgba(22,12,40,0.75) 50%, rgba(5,7,10,0.92) 100%), url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=80'); background-size: cover; background-position: center;">
-                    <div class="flex items-center space-x-3 sm:space-x-4 z-10 text-left flex-row">
+                <div class="cyber-banner p-4 sm:p-6 flex flex-col lg:flex-row items-center justify-between gap-6" style="background-image: linear-gradient(90deg, rgba(5,7,10,0.92) 0%, rgba(22,12,40,0.75) 50%, rgba(5,7,10,0.92) 100%), url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=80'); background-size: cover; background-position: center;">
+                    <div class="flex items-center space-x-3 sm:space-x-4 z-10 text-center sm:text-left flex-col sm:flex-row">
                         <img src="KPA CADAS.jpg" alt="Logo KPA CADAS" class="w-16 h-16 sm:w-20 sm:h-20 object-contain rounded-full border-2 border-purple-500 bg-black p-1 shadow-2xl cursor-pointer" onerror="this.src='https://via.placeholder.com/150/000000/a855f7?text=CADAS'" onclick="openLogoModal()">
                         <div class="space-y-0.5 mt-2 sm:mt-0">
-                            <div class="flex items-center space-x-2">
-                                <span class="text-purple-500 font-bold text-xl">—</span>
+                            <div class="flex items-center justify-center sm:justify-start space-x-2">
+                                <span class="text-purple-500 font-bold text-xl hidden sm:inline">—</span>
                                 <h2 class="font-sans font-black text-2xl sm:text-4xl text-white tracking-widest uppercase purple-glow-text">K.P.A CADAS</h2>
-                                <span class="text-purple-500 font-bold text-xl">—</span>
+                                <span class="text-purple-500 font-bold text-xl hidden sm:inline">—</span>
                             </div>
                             <p class="text-[9px] sm:text-xs font-extrabold text-purple-300 tracking-widest uppercase">CINTA ALAM DAN SEMESTA • KOTA PAREPARE</p>
                         </div>
                     </div>
 
-                    <div class="z-10 flex flex-col space-y-1.5 text-right text-xs font-bold text-slate-200">
-                        <div class="flex items-center justify-end space-x-2">
+                    <div class="z-10 flex flex-col space-y-1.5 text-center sm:text-right text-xs font-bold text-slate-200">
+                        <div class="flex items-center justify-center sm:justify-end space-x-2">
                             <i class="fa-brands fa-facebook text-purple-400"></i>
                             <span class="tracking-wider">KPA CADAS PAREPARE</span>
                         </div>
-                        <div class="flex items-center justify-end space-x-2">
+                        <div class="flex items-center justify-center sm:justify-end space-x-2">
                             <i class="fa-brands fa-tiktok text-purple-400"></i>
                             <span class="tracking-wider">KPA CADAS PAREPARE</span>
                         </div>
-                        <div class="flex items-center justify-end space-x-2">
+                        <div class="flex items-center justify-center sm:justify-end space-x-2">
                             <i class="fa-brands fa-whatsapp text-purple-400"></i>
                             <span class="tracking-wider">082343551039</span>
                         </div>
-                        <div class="flex items-center justify-end space-x-2">
+                        <div class="flex items-center justify-center sm:justify-end space-x-2">
                             <i class="fa-solid fa-globe text-purple-400"></i>
                             <span class="tracking-wider text-purple-300">kpa-cadas.firebaseapp.com</span>
                         </div>
@@ -272,7 +307,7 @@
                 </div>
 
                 <div class="relative max-w-6xl mx-auto my-6 sm:my-12">
-                    <svg class="absolute inset-0 w-full h-full pointer-events-none" style="z-index: 0;">
+                    <svg class="hidden lg:block absolute inset-0 w-full h-full pointer-events-none" style="z-index: 0;">
                         <path d="M 320 100 L 480 100 L 520 250" class="circuit-line-left" />
                         <path d="M 320 260 L 520 260" class="circuit-line-left" />
                         <path d="M 320 420 L 480 420 L 520 270" class="circuit-line-left" />
@@ -281,7 +316,7 @@
                         <path d="M 830 420 L 670 420 L 630 270" class="circuit-line-right" />
                     </svg>
 
-                    <div class="grid grid-cols-3 gap-6 sm:gap-8 items-center relative z-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 items-center relative z-10">
                         <div class="space-y-4 sm:space-y-6">
                             <div onclick="switchTab('trails')" class="chamfer-card p-5 sm:p-6 cursor-pointer group text-center">
                                 <div class="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-2.5 sm:mb-3 text-purple-400 flex items-center justify-center text-xl sm:text-2xl group-hover:scale-110 transition-transform">
@@ -309,24 +344,24 @@
                         </div>
 
                         <div class="flex flex-col items-center justify-center py-2 sm:py-4">
-                            <div onclick="openLogoModal()" class="relative w-96 h-96 rounded-full center-circle-ring p-4 sm:p-6 cursor-pointer group flex flex-col items-center justify-center text-center space-y-2.5 sm:space-y-3 transition-all hover:scale-105">
+                            <div onclick="openLogoModal()" class="relative w-72 h-72 sm:w-96 sm:h-96 rounded-full center-circle-ring p-4 sm:p-6 cursor-pointer group flex flex-col items-center justify-center text-center space-y-2.5 sm:space-y-3 transition-all hover:scale-105">
                                 <div class="absolute inset-2 rounded-full border-2 border-purple-500/30 border-dashed animate-spin-slow"></div>
                                 <div class="absolute inset-5 rounded-full border border-purple-400/20"></div>
 
-                                <div class="relative w-44 h-44 mx-auto z-10">
+                                <div class="relative w-32 h-32 sm:w-44 sm:h-44 mx-auto z-10">
                                     <img src="KPA CADAS.jpg" alt="Logo KPA CADAS" class="w-full h-full object-contain rounded-full border-2 border-purple-400 bg-black p-1 shadow-2xl group-hover:scale-105 transition-transform" onerror="this.src='https://via.placeholder.com/300/000000/a855f7?text=KPA+CADAS'">
                                 </div>
 
                                 <div class="relative z-10 space-y-0.5 sm:space-y-1 mt-1">
-                                    <div class="flex items-center justify-center space-x-2">
-                                        <span class="w-4 h-[2px] bg-purple-500"></span>
-                                        <h3 class="font-sans font-black text-3xl tracking-wider uppercase cyber-logo-title">K.P.A CADAS</h3>
-                                        <span class="w-4 h-[2px] bg-purple-500"></span>
+                                    <div class="flex items-center justify-center space-x-1.5 sm:space-x-2">
+                                        <span class="w-3 sm:w-4 h-[2px] bg-purple-500"></span>
+                                        <h3 class="font-sans font-black text-xl sm:text-3xl tracking-wider uppercase cyber-logo-title">K.P.A CADAS</h3>
+                                        <span class="w-3 sm:w-4 h-[2px] bg-purple-500"></span>
                                     </div>
-                                    <p class="text-[10px] font-mono font-bold text-purple-300 uppercase tracking-widest">
+                                    <p class="text-[8px] sm:text-[10px] font-mono font-bold text-purple-300 uppercase tracking-widest">
                                         CINTA ALAM DAN SEMESTA
                                     </p>
-                                    <p class="text-[8px] text-slate-400 uppercase tracking-widest pt-0.5">
+                                    <p class="text-[7px] sm:text-[8px] text-slate-400 uppercase tracking-widest pt-0.5">
                                         PAREPARE • SULAWESI SELATAN
                                     </p>
                                 </div>
@@ -362,38 +397,38 @@
                     </div>
                 </div>
 
-                <div class="pt-2 flex flex-wrap items-center justify-center gap-3">
-                    <button onclick="switchTab('register')" class="px-6 py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl shadow-lg transition flex items-center space-x-2 text-xs">
+                <div class="pt-2 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
+                    <button onclick="switchTab('register')" class="px-5 py-2.5 sm:px-6 sm:py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl shadow-lg transition flex items-center space-x-2 text-xs">
                         <i class="fa-solid fa-pen-to-square"></i>
                         <span>Daftar Sekarang</span>
                     </button>
-                    <button onclick="switchTab('trails')" class="px-6 py-3 bg-[#161f2c] hover:bg-purple-950 text-purple-300 font-bold rounded-xl border border-purple-500/40 shadow-lg transition flex items-center space-x-2 text-xs">
+                    <button onclick="switchTab('trails')" class="px-5 py-2.5 sm:px-6 sm:py-3 bg-[#161f2c] hover:bg-purple-950 text-purple-300 font-bold rounded-xl border border-purple-500/40 shadow-lg transition flex items-center space-x-2 text-xs">
                         <i class="fa-solid fa-cloud-sun"></i>
                         <span>Peta & Cuaca</span>
                     </button>
-                    <button onclick="openRentalModal()" class="px-6 py-3 bg-[#161f2c] hover:bg-purple-950 text-amber-400 font-bold rounded-xl border border-amber-500/40 shadow-lg transition flex items-center space-x-2 text-xs">
+                    <button onclick="openRentalModal()" class="px-5 py-2.5 sm:px-6 sm:py-3 bg-[#161f2c] hover:bg-purple-950 text-amber-400 font-bold rounded-xl border border-amber-500/40 shadow-lg transition flex items-center space-x-2 text-xs">
                         <i class="fa-solid fa-campground"></i>
                         <span>Sewa Alat Outdoor</span>
                     </button>
-                    <button onclick="openServiceModal()" class="px-6 py-3 bg-[#161f2c] hover:bg-purple-950 text-cyan-400 font-bold rounded-xl border border-cyan-500/40 shadow-lg transition flex items-center space-x-2 text-xs">
+                    <button onclick="openServiceModal()" class="px-5 py-2.5 sm:px-6 sm:py-3 bg-[#161f2c] hover:bg-purple-950 text-cyan-400 font-bold rounded-xl border border-cyan-500/40 shadow-lg transition flex items-center space-x-2 text-xs">
                         <i class="fa-solid fa-screwdriver-wrench"></i>
                         <span>Service HP</span>
                     </button>
-                    <button onclick="switchTab('gallery')" class="px-6 py-3 bg-[#161f2c] hover:bg-purple-950 text-purple-300 font-bold rounded-xl border border-purple-500/40 shadow-lg transition flex items-center space-x-2 text-xs">
+                    <button onclick="switchTab('gallery')" class="px-5 py-2.5 sm:px-6 sm:py-3 bg-[#161f2c] hover:bg-purple-950 text-purple-300 font-bold rounded-xl border border-purple-500/40 shadow-lg transition flex items-center space-x-2 text-xs">
                         <i class="fa-solid fa-images"></i>
                         <span>Galeri Foto</span>
                     </button>
                 </div>
 
-                <div class="pt-8">
-                    <div class="bg-[#0c1017] p-6 rounded-3xl border border-purple-900/40 space-y-4 shadow-xl">
+                <div class="pt-6 sm:pt-8">
+                    <div class="bg-[#0c1017] p-5 sm:p-6 rounded-3xl border border-purple-900/40 space-y-4 shadow-xl">
                         <div class="flex items-center space-x-3 text-purple-400">
                             <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/40 flex items-center justify-center text-lg flex-shrink-0">
                                 <i class="fa-solid fa-location-dot"></i>
                             </div>
-                            <h3 class="font-serif font-bold text-base text-white">Sekretariat Utama & Titik Kumpul K.P.A CADAS</h3>
+                            <h3 class="font-serif font-bold text-sm sm:text-base text-white">Sekretariat Utama & Titik Kumpul K.P.A CADAS</h3>
                         </div>
-                        <div class="grid grid-cols-3 gap-6 items-center">
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
                             <div>
                                 <p class="text-xs text-slate-300 leading-relaxed">
                                     <strong class="text-purple-400">K.P.A CADAS Parepare</strong><br>
@@ -407,7 +442,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-span-2 rounded-2xl overflow-hidden border border-purple-500/40 h-64">
+                            <div class="lg:col-span-2 rounded-2xl overflow-hidden border border-purple-500/40 h-56 sm:h-64">
                                 <iframe 
                                     src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d50847.2258756!2d119.6200!3d-4.0150!2m3!1f30!2f60!3f0!3m2!1i1024!2i768!4f35!5e1!3m2!1sen!2sid!4v1650000000000!5m2!1sen!2sid" 
                                     width="100%" 
@@ -427,19 +462,19 @@
         </section>
 
         <!-- SECTION FITUR PETA & CUACA GABUNGAN -->
-        <section id="view-trails" class="view-section hidden py-16">
+        <section id="view-trails" class="view-section hidden py-8 sm:py-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-                <div class="bg-[#0c1017] text-white rounded-3xl p-8 border-b-4 border-purple-500 shadow-xl text-center space-y-3">
+                <div class="bg-[#0c1017] text-white rounded-3xl p-6 sm:p-8 border-b-4 border-purple-500 shadow-xl text-center space-y-3">
                     <span class="text-[10px] font-extrabold uppercase tracking-widest text-purple-300 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/30">Pusat Navigasi & Informasi Cuaca Pendakian</span>
-                    <h2 class="font-serif text-3xl font-bold">PANTAU CUACA & JALUR PENDAKIAN</h2>
-                    <p class="text-sm text-slate-300 max-w-2xl mx-auto">
+                    <h2 class="font-serif text-xl sm:text-3xl font-bold">PANTAU CUACA & JALUR PENDAKIAN</h2>
+                    <p class="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto">
                         Cari nama kota, kabupaten, gunung, atau wilayah mana saja di Indonesia pada kolom pencarian di bawah.
                     </p>
                 </div>
 
                 <!-- WIDGET CEK CUACA PENCARIAN BEBAS -->
-                <div class="bg-[#0c1017] rounded-3xl p-8 border-2 border-cyan-500/70 shadow-2xl space-y-6">
-                    <div class="flex items-center justify-between border-b border-cyan-900 pb-4">
+                <div class="bg-[#0c1017] rounded-3xl p-6 sm:p-8 border-2 border-cyan-500/70 shadow-2xl space-y-6">
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-cyan-900 pb-4">
                         <div class="flex items-center space-x-3">
                             <div class="w-12 h-12 rounded-2xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-2xl font-bold flex-shrink-0">
                                 <i class="fa-solid fa-magnifying-glass-location"></i>
@@ -453,8 +488,8 @@
 
                     <!-- KOTAK INPUT PENCARIAN & SHORTCUT -->
                     <div class="space-y-3">
-                        <form onsubmit="event.preventDefault(); searchCustomWeather();" class="flex gap-2">
-                            <input type="text" id="weather-search-input" placeholder="Ketik nama kota / kabupaten / gunung (Cth: Barru, Pinrang, Sidrap)..." class="w-full px-4 py-3.5 rounded-xl border border-cyan-800 bg-[#070a0f] text-white text-sm outline-none focus:ring-2 focus:ring-cyan-500">
+                        <form onsubmit="event.preventDefault(); searchCustomWeather();" class="flex flex-col sm:flex-row gap-2">
+                            <input type="text" id="weather-search-input" placeholder="Ketik nama kota / kabupaten / gunung (Cth: Barru, Pinrang, Sidrap)..." class="w-full px-4 py-3.5 rounded-xl border border-cyan-800 bg-[#070a0f] text-white text-xs sm:text-sm outline-none focus:ring-2 focus:ring-cyan-500">
                             <button type="submit" class="px-6 py-3.5 bg-cyan-600 hover:bg-cyan-500 text-white font-extrabold rounded-xl text-xs shadow transition flex items-center justify-center space-x-2 flex-shrink-0">
                                 <i class="fa-solid fa-cloud-sun text-sm"></i>
                                 <span>Cek Cuaca Live</span>
@@ -481,33 +516,33 @@
                     </div>
 
                     <!-- CARD HASIL CUACA -->
-                    <div id="weather-result-box" class="grid grid-cols-4 gap-4 text-center">
+                    <div id="weather-result-box" class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
                         <div class="bg-[#070a0f] p-4 rounded-2xl border border-cyan-900/60 space-y-1">
                             <span class="text-[10px] uppercase text-slate-400 font-bold block">Kondisi Cuaca</span>
-                            <div id="w-condition" class="text-sm font-extrabold text-cyan-300">-</div>
+                            <div id="w-condition" class="text-xs sm:text-sm font-extrabold text-cyan-300">-</div>
                         </div>
                         <div class="bg-[#070a0f] p-4 rounded-2xl border border-cyan-900/60 space-y-1">
                             <span class="text-[10px] uppercase text-slate-400 font-bold block">Suhu Udara</span>
-                            <div id="w-temp" class="text-base font-black text-white">- °C</div>
+                            <div id="w-temp" class="text-sm sm:text-base font-black text-white">- °C</div>
                         </div>
                         <div class="bg-[#070a0f] p-4 rounded-2xl border border-cyan-900/60 space-y-1">
                             <span class="text-[10px] uppercase text-slate-400 font-bold block">Kecepatan Angin</span>
-                            <div id="w-wind" class="text-base font-black text-amber-400">- km/h</div>
+                            <div id="w-wind" class="text-sm sm:text-base font-black text-amber-400">- km/h</div>
                         </div>
                         <div class="bg-[#070a0f] p-4 rounded-2xl border border-cyan-900/60 space-y-1">
                             <span class="text-[10px] uppercase text-slate-400 font-bold block">Kelembapan</span>
-                            <div id="w-humidity" class="text-base font-black text-purple-300">- %</div>
+                            <div id="w-humidity" class="text-sm sm:text-base font-black text-purple-300">- %</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 gap-6">
-                    <div class="bg-[#0c1017] p-6 rounded-3xl border-2 border-purple-500/60 shadow-xl space-y-4 flex flex-col justify-between">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-[#0c1017] p-5 sm:p-6 rounded-3xl border-2 border-purple-500/60 shadow-xl space-y-4 flex flex-col justify-between">
                         <div class="space-y-3">
                             <div class="w-12 h-12 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl font-bold">
                                 <i class="fa-solid fa-mountain"></i>
                             </div>
-                            <h3 class="font-serif font-bold text-xl text-purple-400">Peta Jalur Latimojong</h3>
+                            <h3 class="font-serif font-bold text-lg sm:text-xl text-purple-400">Peta Jalur Latimojong</h3>
                             <p class="text-xs text-slate-300 leading-relaxed">
                                 Peta satelit Google My Maps interaktif lengkap dengan rute, pos peristirahatan, dan titik penting pendakian Gunung Latimojong.
                             </p>
@@ -522,12 +557,12 @@
                         </div>
                     </div>
 
-                    <div class="bg-[#0c1017] p-6 rounded-3xl border-2 border-purple-500/60 shadow-xl space-y-4 flex flex-col justify-between">
+                    <div class="bg-[#0c1017] p-5 sm:p-6 rounded-3xl border-2 border-purple-500/60 shadow-xl space-y-4 flex flex-col justify-between">
                         <div class="space-y-3">
                             <div class="w-12 h-12 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl font-bold">
                                 <i class="fa-solid fa-route"></i>
                             </div>
-                            <h3 class="font-serif font-bold text-xl text-purple-400">Wikiloc Bawakaraeng (Bulubalea)</h3>
+                            <h3 class="font-serif font-bold text-lg sm:text-xl text-purple-400">Wikiloc Bawakaraeng (Bulubalea)</h3>
                             <p class="text-xs text-slate-300 leading-relaxed">
                                 Panduan rute pendakian detail Gunung Bawakaraeng via jalur Bulubalea langsung dari platform Wikiloc untuk navigasi lapangan akurat.
                             </p>
@@ -544,12 +579,12 @@
                 </div>
 
                 <div class="bg-[#0c1017] rounded-3xl overflow-hidden border-2 border-purple-500 shadow-2xl p-4 space-y-4">
-                    <div class="flex justify-between items-center border-b border-purple-900 pb-3">
-                        <h4 id="map-title" class="font-serif font-bold text-base text-purple-400"><i class="fa-solid fa-map mr-2"></i> Menampilkan: Peta Jalur Latimojong</h4>
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-purple-900 pb-3">
+                        <h4 id="map-title" class="font-serif font-bold text-sm sm:text-base text-purple-400"><i class="fa-solid fa-map mr-2"></i> Menampilkan: Peta Jalur Latimojong</h4>
                         <span id="map-status" class="text-[10px] bg-purple-500/20 text-purple-300 px-2.5 py-1 rounded-full border border-purple-500/30">Google My Maps Mode</span>
                     </div>
 
-                    <div id="map-container" class="w-full h-[70vh] rounded-2xl overflow-hidden bg-[#070a0f] relative">
+                    <div id="map-container" class="w-full h-[60vh] sm:h-[70vh] rounded-2xl overflow-hidden bg-[#070a0f] relative">
                         <iframe id="active-map-frame"
                             src="https://www.google.com/maps/d/u/0/embed?mid=1uT9im4r_M1oAwIK0spRM1O9UgPK6BIs&ehbc=2E312F" 
                             width="100%" 
@@ -566,29 +601,29 @@
         </section>
 
         <!-- REGISTER SECTION -->
-        <section id="view-register" class="view-section hidden py-16">
+        <section id="view-register" class="view-section hidden py-8 sm:py-16">
             <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="bg-[#0c1017] rounded-3xl shadow-2xl border border-purple-500/30 overflow-hidden text-slate-200">
-                    <div class="bg-[#070a0f] p-8 relative border-b-4 border-purple-500">
-                        <div class="flex items-center space-x-4">
-                            <img src="KPA CADAS.jpg" alt="Logo KPA CADAS" class="w-16 h-16 object-contain rounded-2xl bg-black border-2 border-purple-500 p-1 shadow-md cursor-pointer flex-shrink-0" onclick="openLogoModal()">
+                    <div class="bg-[#070a0f] p-5 sm:p-8 relative border-b-4 border-purple-500">
+                        <div class="flex items-center space-x-3 sm:space-x-4">
+                            <img src="KPA CADAS.jpg" alt="Logo KPA CADAS" class="w-14 h-14 sm:w-16 sm:h-16 object-contain rounded-2xl bg-black border-2 border-purple-500 p-1 shadow-md cursor-pointer flex-shrink-0" onclick="openLogoModal()">
                             <div>
-                                <span class="text-[10px] font-extrabold uppercase tracking-wider text-purple-300 bg-purple-500/10 px-2.5 py-1 rounded-full border border-purple-500/30">Formulir Resmi Pendaftaran</span>
-                                <h2 class="font-serif text-2xl font-bold mt-1 text-white">Pendaftaran K.P.A CADAS Parepare</h2>
+                                <span class="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-purple-300 bg-purple-500/10 px-2.5 py-1 rounded-full border border-purple-500/30">Formulir Resmi Pendaftaran</span>
+                                <h2 class="font-serif text-lg sm:text-2xl font-bold mt-1 text-white">Pendaftaran K.P.A CADAS Parepare</h2>
                                 <p class="text-purple-300 text-xs">Silakan isi Data Diri Anda dengan lengkap dan benar.</p>
                             </div>
                         </div>
                     </div>
 
-                    <form id="form-registration" onsubmit="handleFormSubmit(event)" class="p-8 space-y-6">
+                    <form id="form-registration" onsubmit="handleFormSubmit(event)" class="p-5 sm:p-8 space-y-6">
                         <div class="space-y-4">
                             <div class="border-b border-purple-900 pb-2 flex items-center space-x-2">
                                 <div class="w-7 h-7 rounded-lg bg-purple-600 text-white flex items-center justify-center font-bold text-xs">1</div>
-                                <h3 class="font-bold text-base text-purple-400">Data Diri Calon Anggota</h3>
+                                <h3 class="font-bold text-sm sm:text-base text-purple-400">Data Diri Calon Anggota</h3>
                             </div>
 
-                            <div class="grid grid-cols-2 gap-4">
-                                <div class="col-span-2">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div class="sm:col-span-2">
                                     <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Nama Lengkap <span class="text-red-400">*</span></label>
                                     <input type="text" id="reg-nama" required placeholder="Contoh: Andi Muhammad Faisal" class="w-full px-4 py-3 rounded-xl border border-purple-900 focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm bg-[#070a0f] text-white">
                                 </div>
@@ -604,11 +639,11 @@
                                         <option value="Perempuan">Perempuan</option>
                                     </select>
                                 </div>
-                                <div class="col-span-2">
+                                <div class="sm:col-span-2">
                                     <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Tempat / Tanggal Lahir <span class="text-red-400">*</span></label>
                                     <input type="text" id="reg-ttl" required placeholder="Contoh: Parepare, 14 Mei 2004" class="w-full px-4 py-3 rounded-xl border border-purple-900 focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm bg-[#070a0f] text-white">
                                 </div>
-                                <div class="col-span-2">
+                                <div class="sm:col-span-2">
                                     <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Alamat Domisili <span class="text-red-400">*</span></label>
                                     <textarea id="reg-alamat" required rows="2" placeholder="Alamat lengkap saat ini di Parepare / sekitarnya..." class="w-full px-4 py-3 rounded-xl border border-purple-900 focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm bg-[#070a0f] text-white"></textarea>
                                 </div>
@@ -620,7 +655,7 @@
                                     <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Riwayat Penyakit (Jika Ada)</label>
                                     <input type="text" id="reg-penyakit" placeholder="Asma, Alergi, Maag / Tidak Ada" class="w-full px-4 py-3 rounded-xl border border-purple-900 focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm bg-[#070a0f] text-white">
                                 </div>
-                                <div class="col-span-2">
+                                <div class="sm:col-span-2">
                                     <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Upload Foto Setengah Badan (Pasfoto KTA) <span class="text-red-400">*</span></label>
                                     <input type="file" id="reg-foto" accept="image/*" required class="w-full text-xs text-slate-300 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-purple-600 file:text-white hover:file:bg-purple-500 cursor-pointer bg-[#070a0f] rounded-xl border border-purple-900 p-2">
                                 </div>
@@ -630,10 +665,10 @@
                         <div class="space-y-4 pt-2">
                             <div class="border-b border-purple-900 pb-2 flex items-center space-x-2">
                                 <div class="w-7 h-7 rounded-lg bg-purple-600 text-white flex items-center justify-center font-bold text-xs">2</div>
-                                <h3 class="font-bold text-base text-purple-400">Kontak Darurat (Keluarga / Orang Tua)</h3>
+                                <h3 class="font-bold text-sm sm:text-base text-purple-400">Kontak Darurat (Keluarga / Orang Tua)</h3>
                             </div>
 
-                            <div class="grid grid-cols-2 gap-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Nama Wali / Orang Tua <span class="text-red-400">*</span></label>
                                     <input type="text" id="reg-darurat-nama" required placeholder="Contoh: Nama Orang Tua" class="w-full px-4 py-3 rounded-xl border border-purple-900 focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm bg-[#070a0f] text-white">
@@ -648,7 +683,7 @@
                         <div class="space-y-4 pt-2">
                             <div class="border-b border-purple-900 pb-2 flex items-center space-x-2">
                                 <div class="w-7 h-7 rounded-lg bg-purple-600 text-white flex items-center justify-center font-bold text-xs">3</div>
-                                <h3 class="font-bold text-base text-purple-400">Alasan & Motivasi</h3>
+                                <h3 class="font-bold text-sm sm:text-base text-purple-400">Alasan & Motivasi</h3>
                             </div>
 
                             <div>
@@ -664,9 +699,9 @@
                             </label>
                         </div>
 
-                        <div class="pt-4 border-t border-purple-900 flex items-center justify-end gap-3">
-                            <button type="button" onclick="switchTab('home')" class="px-5 py-2.5 rounded-xl text-xs font-bold text-slate-400 hover:bg-purple-950/50 transition">Batal</button>
-                            <button type="submit" class="px-8 py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl shadow-lg transition flex items-center justify-center space-x-2 text-sm">
+                        <div class="pt-4 border-t border-purple-900 flex flex-col sm:flex-row items-center justify-end gap-3">
+                            <button type="button" onclick="switchTab('home')" class="w-full sm:w-auto px-5 py-2.5 rounded-xl text-xs font-bold text-slate-400 hover:bg-purple-950/50 transition">Batal</button>
+                            <button type="submit" class="w-full sm:w-auto px-8 py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl shadow-lg transition flex items-center justify-center space-x-2 text-sm">
                                 <i class="fa-brands fa-whatsapp text-base"></i>
                                 <span>Kirim Via WhatsApp</span>
                             </button>
@@ -677,18 +712,18 @@
         </section>
 
         <!-- GALLERY SECTION -->
-        <section id="view-gallery" class="view-section hidden py-16">
+        <section id="view-gallery" class="view-section hidden py-8 sm:py-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
                 <div class="space-y-6">
-                    <div class="bg-[#0c1017] text-white rounded-3xl p-8 border-b-4 border-purple-500 shadow-xl flex items-center justify-between gap-6">
-                        <div class="space-y-2 text-left">
+                    <div class="bg-[#0c1017] text-white rounded-3xl p-6 sm:p-8 border-b-4 border-purple-500 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+                        <div class="space-y-2 text-center md:text-left">
                             <span class="text-[10px] font-extrabold uppercase tracking-widest text-purple-300 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/30">Arsip & Dokumentasi Foto</span>
-                            <h2 class="font-serif text-3xl font-bold">Galeri Foto Kegiatan K.P.A CADAS</h2>
-                            <p class="text-sm text-purple-200 font-light max-w-xl">
+                            <h2 class="font-serif text-xl sm:text-3xl font-bold">Galeri Foto Kegiatan K.P.A CADAS</h2>
+                            <p class="text-xs sm:text-sm text-purple-200 font-light max-w-xl">
                                 Kumpulan dokumentasi foto kegiatan pendakian, navigasi darat, survival, dan aksi konservasi alam.
                             </p>
                         </div>
-                        <div class="flex gap-3">
+                        <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
                             <button onclick="openUploadPhotoModal()" class="px-5 py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-2xl shadow-lg transition flex items-center justify-center space-x-2 text-xs">
                                 <i class="fa-solid fa-cloud-arrow-up text-sm"></i>
                                 <span>Unggah Foto Kegiatan</span>
@@ -700,37 +735,37 @@
                         </div>
                     </div>
 
-                    <div id="gallery-grid" class="grid grid-cols-4 gap-6"></div>
+                    <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
                 </div>
 
                 <div class="space-y-6 pt-6 border-t border-purple-900">
-                    <div class="bg-[#0c1017] text-white rounded-3xl p-8 border-b-4 border-purple-500 shadow-xl flex items-center justify-between gap-6">
-                        <div class="space-y-2 text-left">
+                    <div class="bg-[#0c1017] text-white rounded-3xl p-6 sm:p-8 border-b-4 border-purple-500 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+                        <div class="space-y-2 text-center md:text-left">
                             <span class="text-[10px] font-extrabold uppercase tracking-widest text-purple-300 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/30">Arsip Video Kegiatan</span>
-                            <h2 class="font-serif text-3xl font-bold">Video Dokumentasi YouTube</h2>
+                            <h2 class="font-serif text-xl sm:text-3xl font-bold">Video Dokumentasi YouTube</h2>
                         </div>
-                        <div>
-                            <button onclick="openUploadVideoModal()" class="px-5 py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-2xl shadow-lg transition flex items-center justify-center space-x-2 text-xs">
+                        <div class="w-full md:w-auto">
+                            <button onclick="openUploadVideoModal()" class="w-full md:w-auto px-5 py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-2xl shadow-lg transition flex items-center justify-center space-x-2 text-xs">
                                 <i class="fa-solid fa-video text-sm"></i>
                                 <span>Tambah Video YouTube</span>
                             </button>
                         </div>
                     </div>
 
-                    <div id="video-grid" class="grid grid-cols-3 gap-6"></div>
+                    <div id="video-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
                 </div>
             </div>
         </section>
 
         <!-- ETHICS SECTION -->
-        <section id="view-ethics" class="view-section hidden py-16">
+        <section id="view-ethics" class="view-section hidden py-8 sm:py-16">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-                <div class="bg-[#0c1017] text-white rounded-3xl p-8 border-b-4 border-purple-500 shadow-xl text-center space-y-3">
+                <div class="bg-[#0c1017] text-white rounded-3xl p-6 sm:p-8 border-b-4 border-purple-500 shadow-xl text-center space-y-3">
                     <span class="text-[10px] font-extrabold uppercase tracking-widest text-purple-300 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/30">Dokumen Resmi Organisasi</span>
-                    <h2 class="font-serif text-3xl font-bold">Tata Tertib & Kode Etik Pecinta Alam</h2>
+                    <h2 class="font-serif text-xl sm:text-3xl font-bold">Tata Tertib & Kode Etik Pecinta Alam</h2>
                 </div>
 
-                <div class="bg-[#0c1017] rounded-3xl p-8 border border-purple-900/50 shadow-2xl space-y-6 text-sm text-slate-300 leading-relaxed">
+                <div class="bg-[#0c1017] rounded-3xl p-6 sm:p-8 border border-purple-900/50 shadow-2xl space-y-6 text-xs sm:text-sm text-slate-300 leading-relaxed">
                     <div class="space-y-2 border-b border-purple-950 pb-4">
                         <h3 class="font-serif font-bold text-base text-purple-400">BAB I - KETENTUAN UMUM</h3>
                         <p><strong>Pasal 1 (Pengertian):</strong> K.P.A CADAS adalah organisasi yang bergerak dalam bidang kepecintaalaman, pelestarian lingkungan, pendidikan, dan kegiatan alam bebas.</p>
@@ -758,17 +793,17 @@
         </section>
 
         <!-- KTA DIGITAL SECTION -->
-        <section id="view-kta" class="view-section hidden py-16">
+        <section id="view-kta" class="view-section hidden py-8 sm:py-16">
             <div class="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-                <div class="bg-[#0c1017] text-white rounded-3xl p-8 border-b-4 border-purple-500 shadow-xl text-center space-y-3">
+                <div class="bg-[#0c1017] text-white rounded-3xl p-6 sm:p-8 border-b-4 border-purple-500 shadow-xl text-center space-y-3">
                     <span class="text-[10px] font-extrabold uppercase tracking-widest text-purple-300 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/30">Identitas Resmi Anggota</span>
-                    <h2 class="font-serif text-3xl font-bold">Kartu Tanda Anggota (KTA) Digital</h2>
+                    <h2 class="font-serif text-xl sm:text-3xl font-bold">Kartu Tanda Anggota (KTA) Digital</h2>
                 </div>
 
-                <div class="bg-[#0c1017] rounded-3xl p-8 border border-purple-900/50 shadow-2xl space-y-4">
-                    <div class="flex gap-2">
-                        <input type="text" id="kta-search-input" placeholder="Masukkan NIA atau Nama..." class="w-full px-4 py-3 rounded-xl border border-purple-900 bg-[#070a0f] text-white text-sm outline-none focus:ring-2 focus:ring-purple-500">
-                        <button onclick="searchKTA()" class="px-6 py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl text-xs shadow transition flex items-center justify-center space-x-1 flex-shrink-0">
+                <div class="bg-[#0c1017] rounded-3xl p-5 sm:p-8 border border-purple-900/50 shadow-2xl space-y-4">
+                    <div class="flex flex-col sm:flex-row gap-2">
+                        <input type="text" id="kta-search-input" placeholder="Masukkan NIA atau Nama..." class="w-full px-4 py-3 rounded-xl border border-purple-900 bg-[#070a0f] text-white text-xs sm:text-sm outline-none focus:ring-2 focus:ring-purple-500">
+                        <button onclick="searchKTA()" class="w-full sm:w-auto px-6 py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl text-xs shadow transition flex items-center justify-center space-x-1 flex-shrink-0">
                             <i class="fa-solid fa-magnifying-glass"></i>
                             <span>Cari</span>
                         </button>
@@ -776,23 +811,23 @@
                 </div>
 
                 <div id="kta-result-card" class="hidden space-y-4">
-                    <div id="kta-card-capture" class="bg-gradient-to-br from-purple-950 via-[#0c1017] to-black rounded-3xl p-8 border-2 border-purple-500 shadow-2xl relative overflow-hidden space-y-6">
+                    <div id="kta-card-capture" class="bg-gradient-to-br from-purple-950 via-[#0c1017] to-black rounded-3xl p-5 sm:p-8 border-2 border-purple-500 shadow-2xl relative overflow-hidden space-y-6">
                         <div class="absolute top-0 right-0 transform translate-x-6 -translate-y-6 w-32 h-32 bg-purple-500/10 rounded-full blur-2xl pointer-events-none"></div>
 
-                        <div class="flex items-center space-x-4 border-b border-purple-900/80 pb-4">
-                            <img src="KPA CADAS.jpg" alt="Logo CADAS" class="w-14 h-14 object-contain rounded-2xl bg-black border-2 border-purple-500 p-1 shadow-md flex-shrink-0">
+                        <div class="flex items-center space-x-3 sm:space-x-4 border-b border-purple-900/80 pb-4">
+                            <img src="KPA CADAS.jpg" alt="Logo CADAS" class="w-12 h-12 sm:w-14 sm:h-14 object-contain rounded-2xl bg-black border-2 border-purple-500 p-1 shadow-md flex-shrink-0">
                             <div>
-                                <h3 class="font-serif font-black text-base text-purple-400">K.P.A CADAS PAREPARE</h3>
-                                <p class="text-[9px] font-bold text-purple-300 uppercase tracking-widest">Cinta Alam Dan Semesta</p>
-                                <span class="inline-block mt-1 text-[9px] bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded border border-purple-500/40 font-mono">KTA RESMI ANGGOTA</span>
+                                <h3 class="font-serif font-black text-xs sm:text-base text-purple-400">K.P.A CADAS PAREPARE</h3>
+                                <p class="text-[8px] sm:text-[9px] font-bold text-purple-300 uppercase tracking-widest">Cinta Alam Dan Semesta</p>
+                                <span class="inline-block mt-1 text-[8px] sm:text-[9px] bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded border border-purple-500/40 font-mono">KTA RESMI ANGGOTA</span>
                             </div>
                         </div>
 
-                        <div class="flex items-center gap-6">
+                        <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
                             <div class="w-28 h-36 bg-black rounded-2xl border-2 border-purple-500 overflow-hidden shadow-inner flex items-center justify-center relative flex-shrink-0">
                                 <img id="kta-foto" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" alt="Foto Anggota" class="w-full h-full object-cover">
                             </div>
-                            <div class="space-y-2 text-xs text-slate-200 w-full text-left">
+                            <div class="space-y-2 text-xs text-slate-200 w-full text-center sm:text-left">
                                 <div>
                                     <span class="text-[10px] text-slate-400 uppercase tracking-wider block">Nomor Induk Anggota (NIA) / ID</span>
                                     <span id="kta-nia" class="font-mono font-black text-purple-400 text-sm tracking-wider">-</span>
@@ -814,7 +849,7 @@
                             </div>
                         </div>
 
-                        <div class="pt-2 border-t border-purple-950 flex justify-between items-center text-[10px] text-slate-400">
+                        <div class="pt-2 border-t border-purple-950 flex justify-between items-center text-[9px] sm:text-[10px] text-slate-400">
                             <span id="kta-tanggal">Terdaftar: -</span>
                             <span class="text-purple-400 font-bold">SALAM LESTARI</span>
                         </div>
@@ -829,21 +864,21 @@
         </section>
 
         <!-- SUCCESS SECTION -->
-        <section id="view-success" class="view-section hidden py-16">
+        <section id="view-success" class="view-section hidden py-10 sm:py-16">
             <div class="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-                <div id="printable-card" class="bg-white text-slate-800 rounded-3xl shadow-2xl border-2 border-purple-500 p-8 space-y-6 text-left relative overflow-hidden">
-                    <div class="flex items-center space-x-4 border-b-2 border-purple-950 pb-4">
-                        <img src="KPA CADAS.jpg" alt="Logo KPA CADAS" class="w-16 h-16 object-contain rounded-xl bg-black border border-purple-500 p-1 shadow-md flex-shrink-0">
+                <div id="printable-card" class="bg-white text-slate-800 rounded-3xl shadow-2xl border-2 border-purple-500 p-5 sm:p-8 space-y-6 text-left relative overflow-hidden">
+                    <div class="flex items-center space-x-3 sm:space-x-4 border-b-2 border-purple-950 pb-4">
+                        <img src="KPA CADAS.jpg" alt="Logo KPA CADAS" class="w-14 h-14 sm:w-16 sm:h-16 object-contain rounded-xl bg-black border border-purple-500 p-1 shadow-md flex-shrink-0">
                         <div>
-                            <h3 class="font-serif font-black text-lg text-slate-900 leading-tight">K.P.A CADAS PAREPARE</h3>
-                            <p class="text-[10px] font-bold text-purple-600 uppercase tracking-wider">Cinta Alam Dan Semesta - Sulawesi Selatan</p>
-                            <p class="text-[10px] text-slate-500 font-semibold mt-0.5">Bukti Tanda Pendaftaran</p>
+                            <h3 class="font-serif font-black text-sm sm:text-lg text-slate-900 leading-tight">K.P.A CADAS PAREPARE</h3>
+                            <p class="text-[9px] sm:text-[10px] font-bold text-purple-600 uppercase tracking-wider">Cinta Alam Dan Semesta - Sulawesi Selatan</p>
+                            <p class="text-[9px] sm:text-[10px] text-slate-500 font-semibold mt-0.5">Bukti Tanda Pendaftaran</p>
                         </div>
                     </div>
 
                     <div class="bg-[#070a0f] text-white p-4 rounded-2xl text-center border-2 border-purple-500">
-                        <span class="text-[10px] uppercase font-bold tracking-widest text-purple-400">Nomor Registrasi Pendaftaran</span>
-                        <div id="success-reg-id" class="text-3xl font-mono font-black text-purple-400 tracking-wider mt-1">CADAS-2026-0001</div>
+                        <span class="text-[9px] sm:text-[10px] uppercase font-bold tracking-widest text-purple-400">Nomor Registrasi Pendaftaran</span>
+                        <div id="success-reg-id" class="text-xl sm:text-3xl font-mono font-black text-purple-400 tracking-wider mt-1">CADAS-2026-0001</div>
                     </div>
 
                     <div class="space-y-2 text-xs text-slate-700 bg-slate-50 p-4 rounded-xl border border-slate-200">
@@ -966,13 +1001,13 @@
                 <img id="preview-modal-img" src="" alt="Pratinjau Foto" class="max-h-[70vh] w-auto object-contain">
             </div>
             
-            <div class="flex items-center justify-between text-left bg-[#0c1017] p-4 rounded-2xl border border-purple-900 shadow-lg gap-3">
+            <div class="flex flex-col sm:flex-row items-center justify-between text-left bg-[#0c1017] p-4 rounded-2xl border border-purple-900 shadow-lg gap-3">
                 <div>
                     <span id="preview-modal-category" class="text-[10px] font-extrabold uppercase tracking-wider text-purple-300 bg-purple-500/10 px-2.5 py-0.5 rounded-full"></span>
                     <h3 id="preview-modal-title" class="font-bold text-white text-base mt-1"></h3>
                     <p id="preview-modal-date" class="text-xs text-slate-400"></p>
                 </div>
-                <button onclick="downloadCurrentPreviewPhoto()" class="px-5 py-2.5 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl text-xs flex items-center justify-center space-x-2 shadow-lg transition">
+                <button onclick="downloadCurrentPreviewPhoto()" class="w-full sm:w-auto px-5 py-2.5 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl text-xs flex items-center justify-center space-x-2 shadow-lg transition">
                     <i class="fa-solid fa-download"></i>
                     <span>Unduh Foto Ini</span>
                 </button>
@@ -1006,36 +1041,36 @@
         </div>
     </div>
 
-    <div id="rental-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
-        <div class="bg-[#0c1017] text-white rounded-3xl max-w-4xl w-full max-h-[92vh] overflow-y-auto p-5 space-y-4 shadow-2xl border-2 border-amber-500 relative">
+    <div id="rental-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-2 sm:p-4">
+        <div class="bg-[#0c1017] text-white rounded-3xl max-w-4xl w-full max-h-[92vh] overflow-y-auto p-3 sm:p-5 space-y-4 shadow-2xl border-2 border-amber-500 relative">
             <button onclick="closeRentalModal()" class="absolute top-3 right-3 text-slate-400 hover:text-white text-xl font-bold z-30 bg-black/70 w-9 h-9 rounded-full flex items-center justify-center">
                 <i class="fa-solid fa-xmark"></i>
             </button>
 
-            <div id="poster-capture-area" class="relative rounded-2xl overflow-hidden shadow-2xl border-2 border-amber-400 bg-cover bg-center p-6 text-white font-sans" style="background-image: url('outdoor.png');">
+            <div id="poster-capture-area" class="relative rounded-2xl overflow-hidden shadow-2xl border-2 border-amber-400 bg-cover bg-center p-4 sm:p-6 text-white font-sans" style="background-image: url('outdoor.png');">
                 <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/75 to-black/40"></div>
 
                 <div class="relative z-10 space-y-4">
-                    <div class="flex justify-between items-center gap-2">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                         <div class="space-y-1">
                             <div class="inline-flex items-center space-x-2 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-r-full rounded-l-md shadow-md border border-black">
                                 <i class="fa-solid fa-mountain text-xs"></i>
                                 <span>LENGKAP - MURAH - SIAP PAKAI</span>
                             </div>
-                            <h2 class="font-impact font-black text-4xl tracking-tight leading-none text-amber-400 uppercase banner-glow">
+                            <h2 class="font-impact font-black text-2xl sm:text-4xl tracking-tight leading-none text-amber-400 uppercase banner-glow">
                                 SEWA ALAT OUTDOOR <br>
                                 <span class="text-white">KAMPING</span> 
-                                <i class="fa-solid fa-mountain-sun text-amber-400 text-3xl ml-1"></i>
+                                <i class="fa-solid fa-mountain-sun text-amber-400 text-2xl sm:text-3xl ml-1"></i>
                             </h2>
                         </div>
-                        <div class="text-right">
-                            <span class="font-hand text-3xl text-amber-300 block banner-glow">
+                        <div class="text-left sm:text-right">
+                            <span class="font-hand text-2xl sm:text-3xl text-amber-300 block banner-glow">
                                 Jelajahi Alam <br> <span class="underline decoration-amber-400 decoration-2">Tanpa Batas</span>
                             </span>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-2.5 pt-1">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
                         <div class="space-y-2 text-xs font-bold">
                             <div class="bg-black/85 backdrop-blur border-2 border-amber-400 pl-1 pr-3 py-1.5 rounded-full flex items-center justify-between shadow-lg">
                                 <div class="flex items-center space-x-2">
@@ -1099,15 +1134,15 @@
                         </div>
                     </div>
 
-                    <div class="pt-2 flex items-center justify-between bg-black/90 border-2 border-amber-400 p-3 rounded-2xl gap-3 shadow-2xl">
-                        <div class="flex items-center space-x-3 text-left">
-                            <i class="fa-solid fa-mountain text-3xl text-amber-400"></i>
+                    <div class="pt-2 flex flex-col sm:flex-row items-center justify-between bg-black/90 border-2 border-amber-400 p-3 rounded-2xl gap-3 shadow-2xl">
+                        <div class="flex items-center space-x-3 text-center sm:text-left">
+                            <i class="fa-solid fa-mountain text-3xl text-amber-400 hidden sm:block"></i>
                             <div>
-                                <p class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">ALAT BERSIH & TERAWAT • HARGA TERJANGKAU</p>
-                                <p class="font-impact font-black text-xl text-white tracking-wider">HUBUNGI SEKARANG</p>
+                                <p class="text-[9px] sm:text-[10px] font-bold text-amber-400 uppercase tracking-widest">ALAT BERSIH & TERAWAT • HARGA TERJANGKAU</p>
+                                <p class="font-impact font-black text-lg sm:text-xl text-white tracking-wider">HUBUNGI SEKARANG</p>
                             </div>
                         </div>
-                        <a href="https://wa.me/6285197466858?text=Halo%20Admin%20Sewa%20Alat%20Outdoor%20KPA%20CADAS,%20saya%20mau%20sewa%20alat%20camping" target="_blank" class="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-white font-black rounded-full text-base flex items-center justify-center space-x-2.5 shadow-xl transition border-2 border-white">
+                        <a href="https://wa.me/6285197466858?text=Halo%20Admin%20Sewa%20Alat%20Outdoor%20KPA%20CADAS,%20saya%20mau%20sewa%20alat%20camping" target="_blank" class="w-full sm:w-auto px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-white font-black rounded-full text-sm sm:text-base flex items-center justify-center space-x-2.5 shadow-xl transition border-2 border-white">
                             <div class="w-6 h-6 bg-white text-emerald-600 rounded-full flex items-center justify-center text-sm flex-shrink-0"><i class="fa-brands fa-whatsapp"></i></div>
                             <span class="tracking-wider">085197466858</span>
                         </a>
@@ -1124,39 +1159,39 @@
         </div>
     </div>
 
-    <div id="service-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4">
-        <div class="bg-[#050b14] text-white rounded-3xl max-w-5xl w-full max-h-[95vh] overflow-y-auto p-5 space-y-4 shadow-2xl border-2 border-cyan-500 relative">
+    <div id="service-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-2 sm:p-4">
+        <div class="bg-[#050b14] text-white rounded-3xl max-w-5xl w-full max-h-[95vh] overflow-y-auto p-3 sm:p-5 space-y-4 shadow-2xl border-2 border-cyan-500 relative">
             <button onclick="closeServiceModal()" class="absolute top-3 right-3 text-cyan-400 hover:text-white text-xl font-bold z-30 bg-black/80 w-9 h-9 rounded-full flex items-center justify-center border border-cyan-500">
                 <i class="fa-solid fa-xmark"></i>
             </button>
 
-            <div id="service-poster-capture" class="relative rounded-2xl overflow-hidden shadow-2xl border-2 border-cyan-400 bg-slate-950 p-6 text-white font-sans bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1600&q=80');">
+            <div id="service-poster-capture" class="relative rounded-2xl overflow-hidden shadow-2xl border-2 border-cyan-400 bg-slate-950 p-4 sm:p-6 text-white font-sans bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1600&q=80');">
                 <div class="absolute inset-0 bg-gradient-to-r from-black/95 via-blue-950/90 to-black/95"></div>
 
-                <div class="relative z-10 space-y-5">
-                    <div class="flex justify-between items-center text-left gap-4 border-b border-cyan-500/40 pb-4">
+                <div class="relative z-10 space-y-4 sm:space-y-5">
+                    <div class="flex flex-col sm:flex-row justify-between items-center text-center sm:text-left gap-4 border-b border-cyan-500/40 pb-4">
                         <div class="space-y-1">
-                            <span class="inline-block bg-cyan-500/20 text-cyan-300 text-[10px] font-black uppercase px-3 py-1 rounded-full border border-cyan-400/50">
+                            <span class="inline-block bg-cyan-500/20 text-cyan-300 text-[9px] sm:text-[10px] font-black uppercase px-3 py-1 rounded-full border border-cyan-400/50">
                                 <i class="fa-solid fa-bolt mr-1"></i> Solusi Tepat Untuk Semua Perangkat Anda
                             </span>
-                            <h2 class="font-impact font-black text-5xl text-cyan-400 tracking-wider uppercase neon-blue-glow">
+                            <h2 class="font-impact font-black text-2xl sm:text-5xl text-cyan-400 tracking-wider uppercase neon-blue-glow">
                                 OB SMARTPHONE
                             </h2>
-                            <p class="text-sm font-bold text-slate-200 tracking-widest uppercase">
+                            <p class="text-xs sm:text-sm font-bold text-slate-200 tracking-widest uppercase">
                                 SERVICE • REPAIR • SOLUTION
                             </p>
                         </div>
-                        <div class="bg-cyan-950/80 border border-cyan-400 p-3 rounded-2xl text-right neon-border">
+                        <div class="bg-cyan-950/80 border border-cyan-400 p-3 rounded-2xl text-center sm:text-right neon-border w-full sm:w-auto">
                             <p class="text-xs font-bold text-amber-400 italic">"HP Anda Kembali Normal, Kami Siap Membantu"</p>
-                            <span class="text-[10px] text-cyan-300 uppercase font-black tracking-wider block mt-1">BERGARANSI & HARGA TERBAIK</span>
+                            <span class="text-[9px] sm:text-[10px] text-cyan-300 uppercase font-black tracking-wider block mt-1">BERGARANSI & HARGA TERBAIK</span>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div class="bg-black/80 border-2 border-cyan-500 rounded-2xl p-4 space-y-3">
                             <div class="flex items-center space-x-2 text-cyan-400 border-b border-cyan-800 pb-2">
-                                <i class="fa-solid fa-cart-shopping text-xl"></i>
-                                <h3 class="font-black text-sm uppercase tracking-wide text-white">JUAL BELI HANDPHONE</h3>
+                                <i class="fa-solid fa-cart-shopping text-lg sm:text-xl"></i>
+                                <h3 class="font-black text-xs sm:text-sm uppercase tracking-wide text-white">JUAL BELI HANDPHONE</h3>
                             </div>
                             <ul class="text-xs space-y-2 text-slate-200 font-semibold">
                                 <li class="flex items-center space-x-2"><i class="fa-solid fa-check-circle text-cyan-400"></i><span>HP Baru & Second Berkualitas</span></li>
@@ -1167,8 +1202,8 @@
 
                         <div class="bg-black/80 border-2 border-cyan-500 rounded-2xl p-4 space-y-2">
                             <div class="flex items-center space-x-2 text-cyan-400 border-b border-cyan-800 pb-2">
-                                <i class="fa-solid fa-screwdriver-wrench text-xl"></i>
-                                <h3 class="font-black text-sm uppercase tracking-wide text-white">LAYANAN SERVICE</h3>
+                                <i class="fa-solid fa-screwdriver-wrench text-lg sm:text-xl"></i>
+                                <h3 class="font-black text-xs sm:text-sm uppercase tracking-wide text-white">LAYANAN SERVICE</h3>
                             </div>
                             <div class="grid grid-cols-1 gap-1.5 text-[11px] font-bold text-slate-300 pt-1">
                                 <div class="bg-cyan-950/60 px-2.5 py-1.5 rounded-lg border border-cyan-800 flex justify-between"><span><i class="fa-solid fa-battery-full text-cyan-400 mr-2"></i>Ganti LCD / Baterai</span><span class="text-[9px] text-cyan-300">Original</span></div>
@@ -1179,8 +1214,8 @@
 
                         <div class="bg-black/80 border-2 border-cyan-500 rounded-2xl p-4 space-y-2">
                             <div class="flex items-center space-x-2 text-cyan-400 border-b border-cyan-800 pb-2">
-                                <i class="fa-solid fa-laptop text-xl"></i>
-                                <h3 class="font-black text-sm uppercase tracking-wide text-white">PERANGKAT LAINNYA</h3>
+                                <i class="fa-solid fa-laptop text-lg sm:text-xl"></i>
+                                <h3 class="font-black text-xs sm:text-sm uppercase tracking-wide text-white">PERANGKAT LAINNYA</h3>
                             </div>
                             <div class="space-y-1 text-[10px] font-bold text-slate-300 pt-1">
                                 <div class="bg-cyan-950/60 px-2 py-1 rounded border border-cyan-800 flex items-center"><i class="fa-solid fa-mobile-screen text-cyan-400 mr-2"></i>Service Smartphone</div>
@@ -1191,7 +1226,7 @@
                         </div>
                     </div>
 
-                    <div class="bg-black/80 border border-cyan-500/50 p-2.5 rounded-xl flex items-center justify-center gap-4 text-xs font-black tracking-widest text-cyan-300 uppercase text-center">
+                    <div class="bg-black/80 border border-cyan-500/50 p-2.5 rounded-xl flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-[10px] sm:text-xs font-black tracking-widest text-cyan-300 uppercase text-center">
                         <span class="text-white">APPLE</span> • 
                         <span class="text-white">SAMSUNG</span> • 
                         <span class="text-white">XIAOMI</span> • 
@@ -1201,16 +1236,16 @@
                         <span class="text-white">ASUS</span>
                     </div>
 
-                    <div class="flex items-center justify-between bg-gradient-to-r from-cyan-950 via-black to-blue-950 border-2 border-cyan-400 p-3.5 rounded-2xl gap-3 shadow-2xl">
-                        <div class="flex items-center space-x-3 text-left">
+                    <div class="flex flex-col sm:flex-row items-center justify-between bg-gradient-to-r from-cyan-950 via-black to-blue-950 border-2 border-cyan-400 p-3.5 rounded-2xl gap-3 shadow-2xl">
+                        <div class="flex items-center space-x-3 text-center sm:text-left">
                             <div class="w-10 h-10 rounded-xl bg-cyan-500 text-black flex items-center justify-center text-xl font-bold flex-shrink-0"><i class="fa-solid fa-location-dot"></i></div>
                             <div>
-                                <p class="text-[10px] font-bold text-cyan-300 uppercase tracking-widest">KOTA PAREPARE • SULAWESI SELATAN</p>
+                                <p class="text-[9px] sm:text-[10px] font-bold text-cyan-300 uppercase tracking-widest">KOTA PAREPARE • SULAWESI SELATAN</p>
                                 <p class="text-xs text-slate-300 font-semibold">Bergaransi • Harga Bersaing • Pelayanan Terbaik</p>
                             </div>
                         </div>
-                        <a href="https://wa.me/6285197466858?text=Halo%20Admin%20OB%20Smartphone,%20saya%20mau%20tanya%20service%20perbaikan%20HP/Laptop" target="_blank" class="px-6 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-white font-black rounded-full text-base flex items-center justify-center space-x-2.5 shadow-xl transition border-2 border-white">
-                            <i class="fa-brands fa-whatsapp text-2xl"></i>
+                        <a href="https://wa.me/6285197466858?text=Halo%20Admin%20OB%20Smartphone,%20saya%20mau%20tanya%20service%20perbaikan%20HP/Laptop" target="_blank" class="w-full sm:w-auto px-6 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-white font-black rounded-full text-sm sm:text-base flex items-center justify-center space-x-2.5 shadow-xl transition border-2 border-white">
+                            <i class="fa-brands fa-whatsapp text-xl sm:text-2xl"></i>
                             <span class="tracking-wider">085197466858</span>
                         </a>
                     </div>
@@ -1235,7 +1270,7 @@
                 <p class="text-xs text-slate-400 mt-1">Masukkan Kata Kunci Keamanan untuk mengakses data pendaftar.</p>
             </div>
             <div>
-                <input type="text" id="admin-pin-input" placeholder="Kata Kunci Admin (SALAM LESTARI)" class="w-full text-center tracking-wider text-base font-bold px-4 py-3 rounded-xl border border-purple-900 bg-[#070a0f] text-white focus:outline-none focus:ring-2 focus:ring-purple-500">
+                <input type="text" id="admin-pin-input" placeholder="Kata Kunci Admin (SALAM LESTARI)" class="w-full text-center tracking-wider text-sm sm:text-base font-bold px-4 py-3 rounded-xl border border-purple-900 bg-[#070a0f] text-white focus:outline-none focus:ring-2 focus:ring-purple-500">
             </div>
             <div class="flex space-x-2">
                 <button onclick="closeAdminModal()" class="w-1/2 py-2.5 text-xs font-bold text-slate-400 bg-purple-950/40 rounded-xl">Batal</button>
@@ -1244,17 +1279,17 @@
         </div>
 
         <div id="admin-dashboard-box" class="bg-[#0c1017] rounded-3xl max-w-5xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden hidden border-2 border-purple-500">
-            <div class="bg-[#070a0f] text-white p-5 flex items-center justify-between border-b-2 border-purple-500">
+            <div class="bg-[#070a0f] text-white p-4 sm:p-5 flex items-center justify-between border-b-2 border-purple-500">
                 <div class="flex items-center space-x-3">
                     <img src="KPA CADAS.jpg" alt="Logo CADAS" class="w-10 h-10 object-contain rounded-xl bg-black border border-purple-500 p-1 flex-shrink-0">
                     <div>
-                        <h3 class="font-serif font-bold text-base text-purple-400">Dashboard Admin K.P.A CADAS</h3>
-                        <p class="text-[10px] text-purple-300">Kelola dan lihat data calon anggota terdaftar</p>
+                        <h3 class="font-serif font-bold text-sm sm:text-base text-purple-400">Dashboard Admin K.P.A CADAS</h3>
+                        <p class="text-[9px] sm:text-[10px] text-purple-300">Kelola dan lihat data calon anggota terdaftar</p>
                     </div>
                 </div>
                 <button onclick="closeAdminModal()" class="text-white hover:text-purple-400 text-xl font-bold"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div class="p-6 overflow-y-auto space-y-4 flex-grow bg-[#05070a]">
+            <div class="p-4 sm:p-6 overflow-y-auto space-y-4 flex-grow bg-[#05070a]">
                 <div class="flex justify-between items-center">
                     <p class="text-xs font-bold text-slate-300">Daftar Pendaftar Masuk</p>
                     <button onclick="exportData()" class="px-3 py-1.5 bg-purple-600 text-white rounded-lg text-xs font-bold shadow hover:bg-purple-500">Export CSV</button>
@@ -1754,6 +1789,10 @@
                 renderGallery();
                 renderVideos();
             }
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
         }
 
         function handleFormSubmit(e) {
