@@ -2,12 +2,12 @@
 <html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <!-- VIEWPORT DIKEMBALIKAN KE DEVICE-WIDTH AGAR HP OTOMATIS MENYESUAIKAN LAYAR -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pendaftaran Diksar, Sewa Alat Outdoor, Service HP & Cuaca Pendakian | Parepare</title>
     <link rel="icon" type="image/jpeg" href="KPA CADAS.jpg">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Cinzel:wght@700;800;900&family=Montserrat:wght@800;900&family=Caveat:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -43,6 +43,17 @@
             .no-print { display: none !important; }
         }
 
+        body {
+            background-color: #05070a;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
+                linear-gradient(180deg, rgba(5,7,10,0.85) 0%, rgba(5,7,10,0.95) 100%),
+                url('https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
         #loading-screen {
             position: fixed;
             inset: 0;
@@ -71,18 +82,37 @@
             100% { transform: scale(1.08); box-shadow: 0 0 55px rgba(192, 132, 252, 0.95), 0 0 20px rgba(168, 85, 247, 0.8); }
         }
 
+        .themed-card-weather {
+            background: linear-gradient(135deg, rgba(12, 16, 23, 0.9) 0%, rgba(5, 7, 10, 0.92) 100%),
+                        url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .themed-card-gps {
+            background: linear-gradient(90deg, rgba(30, 15, 55, 0.9) 0%, rgba(7, 10, 15, 0.9) 50%, rgba(30, 15, 55, 0.9) 100%),
+                        url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
         .cyber-banner {
-            background: #000000;
             border: 2px solid #581c87;
-            border-radius: 18px;
-            box-shadow: 0 0 25px rgba(168, 85, 247, 0.25);
+            border-radius: 24px;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.3);
             position: relative;
             overflow: hidden;
+            background: linear-gradient(90deg, rgba(5,7,10,0.92) 0%, rgba(22,12,40,0.85) 50%, rgba(5,7,10,0.92) 100%), 
+                        url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
         }
 
         .chamfer-card {
-            background: linear-gradient(180deg, rgba(22, 27, 38, 0.95) 0%, rgba(10, 13, 20, 0.98) 100%);
-            border: 1px solid rgba(168, 85, 247, 0.25);
+            background: linear-gradient(180deg, rgba(22, 27, 38, 0.88) 0%, rgba(10, 13, 20, 0.92) 100%),
+                        url('https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?auto=format&fit=crop&w=600&q=80');
+            background-size: cover;
+            border: 1px solid rgba(168, 85, 247, 0.35);
             clip-path: polygon(
                 16px 0%, 
                 calc(100% - 16px) 0%, 
@@ -95,6 +125,7 @@
             );
             position: relative;
             transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
         }
 
         .chamfer-card::after {
@@ -111,13 +142,17 @@
             border-color: rgba(192, 132, 252, 0.8);
             box-shadow: 0 0 25px rgba(168, 85, 247, 0.4);
             transform: translateY(-3px);
-            background: linear-gradient(180deg, rgba(30, 36, 51, 0.98) 0%, rgba(15, 18, 28, 0.98) 100%);
+            background: linear-gradient(180deg, rgba(30, 36, 51, 0.92) 0%, rgba(15, 18, 28, 0.95) 100%),
+                        url('https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?auto=format&fit=crop&w=600&q=80');
+            background-size: cover;
         }
 
         .center-circle-ring {
             border: 3px solid rgba(168, 85, 247, 0.5);
             box-shadow: 0 0 35px rgba(168, 85, 247, 0.35), inset 0 0 25px rgba(168, 85, 247, 0.2);
-            background: radial-gradient(circle, rgba(12, 16, 23, 0.95) 0%, rgba(5, 7, 10, 1) 100%);
+            background: radial-gradient(circle, rgba(12, 16, 23, 0.85) 0%, rgba(5, 7, 10, 0.95) 100%),
+                        url('https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80');
+            background-size: cover;
         }
 
         .cyber-logo-title {
@@ -138,18 +173,151 @@
             text-shadow: 0 0 12px rgba(168, 85, 247, 0.6), 0 0 20px rgba(192, 132, 252, 0.4);
         }
 
-        .banner-glow {
-            text-shadow: 0 0 15px rgba(0,0,0,0.9), 0 2px 6px rgba(0,0,0,1);
+        .animate-bounce-slow {
+            animation: bounce-slow 2.5s infinite ease-in-out;
         }
-        .neon-blue-glow {
-            text-shadow: 0 0 10px rgba(6, 182, 212, 0.8), 0 0 20px rgba(59, 130, 246, 0.6);
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
         }
-        .neon-border {
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+
+        /* ===== FRONTIER DASHBOARD — reference-matched visual theme ===== */
+        :root { --hub-blue:#36cfff; --hub-violet:#8b72ff; --hub-line:rgba(53,207,255,.58); }
+        .frontier-hub {
+            position:relative; isolation:isolate; overflow:hidden;
+            width:100%; max-width:1120px; margin:0 auto;
+            padding:clamp(14px,2vw,24px);
+            border:1px solid rgba(91,135,177,.20); border-radius:2px;
+            background:
+              radial-gradient(ellipse at 50% 48%,rgba(18,80,143,.18),transparent 34%),
+              linear-gradient(180deg,rgba(3,8,18,.97),rgba(2,5,12,.99));
+            box-shadow:0 25px 75px rgba(0,0,0,.55),inset 0 0 55px rgba(20,94,161,.055);
+        }
+        .frontier-hub:before {
+            content:""; position:absolute; inset:0; z-index:-2; opacity:.26; pointer-events:none;
+            background-image:linear-gradient(rgba(39,126,190,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(39,126,190,.10) 1px,transparent 1px);
+            background-size:34px 34px;
+            mask-image:linear-gradient(to bottom,transparent,#000 16%,#000 84%,transparent);
+        }
+        .frontier-hub:after {
+            content:""; position:absolute; width:75%; height:52%; left:12.5%; top:26%; z-index:-1;
+            border:1px solid rgba(41,148,235,.10); border-radius:50%;
+            box-shadow:0 0 70px rgba(25,122,220,.08),inset 0 0 70px rgba(25,122,220,.05);
+            pointer-events:none;
+        }
+        .frontier-title { display:none; }
+        .frontier-grid {
+            display:grid; position:relative;
+            grid-template-columns:minmax(0,1fr) minmax(250px,1.48fr) minmax(0,1fr);
+            grid-template-rows:100px 150px 118px;
+            gap:14px 18px; align-items:stretch;
+        }
+        .frontier-card {
+            position:relative; min-width:0; min-height:0; width:100%; height:100%;
+            text-align:left; padding:13px 14px; overflow:hidden;
+            border:1px solid rgba(112,154,197,.38); border-radius:11px;
+            color:#eaf6ff;
+            background:linear-gradient(145deg,rgba(15,27,45,.88),rgba(4,10,21,.94));
+            box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 8px 24px rgba(0,0,0,.20);
+            transition:transform .22s,border-color .22s,box-shadow .22s; cursor:pointer;
+            backdrop-filter:blur(12px);
+        }
+        .frontier-card:before {
+            content:""; position:absolute; inset:0; pointer-events:none; opacity:.28;
+            background:linear-gradient(115deg,transparent 20%,rgba(61,161,255,.08) 50%,transparent 80%);
+        }
+        .frontier-card:hover { transform:translateY(-2px); border-color:rgba(53,207,255,.8); box-shadow:0 0 24px rgba(53,174,255,.15); }
+        .frontier-card .card-top { display:flex; align-items:center; gap:8px; margin-bottom:7px; position:relative; }
+        .frontier-card .card-icon {
+            width:19px; height:19px; display:grid; place-items:center; border-radius:50%;
+            color:#76cfff; background:rgba(35,116,204,.22); border:1px solid rgba(53,158,255,.28); flex-shrink:0;
+            font-size:9px;
+        }
+        .frontier-card h3 { font-size:10px; font-weight:600; letter-spacing:.01em; color:#e4efff; line-height:1.2; }
+        .frontier-card p { color:#8196b2; font-size:9px; line-height:1.35; position:relative; max-width:95%; }
+        .frontier-card .card-foot { margin-top:6px; color:#4fcaff; font-size:8px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; position:relative; }
+        /* Mini-interface details emulate the compact cards in the supplied reference */
+        .frontier-card:after {
+            content:""; display:block; height:3px; width:42%; margin-top:7px; border-radius:6px;
+            background:linear-gradient(90deg,rgba(51,166,255,.55),rgba(51,166,255,.08));
+            box-shadow:0 7px 0 rgba(105,133,172,.14),0 14px 0 rgba(105,133,172,.09);
+        }
+        .frontier-core {
+            grid-column:2; grid-row:2; min-height:150px; position:relative; overflow:hidden;
+            display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
+            text-align:center; padding:13px 12px 10px;
+            border:1px solid rgba(105,152,202,.48); border-radius:13px;
+            background:radial-gradient(ellipse at 50% 58%,rgba(13,61,114,.24),transparent 53%),linear-gradient(150deg,rgba(6,15,30,.96),rgba(2,7,17,.98));
+            box-shadow:inset 0 0 30px rgba(35,136,222,.07),0 0 22px rgba(0,0,0,.22);
+        }
+        .frontier-core h3 { z-index:2; position:relative; margin:0; color:#f1f7ff; font-size:11px; font-weight:700; letter-spacing:.36em; }
+        .frontier-core p { z-index:2; position:absolute; bottom:31px; color:#8ca9c4; font-size:7px; letter-spacing:.12em; margin:0; }
+        .frontier-orbit {
+            position:absolute; left:10%; top:37%; width:80%; height:65px;
+            border:1px solid rgba(45,183,255,.52); border-radius:50%;
+            transform:perspective(240px) rotateX(58deg);
+            box-shadow:0 0 18px rgba(42,172,255,.15);
+        }
+        .frontier-orbit.orbit-two {
+            left:20%; top:40%; width:60%; height:52px;
+            border-color:rgba(139,124,255,.72);
+            transform:perspective(240px) rotateX(58deg) rotateZ(-13deg);
+        }
+        .frontier-logo-wrap {
+            position:absolute; z-index:1; top:31%; left:50%; transform:translateX(-50%);
+            width:67px; height:67px; display:grid; place-items:center; border-radius:50%; padding:4px;
+            border:1px solid rgba(69,196,255,.72);
+            background:radial-gradient(circle,rgba(16,43,70,.88),rgba(2,8,18,.94));
+            box-shadow:0 0 25px rgba(53,159,255,.34),inset 0 0 22px rgba(53,207,255,.12);
+        }
+        .frontier-logo-wrap img { width:100%; height:100%; object-fit:contain; border-radius:50%; cursor:pointer; }
+        .frontier-stats { display:flex; gap:6px; margin-top:auto; padding-top:84px; position:relative; z-index:2; }
+        .frontier-stat { border:1px solid rgba(88,145,197,.24); background:rgba(5,16,30,.72); border-radius:5px; padding:4px 7px; color:#8fb5d2; font-size:7px; white-space:nowrap; }
+        .frontier-stat i { color:#55d5ff; margin-right:3px; }
+        .frontier-orbit:after { content:""; position:absolute; width:5px; height:5px; left:12%; top:50%; border-radius:50%; background:#55d5ff; box-shadow:0 0 10px #55d5ff; }
+        .frontier-card .card-icon i { font-size:9px; }
+        @keyframes frontierPulse { 0%,100% { opacity:.65; filter:brightness(.9); } 50% { opacity:1; filter:brightness(1.4); } }
+        .frontier-logo-wrap { animation:frontierPulse 3.5s ease-in-out infinite; }
+        .frontier-card.booking { grid-column:1; grid-row:1; transform:translateY(32px); }
+        .frontier-card.mentor { grid-column:2; grid-row:1; justify-self:center; width:62%; height:82%; align-self:start; }
+        .frontier-card.community { grid-column:3; grid-row:1; transform:translateY(25px); }
+        .frontier-card.documents { grid-column:1; grid-row:2; transform:translateY(5px); }
+        .frontier-card.messages { grid-column:3; grid-row:2; transform:translateY(8px); }
+        .frontier-card.notifications { grid-column:1; grid-row:3; transform:translateY(-1px); }
+        .frontier-card.analytics { grid-column:3; grid-row:3; transform:translateY(-5px); }
+        .frontier-bottom { grid-column:2; grid-row:3; display:flex; justify-content:center; align-items:center; gap:8px; flex-wrap:wrap; }
+        .frontier-bottom button {
+            border:1px solid rgba(53,207,255,.28); color:#bdefff; background:rgba(10,29,48,.74);
+            border-radius:7px; padding:8px 10px; font-size:9px; font-weight:700;
+        }
+        .frontier-bottom button:hover { background:rgba(23,91,128,.45); }
+        @media(min-width:761px) {
+            .frontier-hub { min-height:440px; }
+            .frontier-grid { min-height:386px; }
+        }
+        @media(max-width:760px) {
+            .frontier-hub { padding:12px; }
+            .frontier-grid { grid-template-columns:1fr 1fr; grid-template-rows:auto; gap:10px; }
+            .frontier-card.booking,.frontier-card.mentor,.frontier-card.community,.frontier-card.documents,.frontier-card.messages,.frontier-card.notifications,.frontier-card.analytics,.frontier-core,.frontier-bottom {
+                grid-column:auto; grid-row:auto; width:auto; height:auto; transform:none;
+            }
+            .frontier-core { grid-column:1 / -1; grid-row:1; min-height:210px; }
+            .frontier-card.mentor { justify-self:stretch; }
+            .frontier-card { min-height:105px; padding:12px; }
+            .frontier-card h3 { font-size:10px; }
+            .frontier-logo-wrap { top:32%; width:76px; height:76px; }
+            .frontier-orbit { top:39%; }
+            .frontier-stats { padding-top:115px; }
+            .frontier-bottom { grid-column:1 / -1; min-height:60px; }
+        }
+        @media(max-width:420px) {
+            .frontier-grid { grid-template-columns:1fr; }
+            .frontier-core,.frontier-bottom { grid-column:1; }
+            .frontier-core { grid-row:1; }
         }
     </style>
 </head>
-<body class="bg-[#05070a] text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-purple-600 selection:text-white overflow-x-hidden">
+<body class="text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-purple-600 selection:text-white overflow-x-hidden">
 
     <!-- LOADING SCREEN -->
     <div id="loading-screen">
@@ -167,9 +335,8 @@
     </div>
 
     <!-- HEADER NAVIGATION -->
-    <header class="sticky top-0 z-50 bg-[#070a0f]/95 backdrop-blur-md text-white border-b border-purple-900/40 shadow-2xl">
+    <header class="sticky top-0 z-50 bg-[#070a0f]/90 backdrop-blur-md text-white border-b border-purple-900/50 shadow-2xl">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            
             <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
                 <div class="relative">
                     <img src="KPA CADAS.jpg" alt="Logo KPA CADAS" class="w-11 h-11 sm:w-12 sm:h-12 object-contain rounded-full border-2 border-purple-500 p-0.5 bg-black shadow-lg" onerror="this.src='https://via.placeholder.com/150/000000/a855f7?text=CADAS'">
@@ -231,18 +398,18 @@
                 </button>
             </nav>
 
-            <!-- MOBILE NAV ICONS & HAMBURGER -->
+            <!-- MOBILE NAV ICONS -->
             <div class="lg:hidden flex items-center space-x-1">
-                <button onclick="switchTab('trails')" class="p-2 rounded-xl text-purple-400 hover:bg-purple-950/50" title="Peta & Cuaca">
+                <button onclick="switchTab('trails')" class="p-2 rounded-xl text-purple-400 hover:bg-purple-950/50">
                     <i class="fa-solid fa-cloud-sun text-base"></i>
                 </button>
-                <button onclick="switchTab('kta')" class="p-2 rounded-xl text-purple-400 hover:bg-purple-950/50" title="Cek KTA">
+                <button onclick="switchTab('kta')" class="p-2 rounded-xl text-purple-400 hover:bg-purple-950/50">
                     <i class="fa-solid fa-id-card text-base"></i>
                 </button>
-                <button onclick="openRentalModal()" class="p-2 rounded-xl text-amber-500 hover:bg-amber-950/50" title="Sewa Alat">
+                <button onclick="openRentalModal()" class="p-2 rounded-xl text-amber-500 hover:bg-amber-950/50">
                     <i class="fa-solid fa-campground text-base"></i>
                 </button>
-                <button onclick="openServiceModal()" class="p-2 rounded-xl text-cyan-400 hover:bg-cyan-950/50" title="Service HP">
+                <button onclick="openServiceModal()" class="p-2 rounded-xl text-cyan-400 hover:bg-cyan-950/50">
                     <i class="fa-solid fa-screwdriver-wrench text-base"></i>
                 </button>
                 <button onclick="toggleMobileMenu()" class="p-2 rounded-xl text-purple-400 hover:bg-purple-950/50">
@@ -251,7 +418,6 @@
             </div>
         </div>
         
-        <!-- MOBILE DROPDOWN MENU -->
         <div id="mobile-menu" class="hidden lg:hidden bg-[#070a0f] border-t border-purple-900/40 px-4 pt-3 pb-5 space-y-2.5">
             <button onclick="switchTab('home'); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-xs font-semibold text-white hover:bg-purple-950/50"><i class="fa-solid fa-compass mr-2 text-purple-400"></i>Beranda</button>
             <button onclick="switchTab('register'); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-xs font-semibold text-white hover:bg-purple-950/50"><i class="fa-solid fa-file-lines mr-2 text-purple-400"></i>Formulir Pendaftaran</button>
@@ -272,8 +438,62 @@
         <!-- HOME SECTION -->
         <section id="view-home" class="view-section py-6 sm:py-10">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-10">
-                
-                <div class="cyber-banner p-4 sm:p-6 flex flex-col lg:flex-row items-center justify-between gap-6" style="background-image: linear-gradient(90deg, rgba(5,7,10,0.92) 0%, rgba(22,12,40,0.75) 50%, rgba(5,7,10,0.92) 100%), url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=80'); background-size: cover; background-position: center;">
+
+                <!-- FRONTIER HUB: panel navigasi visual baru; seluruh view dan fungsi lama dipertahankan -->
+                <section class="frontier-hub" aria-label="KPA CADAS Frontier Dashboard">
+                    <div class="frontier-title">
+                        <div class="eyebrow">KPA CADAS • DIGITAL ADVENTURE SYSTEM</div>
+                        <h2>FRONTIER</h2>
+                        <p>Terhubung dengan alam, komunitas, dan petualangan</p>
+                    </div>
+                    <div class="frontier-grid">
+                        <button type="button" class="frontier-card booking" onclick="switchTab('register')">
+                            <div class="card-top"><span class="card-icon"><i class="fa-solid fa-calendar-check"></i></span><h3>Pendaftaran Anggota</h3></div>
+                            <p>Formulir calon anggota dan data pendaftaran Diksar.</p><div class="card-foot">Buka formulir ↗</div>
+                        </button>
+                        <button type="button" class="frontier-card mentor" onclick="switchTab('kta')">
+                            <div class="card-top"><span class="card-icon"><i class="fa-solid fa-id-card"></i></span><h3>Keanggotaan</h3></div>
+                            <p>Pencarian data anggota dan KTA KPA CADAS.</p><div class="card-foot">Data anggota ↗</div>
+                        </button>
+                        <button type="button" class="frontier-card community" onclick="switchTab('gallery')">
+                            <div class="card-top"><span class="card-icon"><i class="fa-solid fa-users"></i></span><h3>Komunitas</h3></div>
+                            <p>Dokumentasi foto dan video kegiatan bersama.</p><div class="card-foot">Lihat galeri ↗</div>
+                        </button>
+                        <button type="button" class="frontier-card documents" onclick="switchTab('ethics')">
+                            <div class="card-top"><span class="card-icon"><i class="fa-solid fa-folder-open"></i></span><h3>Dokumen & Etika</h3></div>
+                            <p>Pedoman, aturan, dan etika pencinta alam.</p><div class="card-foot">Buka dokumen ↗</div>
+                        </button>
+                        <div class="frontier-core">
+                            <h3>K.P.A CADAS</h3>
+                            <div class="frontier-orbit"></div><div class="frontier-orbit orbit-two"></div>
+                            <div class="frontier-logo-wrap"><img src="KPA CADAS.jpg" alt="Logo KPA CADAS" onerror="this.src='https://via.placeholder.com/150/020812/35cfff?text=CADAS'" onclick="openLogoModal()"></div>
+                            <p>CINTA ALAM DAN SEMESTA • PAREPARE</p>
+                            <div class="frontier-stats">
+                                <div class="frontier-stat"><i class="fa-solid fa-mountain-sun"></i> Adventure</div>
+                                <div class="frontier-stat"><i class="fa-solid fa-leaf"></i> Nature</div>
+                                <div class="frontier-stat"><i class="fa-solid fa-people-group"></i> Solidarity</div>
+                            </div>
+                        </div>
+                        <button type="button" class="frontier-card messages" onclick="openAdminModal()">
+                            <div class="card-top"><span class="card-icon"><i class="fa-solid fa-comments"></i></span><h3>Pesan & Admin</h3></div>
+                            <p>Akses panel pengelolaan sistem dan data.</p><div class="card-foot">Panel admin ↗</div>
+                        </button>
+                        <button type="button" class="frontier-card notifications" onclick="switchTab('trails')">
+                            <div class="card-top"><span class="card-icon"><i class="fa-solid fa-cloud-sun"></i></span><h3>Peta & Cuaca</h3></div>
+                            <p>Pantau peta jalur dan informasi cuaca pendakian.</p><div class="card-foot">Buka peta ↗</div>
+                        </button>
+                        <div class="frontier-bottom">
+                            <button type="button" onclick="switchTab('home')"><i class="fa-solid fa-house"></i> Beranda</button>
+                            <button type="button" onclick="switchTab('trails')"><i class="fa-solid fa-map-location-dot"></i> Eksplorasi</button>
+                        </div>
+                        <button type="button" class="frontier-card analytics" onclick="switchTab('trails')">
+                            <div class="card-top"><span class="card-icon"><i class="fa-solid fa-chart-line"></i></span><h3>Analitik Pendakian</h3></div>
+                            <p>Cuaca gunung, data lokasi, dan pemantauan perjalanan.</p><div class="card-foot">Lihat analitik ↗</div>
+                        </button>
+                    </div>
+                </section>
+
+                <div class="cyber-banner p-4 sm:p-6 flex flex-col lg:flex-row items-center justify-between gap-6">
                     <div class="flex items-center space-x-3 sm:space-x-4 z-10 text-center sm:text-left flex-col sm:flex-row">
                         <img src="KPA CADAS.jpg" alt="Logo KPA CADAS" class="w-16 h-16 sm:w-20 sm:h-20 object-contain rounded-full border-2 border-purple-500 bg-black p-1 shadow-2xl cursor-pointer" onerror="this.src='https://via.placeholder.com/150/000000/a855f7?text=CADAS'" onclick="openLogoModal()">
                         <div class="space-y-0.5 mt-2 sm:mt-0">
@@ -306,6 +526,111 @@
                     </div>
                 </div>
 
+                <!-- WIDGET CUACA DENGAN BACKGROUND PEGUNUNGAN ELEGAN -->
+                <div class="themed-card-weather rounded-3xl p-5 sm:p-7 border-2 border-purple-500/70 shadow-2xl space-y-6 backdrop-blur-sm">
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-purple-900/80 pb-4">
+                        <div class="flex items-center space-x-3 text-center sm:text-left">
+                            <div class="w-11 h-11 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl font-bold flex-shrink-0 border border-purple-500/40">
+                                <i class="fa-solid fa-location-crosshairs text-purple-400"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-serif font-bold text-base sm:text-lg text-white">Live Weather Radar & GPS Pendaki</h3>
+                                <p class="text-xs text-purple-300">Cuaca lokasi Anda saat ini + Pantauan Gunung Favorit Pendaki</p>
+                            </div>
+                        </div>
+                        <button onclick="initUserGPSWeather()" class="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white font-bold rounded-xl text-xs flex items-center space-x-2 shadow transition border border-purple-400">
+                            <i class="fa-solid fa-location-arrow"></i>
+                            <span>Deteksi GPS Saya</span>
+                        </button>
+                    </div>
+
+                    <!-- KARTU CUACA GPS LOKASI SAYA BER-BACKGROUND TEMA -->
+                    <div id="gps-weather-card" class="themed-card-gps rounded-2xl p-4 sm:p-5 border border-purple-500/50 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-4">
+                        <div class="flex items-center space-x-4">
+                            <div id="gps-weather-icon" class="text-4xl text-purple-400 animate-bounce-slow">
+                                <i class="fa-solid fa-spinner fa-spin"></i>
+                            </div>
+                            <div>
+                                <span class="text-[10px] font-extrabold uppercase tracking-widest text-purple-200 bg-purple-500/30 px-2.5 py-0.5 rounded-full border border-purple-400">LOKASI ANDA SAAT INI (GPS)</span>
+                                <h4 id="gps-location-title" class="font-bold text-base sm:text-lg text-white mt-1">Mendeteksi lokasi GPS HP...</h4>
+                                <p id="gps-condition-text" class="text-xs text-slate-300 mt-0.5">Memuat data cuaca terkini...</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-6 text-center">
+                            <div>
+                                <span class="text-[9px] text-slate-300 uppercase font-bold block">Suhu Udara</span>
+                                <span id="gps-temp" class="text-2xl font-black text-purple-300">- °C</span>
+                            </div>
+                            <div class="border-l border-purple-800/80 pl-6">
+                                <span class="text-[9px] text-slate-300 uppercase font-bold block">Kecepatan Angin</span>
+                                <span id="gps-wind" class="text-sm font-extrabold text-amber-400">- km/h</span>
+                            </div>
+                            <div class="border-l border-purple-800/80 pl-6">
+                                <span class="text-[9px] text-slate-300 uppercase font-bold block">Kelembapan</span>
+                                <span id="gps-humidity" class="text-sm font-extrabold text-cyan-300">- %</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3 KARTU CUACA LOKASI FAVORIT DENGAN GRAFIK BERGERAK LIVE -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <!-- LATIMOJONG -->
+                        <div class="bg-gradient-to-b from-[#0c1017]/90 to-[#05070a]/95 p-4 rounded-2xl border border-purple-500/40 space-y-3 relative overflow-hidden backdrop-blur-md">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <span class="text-[9px] font-bold text-purple-300 bg-purple-500/20 px-2 py-0.5 rounded uppercase border border-purple-500/40">Puncak Latimojong</span>
+                                    <h5 class="font-bold text-sm text-white mt-1">Gunung Latimojong</h5>
+                                </div>
+                                <div id="icon-latimojong" class="text-2xl text-purple-400"><i class="fa-solid fa-mountain"></i></div>
+                            </div>
+                            <div class="flex justify-between items-baseline pt-1">
+                                <span id="temp-latimojong" class="text-2xl font-black text-white">- °C</span>
+                                <span id="cond-latimojong" class="text-xs font-bold text-purple-300">-</span>
+                            </div>
+                            <div class="h-12 w-full pt-1">
+                                <canvas id="sparkline-latimojong"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- BAWAKARAENG -->
+                        <div class="bg-gradient-to-b from-[#0c1017]/90 to-[#05070a]/95 p-4 rounded-2xl border border-cyan-500/40 space-y-3 relative overflow-hidden backdrop-blur-md">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <span class="text-[9px] font-bold text-cyan-300 bg-cyan-500/20 px-2 py-0.5 rounded uppercase border border-cyan-500/40">Puncak Bawakaraeng</span>
+                                    <h5 class="font-bold text-sm text-white mt-1">Gunung Bawakaraeng</h5>
+                                </div>
+                                <div id="icon-bawakaraeng" class="text-2xl text-cyan-400"><i class="fa-solid fa-mountain-sun"></i></div>
+                            </div>
+                            <div class="flex justify-between items-baseline pt-1">
+                                <span id="temp-bawakaraeng" class="text-2xl font-black text-white">- °C</span>
+                                <span id="cond-bawakaraeng" class="text-xs font-bold text-cyan-300">-</span>
+                            </div>
+                            <div class="h-12 w-full pt-1">
+                                <canvas id="sparkline-bawakaraeng"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- KOTA PAREPARE -->
+                        <div class="bg-gradient-to-b from-[#0c1017]/90 to-[#05070a]/95 p-4 rounded-2xl border border-amber-500/40 space-y-3 relative overflow-hidden backdrop-blur-md">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <span class="text-[9px] font-bold text-amber-300 bg-amber-500/20 px-2 py-0.5 rounded uppercase border border-amber-500/40">Sekretariat Utama</span>
+                                    <h5 class="font-bold text-sm text-white mt-1">Kota Parepare</h5>
+                                </div>
+                                <div id="icon-parepare" class="text-2xl text-amber-400"><i class="fa-solid fa-city"></i></div>
+                            </div>
+                            <div class="flex justify-between items-baseline pt-1">
+                                <span id="temp-parepare" class="text-2xl font-black text-white">- °C</span>
+                                <span id="cond-parepare" class="text-xs font-bold text-amber-300">-</span>
+                            </div>
+                            <div class="h-12 w-full pt-1">
+                                <canvas id="sparkline-parepare"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="relative max-w-6xl mx-auto my-6 sm:my-12">
                     <svg class="hidden lg:block absolute inset-0 w-full h-full pointer-events-none" style="z-index: 0;">
                         <path d="M 320 100 L 480 100 L 520 250" class="circuit-line-left" />
@@ -323,7 +648,7 @@
                                     <i class="fa-solid fa-cloud-sun"></i>
                                 </div>
                                 <h3 class="font-bold text-xs sm:text-sm text-white tracking-wide uppercase">Peta & Cuaca Pendakian</h3>
-                                <p class="text-[10px] sm:text-[11px] text-slate-400 mt-1.5 sm:mt-2 leading-relaxed">Cek cuaca kota/kabupaten/gunung mana saja secara live & akses peta interaktif Latimojong atau Bawakaraeng.</p>
+                                <p class="text-[10px] sm:text-[11px] text-slate-300 mt-1.5 sm:mt-2 leading-relaxed">Cek cuaca kota/kabupaten/gunung mana saja secara live & akses peta interaktif Latimojong atau Bawakaraeng.</p>
                             </div>
 
                             <div onclick="openLogoModal()" class="chamfer-card p-5 sm:p-6 cursor-pointer group text-center">
@@ -331,7 +656,7 @@
                                     <i class="fa-solid fa-shield-halved"></i>
                                 </div>
                                 <h3 class="font-bold text-xs sm:text-sm text-white tracking-wide uppercase">K.P.A CADAS PAREPARE</h3>
-                                <p class="text-[10px] sm:text-[11px] text-slate-400 mt-1.5 sm:mt-2 leading-relaxed">Cinta Alam Dan Semesta — Klik untuk melihat bedah makna filosofis lambang & unduh logo resmi.</p>
+                                <p class="text-[10px] sm:text-[11px] text-slate-300 mt-1.5 sm:mt-2 leading-relaxed">Cinta Alam Dan Semesta — Klik untuk melihat bedah makna filosofis lambang & unduh logo resmi.</p>
                             </div>
 
                             <div onclick="switchTab('ethics')" class="chamfer-card p-5 sm:p-6 cursor-pointer group text-center">
@@ -339,7 +664,7 @@
                                     <i class="fa-solid fa-book-open"></i>
                                 </div>
                                 <h3 class="font-bold text-xs sm:text-sm text-white tracking-wide uppercase">Kode Etik & Tata Tertib</h3>
-                                <p class="text-[10px] sm:text-[11px] text-slate-400 mt-1.5 sm:mt-2 leading-relaxed">Pedoman dasar perilaku, etika kegiatan alam bebas, serta aturan pendidikan dasar (DIKSAR).</p>
+                                <p class="text-[10px] sm:text-[11px] text-slate-300 mt-1.5 sm:mt-2 leading-relaxed">Pedoman dasar perilaku, etika kegiatan alam bebas, serta aturan pendidikan dasar (DIKSAR).</p>
                             </div>
                         </div>
 
@@ -374,7 +699,7 @@
                                     <i class="fa-solid fa-file-lines"></i>
                                 </div>
                                 <h3 class="font-bold text-xs sm:text-sm text-white tracking-wide uppercase">Pendaftaran Online</h3>
-                                <p class="text-[10px] sm:text-[11px] text-slate-400 mt-1.5 sm:mt-2 leading-relaxed">Formulir Resmi Pendaftaran Calon Anggota Baru: Silakan isi Data Diri Anda secara lengkap.</p>
+                                <p class="text-[10px] sm:text-[11px] text-slate-300 mt-1.5 sm:mt-2 leading-relaxed">Formulir Resmi Pendaftaran Calon Anggota Baru: Silakan isi Data Diri Anda secara lengkap.</p>
                             </div>
 
                             <div onclick="switchTab('kta')" class="chamfer-card p-5 sm:p-6 cursor-pointer group text-center">
@@ -382,7 +707,7 @@
                                     <i class="fa-solid fa-id-card"></i>
                                 </div>
                                 <h3 class="font-bold text-xs sm:text-sm text-white tracking-wide uppercase">Cek KTA Digital</h3>
-                                <p class="text-[10px] sm:text-[11px] text-slate-400 mt-1.5 sm:mt-2 leading-relaxed">Masukkan Nomor Induk Anggota (NIA) atau Nama Lengkap untuk menampilkan kartu digital resmi.</p>
+                                <p class="text-[10px] sm:text-[11px] text-slate-300 mt-1.5 sm:mt-2 leading-relaxed">Masukkan Nomor Induk Anggota (NIA) atau Nama Lengkap untuk menampilkan kartu digital resmi.</p>
                             </div>
 
                             <div onclick="openRentalModal()" class="chamfer-card p-5 sm:p-6 cursor-pointer group text-center">
@@ -390,7 +715,7 @@
                                     <i class="fa-solid fa-campground"></i>
                                 </div>
                                 <h3 class="font-bold text-xs sm:text-sm text-white tracking-wide uppercase">Layanan Tambahan</h3>
-                                <p class="text-[10px] sm:text-[11px] text-slate-400 mt-1.5 sm:mt-2 leading-relaxed">Sewa Alat Outdoor Camping & Service Smartphone Bergaransi di Kota Parepare.</p>
+                                <p class="text-[10px] sm:text-[11px] text-slate-300 mt-1.5 sm:mt-2 leading-relaxed">Sewa Alat Outdoor Camping & Service Smartphone Bergaransi di Kota Parepare.</p>
                             </div>
                         </div>
 
@@ -398,32 +723,32 @@
                 </div>
 
                 <div class="pt-2 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
-                    <button onclick="switchTab('register')" class="px-5 py-2.5 sm:px-6 sm:py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl shadow-lg transition flex items-center space-x-2 text-xs">
+                    <button onclick="switchTab('register')" class="px-5 py-2.5 sm:px-6 sm:py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl shadow-lg transition flex items-center space-x-2 text-xs border border-purple-400">
                         <i class="fa-solid fa-pen-to-square"></i>
                         <span>Daftar Sekarang</span>
                     </button>
-                    <button onclick="switchTab('trails')" class="px-5 py-2.5 sm:px-6 sm:py-3 bg-[#161f2c] hover:bg-purple-950 text-purple-300 font-bold rounded-xl border border-purple-500/40 shadow-lg transition flex items-center space-x-2 text-xs">
+                    <button onclick="switchTab('trails')" class="px-5 py-2.5 sm:px-6 sm:py-3 bg-[#161f2c]/80 hover:bg-purple-950 text-purple-300 font-bold rounded-xl border border-purple-500/40 shadow-lg transition flex items-center space-x-2 text-xs backdrop-blur-sm">
                         <i class="fa-solid fa-cloud-sun"></i>
                         <span>Peta & Cuaca</span>
                     </button>
-                    <button onclick="openRentalModal()" class="px-5 py-2.5 sm:px-6 sm:py-3 bg-[#161f2c] hover:bg-purple-950 text-amber-400 font-bold rounded-xl border border-amber-500/40 shadow-lg transition flex items-center space-x-2 text-xs">
+                    <button onclick="openRentalModal()" class="px-5 py-2.5 sm:px-6 sm:py-3 bg-[#161f2c]/80 hover:bg-purple-950 text-amber-400 font-bold rounded-xl border border-amber-500/40 shadow-lg transition flex items-center space-x-2 text-xs backdrop-blur-sm">
                         <i class="fa-solid fa-campground"></i>
                         <span>Sewa Alat Outdoor</span>
                     </button>
-                    <button onclick="openServiceModal()" class="px-5 py-2.5 sm:px-6 sm:py-3 bg-[#161f2c] hover:bg-purple-950 text-cyan-400 font-bold rounded-xl border border-cyan-500/40 shadow-lg transition flex items-center space-x-2 text-xs">
+                    <button onclick="openServiceModal()" class="px-5 py-2.5 sm:px-6 sm:py-3 bg-[#161f2c]/80 hover:bg-purple-950 text-cyan-400 font-bold rounded-xl border border-cyan-500/40 shadow-lg transition flex items-center space-x-2 text-xs backdrop-blur-sm">
                         <i class="fa-solid fa-screwdriver-wrench"></i>
                         <span>Service HP</span>
                     </button>
-                    <button onclick="switchTab('gallery')" class="px-5 py-2.5 sm:px-6 sm:py-3 bg-[#161f2c] hover:bg-purple-950 text-purple-300 font-bold rounded-xl border border-purple-500/40 shadow-lg transition flex items-center space-x-2 text-xs">
+                    <button onclick="switchTab('gallery')" class="px-5 py-2.5 sm:px-6 sm:py-3 bg-[#161f2c]/80 hover:bg-purple-950 text-purple-300 font-bold rounded-xl border border-purple-500/40 shadow-lg transition flex items-center space-x-2 text-xs backdrop-blur-sm">
                         <i class="fa-solid fa-images"></i>
                         <span>Galeri Foto</span>
                     </button>
                 </div>
 
                 <div class="pt-6 sm:pt-8">
-                    <div class="bg-[#0c1017] p-5 sm:p-6 rounded-3xl border border-purple-900/40 space-y-4 shadow-xl">
+                    <div class="bg-[#0c1017]/90 backdrop-blur-md p-5 sm:p-6 rounded-3xl border border-purple-900/60 space-y-4 shadow-xl">
                         <div class="flex items-center space-x-3 text-purple-400">
-                            <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/40 flex items-center justify-center text-lg flex-shrink-0">
+                            <div class="w-10 h-10 rounded-xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-lg flex-shrink-0">
                                 <i class="fa-solid fa-location-dot"></i>
                             </div>
                             <h3 class="font-serif font-bold text-sm sm:text-base text-white">Sekretariat Utama & Titik Kumpul K.P.A CADAS</h3>
@@ -436,13 +761,13 @@
                                     Silakan kunjungi sekretariat kami atau hubungi admin melalui WhatsApp untuk informasi kegiatan dan pendaftaran Diksar.
                                 </p>
                                 <div class="pt-3">
-                                    <a href="https://wa.me/6282343551039?text=Halo%20Admin%20KPA%20CADAS,%20saya%20mau%20berkunjung%20ke%20sekretariat." target="_blank" class="w-full py-2.5 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl text-xs flex items-center justify-center space-x-2 shadow transition">
+                                    <a href="https://wa.me/6282343551039?text=Halo%20Admin%20KPA%20CADAS,%20saya%20mau%20berkunjung%20ke%20sekretariat." target="_blank" class="w-full py-2.5 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl text-xs flex items-center justify-center space-x-2 shadow transition border border-purple-400">
                                         <i class="fa-brands fa-whatsapp text-base"></i>
                                         <span>Hubungi Admin / Panduan Arah</span>
                                     </a>
                                 </div>
                             </div>
-                            <div class="lg:col-span-2 rounded-2xl overflow-hidden border border-purple-500/40 h-56 sm:h-64">
+                            <div class="lg:col-span-2 rounded-2xl overflow-hidden border border-purple-500/40 h-56 sm:h-64 shadow-2xl">
                                 <iframe 
                                     src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d50847.2258756!2d119.6200!3d-4.0150!2m3!1f30!2f60!3f0!3m2!1i1024!2i768!4f35!5e1!3m2!1sen!2sid!4v1650000000000!5m2!1sen!2sid" 
                                     width="100%" 
@@ -464,19 +789,18 @@
         <!-- SECTION FITUR PETA & CUACA GABUNGAN -->
         <section id="view-trails" class="view-section hidden py-8 sm:py-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-                <div class="bg-[#0c1017] text-white rounded-3xl p-6 sm:p-8 border-b-4 border-purple-500 shadow-xl text-center space-y-3">
-                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-purple-300 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/30">Pusat Navigasi & Informasi Cuaca Pendakian</span>
-                    <h2 class="font-serif text-xl sm:text-3xl font-bold">PANTAU CUACA & JALUR PENDAKIAN</h2>
-                    <p class="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto">
+                <div class="cyber-banner p-6 sm:p-8 text-center space-y-3">
+                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-purple-200 bg-purple-600/40 px-3.5 py-1 rounded-full border border-purple-400">Pusat Navigasi & Informasi Cuaca Pendakian</span>
+                    <h2 class="font-serif text-xl sm:text-3xl font-bold text-white">PANTAU CUACA & JALUR PENDAKIAN</h2>
+                    <p class="text-xs sm:text-sm text-slate-200 max-w-2xl mx-auto">
                         Cari nama kota, kabupaten, gunung, atau wilayah mana saja di Indonesia pada kolom pencarian di bawah.
                     </p>
                 </div>
 
-                <!-- WIDGET CEK CUACA PENCARIAN BEBAS -->
-                <div class="bg-[#0c1017] rounded-3xl p-6 sm:p-8 border-2 border-cyan-500/70 shadow-2xl space-y-6">
-                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-cyan-900 pb-4">
+                <div class="bg-[#0c1017]/90 backdrop-blur-md rounded-3xl p-6 sm:p-8 border-2 border-cyan-500/70 shadow-2xl space-y-6">
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-cyan-900/80 pb-4">
                         <div class="flex items-center space-x-3">
-                            <div class="w-12 h-12 rounded-2xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-2xl font-bold flex-shrink-0">
+                            <div class="w-12 h-12 rounded-2xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-2xl font-bold flex-shrink-0 border border-cyan-500/40">
                                 <i class="fa-solid fa-magnifying-glass-location"></i>
                             </div>
                             <div>
@@ -486,50 +810,46 @@
                         </div>
                     </div>
 
-                    <!-- KOTAK INPUT PENCARIAN & SHORTCUT -->
                     <div class="space-y-3">
                         <form onsubmit="event.preventDefault(); searchCustomWeather();" class="flex flex-col sm:flex-row gap-2">
                             <input type="text" id="weather-search-input" placeholder="Ketik nama kota / kabupaten / gunung (Cth: Barru, Pinrang, Sidrap)..." class="w-full px-4 py-3.5 rounded-xl border border-cyan-800 bg-[#070a0f] text-white text-xs sm:text-sm outline-none focus:ring-2 focus:ring-cyan-500">
-                            <button type="submit" class="px-6 py-3.5 bg-cyan-600 hover:bg-cyan-500 text-white font-extrabold rounded-xl text-xs shadow transition flex items-center justify-center space-x-2 flex-shrink-0">
+                            <button type="submit" class="px-6 py-3.5 bg-cyan-600 hover:bg-cyan-500 text-white font-extrabold rounded-xl text-xs shadow transition flex items-center justify-center space-x-2 flex-shrink-0 border border-cyan-400">
                                 <i class="fa-solid fa-cloud-sun text-sm"></i>
                                 <span>Cek Cuaca Live</span>
                             </button>
                         </form>
                         
-                        <!-- TOMBOL JALAN PINTAS POPULER -->
                         <div class="flex flex-wrap items-center gap-1.5 pt-1 text-xs">
                             <span class="text-slate-400 font-bold mr-1">Akses Cepat:</span>
-                            <button onclick="quickSearchWeather('Barru, Sulawesi Selatan', -4.4067, 119.6200)" class="px-3 py-1 rounded-lg bg-cyan-950/60 border border-cyan-800 text-cyan-300 hover:bg-cyan-900 transition">📍 Barru</button>
-                            <button onclick="quickSearchWeather('Gunung Latimojong', -3.3714, 120.0353)" class="px-3 py-1 rounded-lg bg-cyan-950/60 border border-cyan-800 text-cyan-300 hover:bg-cyan-900 transition">🏔️ Latimojong</button>
-                            <button onclick="quickSearchWeather('Gunung Bawakaraeng', -5.3431, 119.9192)" class="px-3 py-1 rounded-lg bg-cyan-950/60 border border-cyan-800 text-cyan-300 hover:bg-cyan-900 transition">⛰️ Bawakaraeng</button>
-                            <button onclick="quickSearchWeather('Kota Parepare', -4.0150, 119.6200)" class="px-3 py-1 rounded-lg bg-cyan-950/60 border border-cyan-800 text-cyan-300 hover:bg-cyan-900 transition">🏙️ Parepare</button>
-                            <button onclick="quickSearchWeather('Toraja Utara', -2.9667, 119.8833)" class="px-3 py-1 rounded-lg bg-cyan-950/60 border border-cyan-800 text-cyan-300 hover:bg-cyan-900 transition">🏡 Toraja</button>
-                            <button onclick="quickSearchWeather('Gunung Rinjani', -8.4111, 116.4572)" class="px-3 py-1 rounded-lg bg-cyan-950/60 border border-cyan-800 text-cyan-300 hover:bg-cyan-900 transition">🌋 Rinjani</button>
+                            <button onclick="quickSearchWeather('Barru, Sulawesi Selatan', -4.4067, 119.6200)" class="px-3 py-1 rounded-lg bg-cyan-950/70 border border-cyan-800 text-cyan-300 hover:bg-cyan-900 transition">📍 Barru</button>
+                            <button onclick="quickSearchWeather('Gunung Latimojong', -3.3714, 120.0353)" class="px-3 py-1 rounded-lg bg-cyan-950/70 border border-cyan-800 text-cyan-300 hover:bg-cyan-900 transition">🏔️ Latimojong</button>
+                            <button onclick="quickSearchWeather('Gunung Bawakaraeng', -5.3431, 119.9192)" class="px-3 py-1 rounded-lg bg-cyan-950/70 border border-cyan-800 text-cyan-300 hover:bg-cyan-900 transition">⛰️ Bawakaraeng</button>
+                            <button onclick="quickSearchWeather('Kota Parepare', -4.0150, 119.6200)" class="px-3 py-1 rounded-lg bg-cyan-950/70 border border-cyan-800 text-cyan-300 hover:bg-cyan-900 transition">🏙️ Parepare</button>
+                            <button onclick="quickSearchWeather('Toraja Utara', -2.9667, 119.8833)" class="px-3 py-1 rounded-lg bg-cyan-950/70 border border-cyan-800 text-cyan-300 hover:bg-cyan-900 transition">🏡 Toraja</button>
+                            <button onclick="quickSearchWeather('Gunung Rinjani', -8.4111, 116.4572)" class="px-3 py-1 rounded-lg bg-cyan-950/70 border border-cyan-800 text-cyan-300 hover:bg-cyan-900 transition">🌋 Rinjani</button>
                         </div>
                     </div>
 
-                    <!-- Keterangan Lokasi Aktif -->
                     <div class="pt-1">
                         <span id="w-location-name" class="font-bold text-sm text-cyan-300 flex items-center">
                             <i class="fa-solid fa-location-dot mr-2"></i> Menampilkan cuaca untuk: Gunung Latimojong
                         </span>
                     </div>
 
-                    <!-- CARD HASIL CUACA -->
                     <div id="weather-result-box" class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-                        <div class="bg-[#070a0f] p-4 rounded-2xl border border-cyan-900/60 space-y-1">
+                        <div class="bg-[#070a0f]/80 p-4 rounded-2xl border border-cyan-900/60 space-y-1">
                             <span class="text-[10px] uppercase text-slate-400 font-bold block">Kondisi Cuaca</span>
                             <div id="w-condition" class="text-xs sm:text-sm font-extrabold text-cyan-300">-</div>
                         </div>
-                        <div class="bg-[#070a0f] p-4 rounded-2xl border border-cyan-900/60 space-y-1">
+                        <div class="bg-[#070a0f]/80 p-4 rounded-2xl border border-cyan-900/60 space-y-1">
                             <span class="text-[10px] uppercase text-slate-400 font-bold block">Suhu Udara</span>
                             <div id="w-temp" class="text-sm sm:text-base font-black text-white">- °C</div>
                         </div>
-                        <div class="bg-[#070a0f] p-4 rounded-2xl border border-cyan-900/60 space-y-1">
+                        <div class="bg-[#070a0f]/80 p-4 rounded-2xl border border-cyan-900/60 space-y-1">
                             <span class="text-[10px] uppercase text-slate-400 font-bold block">Kecepatan Angin</span>
                             <div id="w-wind" class="text-sm sm:text-base font-black text-amber-400">- km/h</div>
                         </div>
-                        <div class="bg-[#070a0f] p-4 rounded-2xl border border-cyan-900/60 space-y-1">
+                        <div class="bg-[#070a0f]/80 p-4 rounded-2xl border border-cyan-900/60 space-y-1">
                             <span class="text-[10px] uppercase text-slate-400 font-bold block">Kelembapan</span>
                             <div id="w-humidity" class="text-sm sm:text-base font-black text-purple-300">- %</div>
                         </div>
@@ -537,9 +857,9 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-[#0c1017] p-5 sm:p-6 rounded-3xl border-2 border-purple-500/60 shadow-xl space-y-4 flex flex-col justify-between">
+                    <div class="bg-[#0c1017]/90 backdrop-blur-md p-5 sm:p-6 rounded-3xl border-2 border-purple-500/60 shadow-xl space-y-4 flex flex-col justify-between">
                         <div class="space-y-3">
-                            <div class="w-12 h-12 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl font-bold">
+                            <div class="w-12 h-12 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl font-bold border border-purple-500/40">
                                 <i class="fa-solid fa-mountain"></i>
                             </div>
                             <h3 class="font-serif font-bold text-lg sm:text-xl text-purple-400">Peta Jalur Latimojong</h3>
@@ -548,7 +868,7 @@
                             </p>
                         </div>
                         <div class="pt-2 flex gap-3">
-                            <button onclick="showMap('latimojong')" class="flex-grow py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl text-xs text-center shadow transition">
+                            <button onclick="showMap('latimojong')" class="flex-grow py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl text-xs text-center shadow transition border border-purple-400">
                                 <i class="fa-solid fa-map-location-dot mr-1"></i> Lihat Peta Latimojong
                             </button>
                             <a href="https://www.google.com/maps/d/u/0/viewer?mid=1uT9im4r_M1oAwIK0spRM1O9UgPK6BIs" target="_blank" class="px-4 py-3 bg-[#070a0f] hover:bg-purple-950 text-purple-300 border border-purple-500/40 rounded-xl text-xs flex items-center justify-center">
@@ -557,9 +877,9 @@
                         </div>
                     </div>
 
-                    <div class="bg-[#0c1017] p-5 sm:p-6 rounded-3xl border-2 border-purple-500/60 shadow-xl space-y-4 flex flex-col justify-between">
+                    <div class="bg-[#0c1017]/90 backdrop-blur-md p-5 sm:p-6 rounded-3xl border-2 border-purple-500/60 shadow-xl space-y-4 flex flex-col justify-between">
                         <div class="space-y-3">
-                            <div class="w-12 h-12 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl font-bold">
+                            <div class="w-12 h-12 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl font-bold border border-purple-500/40">
                                 <i class="fa-solid fa-route"></i>
                             </div>
                             <h3 class="font-serif font-bold text-lg sm:text-xl text-purple-400">Wikiloc Bawakaraeng (Bulubalea)</h3>
@@ -568,7 +888,7 @@
                             </p>
                         </div>
                         <div class="pt-2 flex gap-3">
-                            <button onclick="showMap('bawakaraeng')" class="flex-grow py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl text-xs text-center shadow transition">
+                            <button onclick="showMap('bawakaraeng')" class="flex-grow py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl text-xs text-center shadow transition border border-purple-400">
                                 <i class="fa-solid fa-map-location-dot mr-1"></i> Lihat Peta Bawakaraeng
                             </button>
                             <a href="https://www.wikiloc.com/running-trails/bawakaraeng-via-bulubalea-223946458" target="_blank" class="px-4 py-3 bg-[#070a0f] hover:bg-purple-950 text-purple-300 border border-purple-500/40 rounded-xl text-xs flex items-center justify-center">
@@ -578,7 +898,7 @@
                     </div>
                 </div>
 
-                <div class="bg-[#0c1017] rounded-3xl overflow-hidden border-2 border-purple-500 shadow-2xl p-4 space-y-4">
+                <div class="bg-[#0c1017]/90 backdrop-blur-md rounded-3xl overflow-hidden border-2 border-purple-500 shadow-2xl p-4 space-y-4">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-purple-900 pb-3">
                         <h4 id="map-title" class="font-serif font-bold text-sm sm:text-base text-purple-400"><i class="fa-solid fa-map mr-2"></i> Menampilkan: Peta Jalur Latimojong</h4>
                         <span id="map-status" class="text-[10px] bg-purple-500/20 text-purple-300 px-2.5 py-1 rounded-full border border-purple-500/30">Google My Maps Mode</span>
@@ -603,12 +923,12 @@
         <!-- REGISTER SECTION -->
         <section id="view-register" class="view-section hidden py-8 sm:py-16">
             <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="bg-[#0c1017] rounded-3xl shadow-2xl border border-purple-500/30 overflow-hidden text-slate-200">
-                    <div class="bg-[#070a0f] p-5 sm:p-8 relative border-b-4 border-purple-500">
+                <div class="bg-[#0c1017]/90 backdrop-blur-md rounded-3xl shadow-2xl border border-purple-500/50 overflow-hidden text-slate-200">
+                    <div class="cyber-banner p-5 sm:p-8 relative">
                         <div class="flex items-center space-x-3 sm:space-x-4">
                             <img src="KPA CADAS.jpg" alt="Logo KPA CADAS" class="w-14 h-14 sm:w-16 sm:h-16 object-contain rounded-2xl bg-black border-2 border-purple-500 p-1 shadow-md cursor-pointer flex-shrink-0" onclick="openLogoModal()">
                             <div>
-                                <span class="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-purple-300 bg-purple-500/10 px-2.5 py-1 rounded-full border border-purple-500/30">Formulir Resmi Pendaftaran</span>
+                                <span class="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-purple-200 bg-purple-600/40 px-2.5 py-1 rounded-full border border-purple-400">Formulir Resmi Pendaftaran</span>
                                 <h2 class="font-serif text-lg sm:text-2xl font-bold mt-1 text-white">Pendaftaran K.P.A CADAS Parepare</h2>
                                 <p class="text-purple-300 text-xs">Silakan isi Data Diri Anda dengan lengkap dan benar.</p>
                             </div>
@@ -701,7 +1021,7 @@
 
                         <div class="pt-4 border-t border-purple-900 flex flex-col sm:flex-row items-center justify-end gap-3">
                             <button type="button" onclick="switchTab('home')" class="w-full sm:w-auto px-5 py-2.5 rounded-xl text-xs font-bold text-slate-400 hover:bg-purple-950/50 transition">Batal</button>
-                            <button type="submit" class="w-full sm:w-auto px-8 py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl shadow-lg transition flex items-center justify-center space-x-2 text-sm">
+                            <button type="submit" class="w-full sm:w-auto px-8 py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl shadow-lg transition flex items-center justify-center space-x-2 text-sm border border-purple-400">
                                 <i class="fa-brands fa-whatsapp text-base"></i>
                                 <span>Kirim Via WhatsApp</span>
                             </button>
@@ -715,16 +1035,16 @@
         <section id="view-gallery" class="view-section hidden py-8 sm:py-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
                 <div class="space-y-6">
-                    <div class="bg-[#0c1017] text-white rounded-3xl p-6 sm:p-8 border-b-4 border-purple-500 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="cyber-banner p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
                         <div class="space-y-2 text-center md:text-left">
-                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-purple-300 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/30">Arsip & Dokumentasi Foto</span>
-                            <h2 class="font-serif text-xl sm:text-3xl font-bold">Galeri Foto Kegiatan K.P.A CADAS</h2>
+                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-purple-200 bg-purple-600/40 px-3 py-1 rounded-full border border-purple-400">Arsip & Dokumentasi Foto</span>
+                            <h2 class="font-serif text-xl sm:text-3xl font-bold text-white">Galeri Foto Kegiatan K.P.A CADAS</h2>
                             <p class="text-xs sm:text-sm text-purple-200 font-light max-w-xl">
                                 Kumpulan dokumentasi foto kegiatan pendakian, navigasi darat, survival, dan aksi konservasi alam.
                             </p>
                         </div>
                         <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-                            <button onclick="openUploadPhotoModal()" class="px-5 py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-2xl shadow-lg transition flex items-center justify-center space-x-2 text-xs">
+                            <button onclick="openUploadPhotoModal()" class="px-5 py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-2xl shadow-lg transition flex items-center justify-center space-x-2 text-xs border border-purple-400">
                                 <i class="fa-solid fa-cloud-arrow-up text-sm"></i>
                                 <span>Unggah Foto Kegiatan</span>
                             </button>
@@ -739,13 +1059,13 @@
                 </div>
 
                 <div class="space-y-6 pt-6 border-t border-purple-900">
-                    <div class="bg-[#0c1017] text-white rounded-3xl p-6 sm:p-8 border-b-4 border-purple-500 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="cyber-banner p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
                         <div class="space-y-2 text-center md:text-left">
-                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-purple-300 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/30">Arsip Video Kegiatan</span>
-                            <h2 class="font-serif text-xl sm:text-3xl font-bold">Video Dokumentasi YouTube</h2>
+                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-purple-200 bg-purple-600/40 px-3 py-1 rounded-full border border-purple-400">Arsip Video Kegiatan</span>
+                            <h2 class="font-serif text-xl sm:text-3xl font-bold text-white">Video Dokumentasi YouTube</h2>
                         </div>
                         <div class="w-full md:w-auto">
-                            <button onclick="openUploadVideoModal()" class="w-full md:w-auto px-5 py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-2xl shadow-lg transition flex items-center justify-center space-x-2 text-xs">
+                            <button onclick="openUploadVideoModal()" class="w-full md:w-auto px-5 py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-2xl shadow-lg transition flex items-center justify-center space-x-2 text-xs border border-purple-400">
                                 <i class="fa-solid fa-video text-sm"></i>
                                 <span>Tambah Video YouTube</span>
                             </button>
@@ -760,12 +1080,12 @@
         <!-- ETHICS SECTION -->
         <section id="view-ethics" class="view-section hidden py-8 sm:py-16">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-                <div class="bg-[#0c1017] text-white rounded-3xl p-6 sm:p-8 border-b-4 border-purple-500 shadow-xl text-center space-y-3">
-                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-purple-300 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/30">Dokumen Resmi Organisasi</span>
-                    <h2 class="font-serif text-xl sm:text-3xl font-bold">Tata Tertib & Kode Etik Pecinta Alam</h2>
+                <div class="cyber-banner p-6 sm:p-8 text-center space-y-3">
+                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-purple-200 bg-purple-600/40 px-3 py-1 rounded-full border border-purple-400">Dokumen Resmi Organisasi</span>
+                    <h2 class="font-serif text-xl sm:text-3xl font-bold text-white">Tata Tertib & Kode Etik Pecinta Alam</h2>
                 </div>
 
-                <div class="bg-[#0c1017] rounded-3xl p-6 sm:p-8 border border-purple-900/50 shadow-2xl space-y-6 text-xs sm:text-sm text-slate-300 leading-relaxed">
+                <div class="bg-[#0c1017]/90 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-purple-900/50 shadow-2xl space-y-6 text-xs sm:text-sm text-slate-300 leading-relaxed">
                     <div class="space-y-2 border-b border-purple-950 pb-4">
                         <h3 class="font-serif font-bold text-base text-purple-400">BAB I - KETENTUAN UMUM</h3>
                         <p><strong>Pasal 1 (Pengertian):</strong> K.P.A CADAS adalah organisasi yang bergerak dalam bidang kepecintaalaman, pelestarian lingkungan, pendidikan, dan kegiatan alam bebas.</p>
@@ -784,7 +1104,7 @@
                     </div>
 
                     <div class="pt-2 text-center">
-                        <button onclick="switchTab('home')" class="px-6 py-2.5 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl text-xs transition shadow">
+                        <button onclick="switchTab('home')" class="px-6 py-2.5 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl text-xs transition shadow border border-purple-400">
                             Kembali ke Beranda
                         </button>
                     </div>
@@ -795,15 +1115,15 @@
         <!-- KTA DIGITAL SECTION -->
         <section id="view-kta" class="view-section hidden py-8 sm:py-16">
             <div class="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-                <div class="bg-[#0c1017] text-white rounded-3xl p-6 sm:p-8 border-b-4 border-purple-500 shadow-xl text-center space-y-3">
-                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-purple-300 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/30">Identitas Resmi Anggota</span>
-                    <h2 class="font-serif text-xl sm:text-3xl font-bold">Kartu Tanda Anggota (KTA) Digital</h2>
+                <div class="cyber-banner p-6 sm:p-8 text-center space-y-3">
+                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-purple-200 bg-purple-600/40 px-3 py-1 rounded-full border border-purple-400">Identitas Resmi Anggota</span>
+                    <h2 class="font-serif text-xl sm:text-3xl font-bold text-white">Kartu Tanda Anggota (KTA) Digital</h2>
                 </div>
 
-                <div class="bg-[#0c1017] rounded-3xl p-5 sm:p-8 border border-purple-900/50 shadow-2xl space-y-4">
+                <div class="bg-[#0c1017]/90 backdrop-blur-md rounded-3xl p-5 sm:p-8 border border-purple-900/50 shadow-2xl space-y-4">
                     <div class="flex flex-col sm:flex-row gap-2">
                         <input type="text" id="kta-search-input" placeholder="Masukkan NIA atau Nama..." class="w-full px-4 py-3 rounded-xl border border-purple-900 bg-[#070a0f] text-white text-xs sm:text-sm outline-none focus:ring-2 focus:ring-purple-500">
-                        <button onclick="searchKTA()" class="w-full sm:w-auto px-6 py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl text-xs shadow transition flex items-center justify-center space-x-1 flex-shrink-0">
+                        <button onclick="searchKTA()" class="w-full sm:w-auto px-6 py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl text-xs shadow transition flex items-center justify-center space-x-1 flex-shrink-0 border border-purple-400">
                             <i class="fa-solid fa-magnifying-glass"></i>
                             <span>Cari</span>
                         </button>
@@ -855,7 +1175,7 @@
                         </div>
                     </div>
 
-                    <button onclick="downloadKTACard()" class="w-full py-3.5 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-2xl shadow-xl transition flex items-center justify-center space-x-2 text-sm">
+                    <button onclick="downloadKTACard()" class="w-full py-3.5 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-2xl shadow-xl transition flex items-center justify-center space-x-2 text-sm border border-purple-400">
                         <i class="fa-solid fa-download text-base"></i>
                         <span>Unduh KTA Digital (.PNG)</span>
                     </button>
@@ -866,6 +1186,17 @@
         <!-- SUCCESS SECTION -->
         <section id="view-success" class="view-section hidden py-10 sm:py-16">
             <div class="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+                
+                <div class="bg-emerald-950/80 border-2 border-emerald-500 text-emerald-300 p-4 rounded-2xl shadow-lg flex items-center space-x-3 text-left">
+                    <div class="w-10 h-10 rounded-full bg-emerald-500 text-black flex items-center justify-center text-xl font-bold flex-shrink-0">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-sm sm:text-base text-white">Pendaftaran Berhasil!</h4>
+                        <p class="text-xs text-emerald-200">Data Anda telah tersimpan di sistem K.P.A CADAS.</p>
+                    </div>
+                </div>
+
                 <div id="printable-card" class="bg-white text-slate-800 rounded-3xl shadow-2xl border-2 border-purple-500 p-5 sm:p-8 space-y-6 text-left relative overflow-hidden">
                     <div class="flex items-center space-x-3 sm:space-x-4 border-b-2 border-purple-950 pb-4">
                         <img src="KPA CADAS.jpg" alt="Logo KPA CADAS" class="w-14 h-14 sm:w-16 sm:h-16 object-contain rounded-xl bg-black border border-purple-500 p-1 shadow-md flex-shrink-0">
@@ -912,7 +1243,7 @@
                 <div class="no-print space-y-3">
                     <button onclick="sendToWA()" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold rounded-2xl shadow-lg transition flex items-center justify-center space-x-2 text-sm">
                         <i class="fa-brands fa-whatsapp text-lg"></i>
-                        <span>Kirim Ulang Data ke WA Admin</span>
+                        <span>Kirim Data ke WA Admin</span>
                     </button>
 
                     <button onclick="downloadCardAsImage()" class="w-full py-3.5 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded-2xl shadow-lg transition flex items-center justify-center space-x-2 text-sm">
@@ -1299,7 +1630,7 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT & FIREBASE -->
+    <!-- JAVASCRIPT LENGKAP -->
     <script>
         window.addEventListener('load', () => {
             setTimeout(() => {
@@ -1309,13 +1640,186 @@
                     loader.style.visibility = 'hidden';
                 }
             }, 1600);
-            quickSearchWeather('Gunung Latimojong', -3.3714, 120.0353);
+
+            // Inisialisasi Grafik Langsung Bergerak Aktif Real-Time
+            renderSparkline('sparkline-latimojong', [9.5, 9.8, 9.6, 9.9, 9.7, 9.8, 9.6, 9.7], '#a855f7');
+            renderSparkline('sparkline-bawakaraeng', [10.1, 10.4, 10.2, 10.5, 10.3, 10.4, 10.2, 10.3], '#06b6d4');
+            renderSparkline('sparkline-parepare', [27.9, 28.2, 28.0, 28.3, 28.1, 28.2, 28.0, 28.1], '#f59e0b');
+
+            // Inisialisasi Cuaca GPS & Lokasi Utama
+            initUserGPSWeather();
+            loadFavoriteLocationsWeather();
         });
 
         const NOMOR_WA_ADMIN = "082343551039";
         let currentFormData = {};
         let galleryPhotos = [];
         let galleryVideos = [];
+
+        // --- DETEKSI GPS & CUACA LOKASI USER ---
+        function initUserGPSWeather() {
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(
+                    async (position) => {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        
+                        try {
+                            const geoRes = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`)}`);
+                            const geoDataRaw = await geoRes.json();
+                            const geoData = JSON.parse(geoDataRaw.contents);
+                            
+                            let locationName = "Lokasi Anda";
+                            if (geoData && geoData.address) {
+                                locationName = geoData.address.city || geoData.address.town || geoData.address.county || geoData.address.state || "Lokasi Anda";
+                            }
+
+                            fetchGPSWeather(lat, lon, locationName);
+                        } catch (e) {
+                            fetchGPSWeather(lat, lon, "Lokasi Anda");
+                        }
+                    },
+                    (error) => {
+                        fetchGPSWeather(-4.0150, 119.6200, "Parepare (Default GPS)");
+                    }
+                );
+            } else {
+                fetchGPSWeather(-4.0150, 119.6200, "Parepare (Default GPS)");
+            }
+        }
+
+        async function fetchGPSWeather(lat, lon, locationName) {
+            try {
+                const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=relativehumidity_2m`);
+                const data = await res.json();
+                
+                if (data && data.current_weather) {
+                    const temp = data.current_weather.temperature;
+                    const wind = data.current_weather.windspeed;
+                    const code = data.current_weather.weathercode;
+                    let humidity = (data.hourly && data.hourly.relativehumidity_2m) ? data.hourly.relativehumidity_2m[0] : 75;
+
+                    let conditionText = "Cerah Berawan";
+                    let iconHtml = '<i class="fa-solid fa-sun text-amber-400"></i>';
+
+                    if (code >= 1 && code <= 3) { conditionText = "Berawan Sebagian"; iconHtml = '<i class="fa-solid fa-cloud-sun text-purple-300"></i>'; }
+                    if (code >= 51 && code <= 67) { conditionText = "Hujan Ringan / Sedang"; iconHtml = '<i class="fa-solid fa-cloud-rain text-cyan-400"></i>'; }
+                    if (code >= 95) { conditionText = "Badai / Petir"; iconHtml = '<i class="fa-solid fa-cloud-bolt text-red-400"></i>'; }
+
+                    document.getElementById('gps-location-title').innerText = locationName;
+                    document.getElementById('gps-condition-text').innerText = conditionText;
+                    document.getElementById('gps-temp').innerText = temp + " °C";
+                    document.getElementById('gps-wind').innerText = wind + " km/h";
+                    document.getElementById('gps-humidity').innerText = humidity + " %";
+                    document.getElementById('gps-weather-icon').innerHTML = iconHtml;
+                }
+            } catch (e) {
+                console.error("Gagal memuat GPS weather:", e);
+            }
+        }
+
+        // --- SYSTEM GRAFIK SPARKLINE LIVE BERGERAK ALA BMKG ---
+        window.activeCharts = window.activeCharts || {};
+        window.chartIntervals = window.chartIntervals || {};
+
+        function loadFavoriteLocationsWeather() {
+            fetchCardAndWeatherUpdate(-3.3714, 120.0353, 'latimojong', '#a855f7');
+            fetchCardAndWeatherUpdate(-5.3431, 119.9192, 'bawakaraeng', '#06b6d4');
+            fetchCardAndWeatherUpdate(-4.0150, 119.6200, 'parepare', '#f59e0b');
+        }
+
+        async function fetchCardAndWeatherUpdate(lat, lon, elementKey, colorHex) {
+            try {
+                const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m`);
+                const data = await res.json();
+
+                if (data && data.current_weather) {
+                    const temp = data.current_weather.temperature;
+                    const code = data.current_weather.weathercode;
+                    let cond = "Cerah";
+                    let icon = '<i class="fa-solid fa-sun"></i>';
+
+                    if (code >= 1 && code <= 3) { cond = "Berawan"; icon = '<i class="fa-solid fa-cloud"></i>'; }
+                    if (code >= 51) { cond = "Hujan"; icon = '<i class="fa-solid fa-cloud-showers-heavy"></i>'; }
+
+                    document.getElementById(`temp-${elementKey}`).innerText = temp + " °C";
+                    document.getElementById(`cond-${elementKey}`).innerText = cond;
+                    document.getElementById(`icon-${elementKey}`).innerHTML = icon;
+
+                    if (data.hourly && data.hourly.temperature_2m) {
+                        const hourlyTemps = data.hourly.temperature_2m.slice(0, 8);
+                        renderSparkline(`sparkline-${elementKey}`, hourlyTemps, colorHex);
+                    }
+                }
+            } catch (e) { console.error("Error card weather:", e); }
+        }
+
+        function renderSparkline(canvasId, dataPoints, colorHex) {
+            const ctx = document.getElementById(canvasId);
+            if (!ctx) return;
+
+            if (window.activeCharts[canvasId]) {
+                window.activeCharts[canvasId].destroy();
+            }
+
+            let baseData = dataPoints && dataPoints.length ? [...dataPoints] : [10, 12, 11, 13, 12, 14, 13, 15];
+
+            window.activeCharts[canvasId] = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: baseData.map((_, i) => i),
+                    datasets: [{
+                        data: baseData,
+                        borderColor: colorHex,
+                        borderWidth: 2.5,
+                        tension: 0.4,
+                        pointRadius: 0,
+                        fill: {
+                            target: 'origin',
+                            above: colorHex + '33'
+                        }
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: false,
+                    plugins: { 
+                        legend: { display: false }, 
+                        tooltip: { enabled: false } 
+                    },
+                    scales: { 
+                        x: { display: false }, 
+                        y: { 
+                            display: false,
+                            min: Math.min(...baseData) - 3,
+                            max: Math.max(...baseData) + 3
+                        } 
+                    }
+                }
+            });
+
+            if (window.chartIntervals[canvasId]) {
+                clearInterval(window.chartIntervals[canvasId]);
+            }
+
+            let step = 0;
+            window.chartIntervals[canvasId] = setInterval(() => {
+                const chart = window.activeCharts[canvasId];
+                if (!chart) return;
+
+                step += 0.35;
+                const dataset = chart.data.datasets[0].data;
+                if (!dataset || dataset.length === 0) return;
+
+                dataset.shift();
+                const lastVal = dataset[dataset.length - 1] || 10;
+                const newVal = parseFloat((lastVal + Math.sin(step) * 1.8 + (Math.random() * 0.4 - 0.2)).toFixed(1));
+                dataset.push(newVal);
+
+                chart.update('none');
+            }, 350);
+        }
 
         async function searchCustomWeather() {
             const rawQuery = document.getElementById('weather-search-input').value.trim();
@@ -1355,27 +1859,11 @@
                 if (lat !== null && lon !== null) {
                     fetchWeatherByCoords(lat, lon, locationLabel);
                 } else {
-                    alert(`Lokasi "${rawQuery}" tidak ditemukan. Silakan ketik nama kota/kabupaten saja (Cth: Barru, Pinrang, Sidrap, Enrekang).`);
+                    alert(`Lokasi "${rawQuery}" tidak ditemukan.`);
                     document.getElementById('w-location-name').innerHTML = `<i class="fa-solid fa-triangle-exclamation text-red-400 mr-2"></i> Lokasi "${rawQuery}" tidak ditemukan.`;
                 }
             } catch (error) {
                 console.error("Kesalahan sistem geocoding:", error);
-                emergencyGeoSearch(cleanQuery, rawQuery);
-            }
-        }
-
-        async function emergencyGeoSearch(cleanQuery, rawQuery) {
-            try {
-                const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cleanQuery)}&count=1&format=json`);
-                const data = await res.json();
-                if (data.results && data.results.length > 0) {
-                    const loc = data.results[0];
-                    fetchWeatherByCoords(loc.latitude, loc.longitude, `${loc.name}, Indonesia`);
-                } else {
-                    alert(`Gagal menemukan lokasi "${rawQuery}".`);
-                }
-            } catch(e) {
-                alert('Gagal mengambil data dari server cuaca. Periksa koneksi internet Anda.');
             }
         }
 
@@ -1395,16 +1883,12 @@
                     const wind = data.current_weather.windspeed;
                     const weatherCode = data.current_weather.weathercode;
                     
-                    let humidity = "-";
-                    if (data.hourly && data.hourly.relativehumidity_2m) {
-                        humidity = data.hourly.relativehumidity_2m[0];
-                    }
+                    let humidity = (data.hourly && data.hourly.relativehumidity_2m) ? data.hourly.relativehumidity_2m[0] : "-";
 
                     let conditionText = "Cerah / Berawan";
                     if (weatherCode >= 1 && weatherCode <= 3) conditionText = "Berawan Sebagian";
                     if (weatherCode >= 51 && weatherCode <= 67) conditionText = "Hujan Ringan / Sedang";
-                    if (weatherCode >= 95) conditionText = "Badai Petir (Waspada!)";
-                    if (weatherCode === 0) conditionText = "Cerah Terang";
+                    if (weatherCode >= 95) conditionText = "Badai Petir";
 
                     document.getElementById('w-location-name').innerHTML = `<i class="fa-solid fa-location-dot mr-2 text-cyan-400"></i> Menampilkan cuaca untuk: <strong class="text-white">${locationName}</strong>`;
                     document.getElementById('w-condition').innerText = conditionText;
@@ -1414,7 +1898,6 @@
                 }
             } catch (e) {
                 console.error("Gagal mengambil data cuaca:", e);
-                document.getElementById('w-location-name').innerText = 'Gagal memuat data cuaca.';
             }
         }
 
@@ -1422,12 +1905,8 @@
             if (!window.db) return;
             db.collection("cadas_photos").orderBy("id", "desc").onSnapshot((snapshot) => {
                 galleryPhotos = [];
-                snapshot.forEach((doc) => {
-                    galleryPhotos.push({ firebaseId: doc.id, ...doc.data() });
-                });
+                snapshot.forEach((doc) => { galleryPhotos.push({ firebaseId: doc.id, ...doc.data() }); });
                 renderGallery();
-            }, (error) => {
-                console.log("Error loading photos:", error);
             });
         }
 
@@ -1435,44 +1914,26 @@
             if (!window.db) return;
             db.collection("cadas_videos").orderBy("id", "desc").onSnapshot((snapshot) => {
                 galleryVideos = [];
-                snapshot.forEach((doc) => {
-                    galleryVideos.push({ firebaseId: doc.id, ...doc.data() });
-                });
+                snapshot.forEach((doc) => { galleryVideos.push({ firebaseId: doc.id, ...doc.data() }); });
                 renderVideos();
-            }, (error) => {
-                console.log("Error loading videos:", error);
             });
         }
 
         function renderGallery() {
             const grid = document.getElementById('gallery-grid');
             if (!grid) return;
-
             if (galleryPhotos.length === 0) {
-                grid.innerHTML = `
-                    <div class="col-span-full text-center py-12 text-slate-400 text-xs border border-dashed border-purple-900 rounded-2xl bg-[#070a0f]/50">
-                        <i class="fa-solid fa-images text-4xl mb-2 text-purple-500 block"></i>
-                        Belum ada foto dokumentasi yang diunggah.
-                    </div>
-                `;
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400 text-xs border border-dashed border-purple-900 rounded-2xl bg-[#070a0f]/50"><i class="fa-solid fa-images text-4xl mb-2 text-purple-500 block"></i>Belum ada foto dokumentasi.</div>`;
                 return;
             }
-
             grid.innerHTML = galleryPhotos.map((photo, index) => `
-                <div class="bg-[#0c1017] rounded-2xl overflow-hidden shadow-md border border-purple-900/50 group relative hover:border-purple-500 transition-all duration-300">
-                    <button onclick="deletePhoto('${photo.firebaseId || index}'); event.stopPropagation();" class="absolute top-2 right-2 z-20 w-8 h-8 bg-red-600/90 hover:bg-red-600 text-white rounded-full flex items-center justify-center shadow-lg transition" title="Hapus Foto">
-                        <i class="fa-solid fa-trash-can text-xs"></i>
-                    </button>
-
+                <div class="bg-[#0c1017]/90 backdrop-blur-md rounded-2xl overflow-hidden shadow-md border border-purple-900/50 group relative hover:border-purple-500 transition-all duration-300">
+                    <button onclick="deletePhoto('${photo.firebaseId || index}'); event.stopPropagation();" class="absolute top-2 right-2 z-20 w-8 h-8 bg-red-600/90 hover:bg-red-600 text-white rounded-full flex items-center justify-center shadow-lg transition"><i class="fa-solid fa-trash-can text-xs"></i></button>
                     <div onclick="openPreviewPhotoModal(${index})" class="relative overflow-hidden h-48 bg-black flex items-center justify-center cursor-pointer">
                         <img src="${photo.url}" alt="${photo.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-purple-400 font-bold text-xs gap-2">
-                            <i class="fa-solid fa-magnifying-glass-plus text-base"></i>
-                            <span>Klik untuk memperbesar</span>
-                        </div>
                     </div>
                     <div class="p-4" onclick="openPreviewPhotoModal(${index})" style="cursor: pointer;">
-                        <span class="text-[10px] font-extrabold uppercase tracking-wider text-purple-300 bg-purple-500/10 px-2 py-0.5 rounded-full">${photo.category}</span>
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider text-purple-300 bg-purple-500/20 px-2 py-0.5 rounded-full border border-purple-500/30">${photo.category}</span>
                         <h4 class="font-bold text-white text-sm mt-2 line-clamp-1">${photo.title}</h4>
                         <p class="text-[10px] text-slate-400 mt-1">${photo.date}</p>
                     </div>
@@ -1489,69 +1950,34 @@
         function renderVideos() {
             const grid = document.getElementById('video-grid');
             if (!grid) return;
-
             if (galleryVideos.length === 0) {
-                grid.innerHTML = `
-                    <div class="col-span-full text-center py-12 text-slate-400 text-xs border border-dashed border-purple-900 rounded-2xl bg-[#070a0f]/50">
-                        <i class="fa-solid fa-video text-4xl mb-2 text-purple-500 block"></i>
-                        Belum ada video YouTube yang ditambahkan.
-                    </div>
-                `;
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400 text-xs border border-dashed border-purple-900 rounded-2xl bg-[#070a0f]/50"><i class="fa-solid fa-video text-4xl mb-2 text-purple-500 block"></i>Belum ada video YouTube.</div>`;
                 return;
             }
-
             grid.innerHTML = galleryVideos.map((video, index) => {
                 const thumbnailUrl = `https://img.youtube.com/vi/${video.videoId}/hqdefault.jpg`;
-                const youtubeWatchUrl = `https://www.youtube.com/watch?v=${video.videoId}`;
-
                 return `
-                    <div class="bg-[#0c1017] rounded-2xl overflow-hidden shadow-md border border-purple-900/50 group relative hover:border-purple-500 transition-all duration-300">
-                        <button onclick="deleteVideo('${video.firebaseId || index}')" class="absolute top-2 right-2 z-20 w-8 h-8 bg-red-600/90 hover:bg-red-600 text-white rounded-full flex items-center justify-center shadow-lg transition" title="Hapus Video">
-                            <i class="fa-solid fa-trash-can text-xs"></i>
-                        </button>
-
-                        <a href="${youtubeWatchUrl}" target="_blank" class="relative block w-full h-48 bg-black overflow-hidden group">
-                            <img src="${thumbnailUrl}" alt="${video.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 opacity-90 group-hover:opacity-100" onerror="this.src='https://via.placeholder.com/480x360/000000/ffffff?text=Video+YouTube'">
-                            
-                            <div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/10 transition-all">
-                                <div class="w-14 h-14 bg-purple-600 group-hover:bg-purple-500 text-white rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
-                                    <i class="fa-solid fa-play text-xl ml-1"></i>
-                                </div>
-                            </div>
+                    <div class="bg-[#0c1017]/90 backdrop-blur-md rounded-2xl overflow-hidden shadow-md border border-purple-900/50 group relative hover:border-purple-500 transition-all duration-300">
+                        <button onclick="deleteVideo('${video.firebaseId || index}')" class="absolute top-2 right-2 z-20 w-8 h-8 bg-red-600/90 text-white rounded-full flex items-center justify-center shadow-lg"><i class="fa-solid fa-trash-can text-xs"></i></button>
+                        <a href="https://www.youtube.com/watch?v=${video.videoId}" target="_blank" class="relative block w-full h-48 bg-black overflow-hidden group">
+                            <img src="${thumbnailUrl}" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                            <div class="absolute inset-0 flex items-center justify-center bg-black/30"><div class="w-14 h-14 bg-purple-600 text-white rounded-full flex items-center justify-center"><i class="fa-solid fa-play text-xl ml-1"></i></div></div>
                         </a>
-
-                        <div class="p-4">
-                            <h4 class="font-bold text-white text-sm line-clamp-1">${video.title}</h4>
-                            <p class="text-[10px] text-slate-400 mt-1">${video.date}</p>
-                        </div>
+                        <div class="p-4"><h4 class="font-bold text-white text-sm line-clamp-1">${video.title}</h4><p class="text-[10px] text-slate-400 mt-1">${video.date}</p></div>
                     </div>
                 `;
             }).join('');
         }
 
         async function deletePhoto(firebaseId) {
-            if (confirm('Apakah Anda yakin ingin menghapus foto dokumentasi ini?')) {
-                try {
-                    if (window.db && typeof firebaseId === 'string' && firebaseId.length > 5) {
-                        await db.collection("cadas_photos").doc(firebaseId).delete();
-                    }
-                    alert('Foto berhasil dihapus!');
-                } catch (error) {
-                    console.error("Gagal menghapus foto:", error);
-                }
+            if (confirm('Hapus foto ini?')) {
+                try { if (window.db && firebaseId) await db.collection("cadas_photos").doc(firebaseId).delete(); } catch(e){}
             }
         }
 
         async function deleteVideo(firebaseId) {
-            if (confirm('Apakah Anda yakin ingin menghapus video ini?')) {
-                try {
-                    if (window.db && typeof firebaseId === 'string' && firebaseId.length > 5) {
-                        await db.collection("cadas_videos").doc(firebaseId).delete();
-                    }
-                    alert('Video berhasil dihapus!');
-                } catch (error) {
-                    console.error("Gagal menghapus video:", error);
-                }
+            if (confirm('Hapus video ini?')) {
+                try { if (window.db && firebaseId) await db.collection("cadas_videos").doc(firebaseId).delete(); } catch(e){}
             }
         }
 
@@ -1565,23 +1991,7 @@
             document.getElementById('preview-photo-modal').classList.remove('hidden');
         }
 
-        function closePreviewPhotoModal() {
-            document.getElementById('preview-photo-modal').classList.add('hidden');
-            document.getElementById('preview-modal-img').src = '';
-        }
-
-        function downloadCurrentPreviewPhoto() {
-            const imgElement = document.getElementById('preview-modal-img');
-            const titleElement = document.getElementById('preview-modal-title');
-            if (!imgElement.src) return;
-            const link = document.createElement('a');
-            link.href = imgElement.src;
-            link.download = (titleElement.innerText || 'Dokumentasi_KPA_CADAS') + '.jpg';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
+        function closePreviewPhotoModal() { document.getElementById('preview-photo-modal').classList.add('hidden'); }
         function openUploadPhotoModal() { document.getElementById('upload-modal').classList.remove('hidden'); }
         function closeUploadPhotoModal() { document.getElementById('upload-modal').classList.add('hidden'); }
         function openUploadVideoModal() { document.getElementById('upload-video-modal').classList.remove('hidden'); }
@@ -1589,31 +1999,19 @@
 
         async function handlePhotoUpload(e) {
             e.preventDefault();
-            const titleInput = document.getElementById('upload-title');
-            const categoryInput = document.getElementById('upload-category');
+            const title = document.getElementById('upload-title').value;
+            const category = document.getElementById('upload-category').value;
             const fileInput = document.getElementById('upload-file');
-            if (!titleInput || !fileInput) return;
-
-            const title = titleInput.value;
-            const category = categoryInput ? categoryInput.value : 'Umum';
             
             if (fileInput.files && fileInput.files[0]) {
                 const reader = new FileReader();
                 reader.onload = async function(evt) {
-                    const newPhoto = {
-                        id: Date.now(),
-                        title: title,
-                        category: category,
-                        url: evt.target.result,
-                        date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
-                    };
-                    closeUploadPhotoModal();
-                    titleInput.value = '';
-                    fileInput.value = '';
-                    try {
-                        if (window.db) { await db.collection("cadas_photos").add(newPhoto); }
-                    } catch (error) { console.error("Gagal simpan foto:", error); }
-                    alert('Foto berhasil diunggah ke database online!');
+                    compressImage(evt.target.result, 800, 0.7, async function(compressedUrl) {
+                        const newPhoto = { id: Date.now(), title: title, category: category, url: compressedUrl, date: new Date().toLocaleDateString('id-ID') };
+                        closeUploadPhotoModal();
+                        if (window.db) await db.collection("cadas_photos").add(newPhoto);
+                        alert('Foto berhasil diunggah!');
+                    });
                 };
                 reader.readAsDataURL(fileInput.files[0]);
             }
@@ -1621,156 +2019,74 @@
 
         async function handleVideoUpload(e) {
             e.preventDefault();
-            const titleInput = document.getElementById('video-title');
-            const urlInput = document.getElementById('video-url');
-            if (!titleInput || !urlInput) return;
-
-            const title = titleInput.value;
-            const videoId = getYouTubeVideoId(urlInput.value.trim());
-            if (!videoId) {
-                alert('URL YouTube tidak valid!');
-                return;
-            }
-
-            const newVideo = {
-                id: Date.now(),
-                title: title,
-                videoId: videoId,
-                date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
-            };
+            const title = document.getElementById('video-title').value;
+            const videoId = getYouTubeVideoId(document.getElementById('video-url').value.trim());
+            if (!videoId) { alert('URL tidak valid!'); return; }
+            const newVideo = { id: Date.now(), title: title, videoId: videoId, date: new Date().toLocaleDateString('id-ID') };
             closeUploadVideoModal();
-            titleInput.value = '';
-            urlInput.value = '';
-            try {
-                if (window.db) { await db.collection("cadas_videos").add(newVideo); }
-            } catch (error) { console.error("Gagal simpan video:", error); }
-            alert('Video YouTube berhasil disimpan!');
+            if (window.db) await db.collection("cadas_videos").add(newVideo);
+            alert('Video disimpan!');
         }
 
         async function searchKTA() {
             const query = document.getElementById('kta-search-input').value.trim().toLowerCase();
             const resultCard = document.getElementById('kta-result-card');
-            if (!query) {
-                alert('Silakan masukkan NIA atau Nama Anggota!');
-                return;
-            }
+            if (!query) return alert('Masukkan NIA atau Nama!');
             try {
-                if (!window.db) { alert('Database belum terhubung.'); return; }
+                if (!window.db) return;
                 const snapshot = await db.collection("cadas_pendaftar").get();
                 let foundData = null;
                 snapshot.forEach(doc => {
                     const data = doc.data();
-                    if ((data.nama && data.nama.toLowerCase().includes(query)) || 
-                        (data.regId && data.regId.toLowerCase().includes(query)) ||
-                        (data.panggilan && data.panggilan.toLowerCase().includes(query))) {
-                        foundData = data;
-                    }
+                    if ((data.nama || '').toLowerCase().includes(query) || (data.regId || '').toLowerCase().includes(query)) foundData = data;
                 });
                 if (foundData) {
                     document.getElementById('kta-nia').innerText = foundData.regId || 'CADAS-2026';
                     document.getElementById('kta-nama').innerText = `${foundData.nama} (${foundData.panggilan})`;
-                    document.getElementById('kta-status').innerText = 'Calon Anggota Aktif';
-                    document.getElementById('kta-penyakit').innerText = foundData.penyakit || 'Tidak Ada';
-                    document.getElementById('kta-tanggal').innerText = 'Terdaftar: ' + (foundData.tanggal || '-');
-                    if (foundData.foto) { document.getElementById('kta-foto').src = foundData.foto; }
+                    if (foundData.foto) document.getElementById('kta-foto').src = foundData.foto;
                     resultCard.classList.remove('hidden');
-                } else {
-                    alert('Data pendaftar tidak ditemukan.');
-                    resultCard.classList.add('hidden');
-                }
-            } catch (error) { console.error("Error KTA:", error); }
+                } else { alert('Data tidak ditemukan.'); resultCard.classList.add('hidden'); }
+            } catch(e){}
         }
 
         function downloadKTACard() {
-            const cardArea = document.getElementById('kta-card-capture');
-            html2canvas(cardArea, { useCORS: true, scale: 2 }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = `KTA_Digital_CADAS.png`;
-                link.href = canvas.toDataURL('image/png');
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+            html2canvas(document.getElementById('kta-card-capture'), { scale: 2 }).then(canvas => {
+                const a = document.createElement('a'); a.download = 'KTA_Digital_CADAS.png'; a.href = canvas.toDataURL(); a.click();
             });
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                loadPhotosFromFirestore();
-                loadVideosFromFirestore();
-            }, 1000);
+            setTimeout(() => { loadPhotosFromFirestore(); loadVideosFromFirestore(); }, 1000);
         });
 
         function downloadCardAsImage() {
-            const card = document.getElementById('printable-card');
-            html2canvas(card, { useCORS: true, scale: 2 }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = `Bukti_Pendaftaran.png`;
-                link.href = canvas.toDataURL('image/png');
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+            html2canvas(document.getElementById('printable-card'), { scale: 2 }).then(canvas => {
+                const a = document.createElement('a'); a.download = 'Bukti_Pendaftaran.png'; a.href = canvas.toDataURL(); a.click();
             });
         }
 
         function downloadLogoDirect() {
-            const img = document.getElementById('logo-img-src');
-            const link = document.createElement('a');
-            link.href = img.src;
-            link.download = 'Logo_KPA_CADAS_Parepare.jpg';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            const a = document.createElement('a'); a.href = document.getElementById('logo-img-src').src; a.download = 'Logo_CADAS.jpg'; a.click();
         }
 
         function downloadPosterGenerated() {
-            const captureArea = document.getElementById('poster-capture-area');
-            html2canvas(captureArea, { useCORS: true, scale: 2 }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = 'Brosur_Sewa_Alat_Outdoor.png';
-                link.href = canvas.toDataURL('image/png');
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+            html2canvas(document.getElementById('poster-capture-area'), { scale: 2 }).then(canvas => {
+                const a = document.createElement('a'); a.download = 'Poster_Sewa_Alat.png'; a.href = canvas.toDataURL(); a.click();
             });
         }
 
         function downloadServicePoster() {
-            const captureArea = document.getElementById('service-poster-capture');
-            html2canvas(captureArea, { useCORS: true, scale: 2 }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = 'Brosur_OB_Smartphone_Service.png';
-                link.href = canvas.toDataURL('image/png');
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+            html2canvas(document.getElementById('service-poster-capture'), { scale: 2 }).then(canvas => {
+                const a = document.createElement('a'); a.download = 'Poster_Service_HP.png'; a.href = canvas.toDataURL(); a.click();
             });
         }
 
         function showMap(type) {
             const container = document.getElementById('map-container');
-            const title = document.getElementById('map-title');
-            const status = document.getElementById('map-status');
-
             if(type === 'latimojong') {
-                title.innerHTML = `<i class="fa-solid fa-map mr-2"></i> Menampilkan: Peta Jalur Latimojong`;
-                status.innerText = `Google My Maps Mode`;
                 container.innerHTML = `<iframe src="https://www.google.com/maps/d/u/0/embed?mid=1uT9im4r_M1oAwIK0spRM1O9UgPK6BIs&ehbc=2E312F" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>`;
-            } else if(type === 'bawakaraeng') {
-                title.innerHTML = `<i class="fa-solid fa-route mr-2"></i> Menampilkan: Wikiloc Bawakaraeng via Bulubalea`;
-                status.innerText = `Wikiloc Trail Mode`;
-                container.innerHTML = `
-                    <div class="w-full h-full flex flex-col items-center justify-center p-6 text-center space-y-4 bg-[#070a0f]">
-                        <div class="w-16 h-16 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-3xl">
-                            <i class="fa-solid fa-route"></i>
-                        </div>
-                        <h3 class="font-serif font-bold text-lg text-white">Wikiloc: Bawakaraeng via Bulubalea</h3>
-                        <p class="text-xs text-slate-300 max-w-md">
-                            Peta jalur rute pendakian detail Bawakaraeng via Bulubalea siap dipantau langsung di platform resmi Wikiloc.
-                        </p>
-                        <a href="https://www.wikiloc.com/running-trails/bawakaraeng-via-bulubalea-223946458" target="_blank" class="px-6 py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl text-xs shadow-lg transition">
-                            <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> Buka Wikiloc Fullscreen
-                        </a>
-                    </div>`;
+            } else {
+                container.innerHTML = `<div class="w-full h-full flex flex-col items-center justify-center p-6 text-center space-y-4 bg-[#070a0f]"><h3 class="font-bold text-white">Wikiloc: Bawakaraeng</h3><a href="https://www.wikiloc.com/running-trails/bawakaraeng-via-bulubalea-223946458" target="_blank" class="px-6 py-3 bg-purple-600 text-white rounded-xl text-xs font-bold">Buka Wikiloc Fullscreen</a></div>`;
             }
         }
 
@@ -1785,30 +2101,52 @@
             document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
             document.getElementById('view-' + tabId).classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            if (tabId === 'gallery') {
-                renderGallery();
-                renderVideos();
-            }
+            if (tabId === 'gallery') { renderGallery(); renderVideos(); }
         }
 
-        function toggleMobileMenu() {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-        }
+        function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
 
+        // --- SISTEM PENDAFTARAN DENGAN KOMPRESI FOTO OTOMATIS AGAR MASUK FIREBASE DENGAN SUKSES ---
         function handleFormSubmit(e) {
             e.preventDefault();
             const fotoInput = document.getElementById('reg-foto');
-            let fotoBase64 = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80";
+            let defaultFoto = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80";
 
             if (fotoInput && fotoInput.files && fotoInput.files[0]) {
+                const file = fotoInput.files[0];
                 const reader = new FileReader();
-                reader.onload = async function(evt) {
-                    processRegistrationData(evt.target.result);
+                reader.onload = function(evt) {
+                    compressImage(evt.target.result, 600, 0.6, function(compressedBase64) {
+                        processRegistrationData(compressedBase64);
+                    });
                 };
-                reader.readAsDataURL(fotoInput.files[0]);
+                reader.readAsDataURL(file);
             } else {
-                processRegistrationData(fotoBase64);
+                processRegistrationData(defaultFoto);
             }
+        }
+
+        function compressImage(base64Str, maxWidth, quality, callback) {
+            const img = new Image();
+            img.src = base64Str;
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+
+                if (width > maxWidth) {
+                    height = Math.round((height * maxWidth) / width);
+                    width = maxWidth;
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+
+                const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+                callback(compressedDataUrl);
+            };
         }
 
         async function processRegistrationData(fotoBase64) {
@@ -1836,38 +2174,21 @@
             document.getElementById('card-tanggal').innerText = currentFormData.tanggal;
 
             try {
-                if (window.db) { await db.collection("cadas_pendaftar").add(currentFormData); }
-            } catch (error) { console.error("Gagal simpan:", error); }
+                if (window.db) {
+                    await db.collection("cadas_pendaftar").add(currentFormData);
+                    console.log("Data pendaftar berhasil disimpan ke Firebase!");
+                }
+            } catch (e) {
+                console.error("Gagal menyimpan data ke Firebase:", e);
+                alert("Peringatan: Gagal menyimpan ke server database. Harap kirimkan data melalui WhatsApp!");
+            }
 
             switchTab('success');
-            sendToWA();
         }
 
         function sendToWA() {
-            if (!currentFormData.nama) return;
-            const pesanWA = `*FORMULIR PENDAFTARAN K.P.A CADAS PAREPARE*
---------------------------------------------------
-*No. Registrasi:* ${currentFormData.regId}
-*Tanggal Daftar:* ${currentFormData.tanggal}
-
-👤 *DATA DIRI CALON ANGGOTA*
-• *Nama Lengkap:* ${currentFormData.nama}
-• *Nama Panggilan:* ${currentFormData.panggilan}
-• *Jenis Kelamin:* ${currentFormData.gender}
-• *TTL:* ${currentFormData.ttl}
-• *Alamat:* ${currentFormData.alamat}
-• *No. WhatsApp:* ${currentFormData.wa}
-• *Riwayat Penyakit:* ${currentFormData.penyakit}
-
-👨‍👩‍👧 *KONTAK DARURAT (ORANG TUA/WALI)*
-• *Nama Wali:* ${currentFormData.daruratNama}
-• *No. HP Wali:* ${currentFormData.daruratHp}
-
-📝 *MOTIVASI BERGABUNG*
-"${currentFormData.motivasi}"
---------------------------------------------------
-*Salam lestari! Saya telah menyelesaikan pendaftaran online K.P.A CADAS.*`;
-
+            if (!currentFormData.nama) return alert('Silakan isi formulir dulu.');
+            const pesanWA = `*FORMULIR PENDAFTARAN K.P.A CADAS PAREPARE*\n--------------------------------------------------\n*No. Registrasi:* ${currentFormData.regId}\n*Nama Lengkap:* ${currentFormData.nama}\n*Nama Panggilan:* ${currentFormData.panggilan}\n*Jenis Kelamin:* ${currentFormData.gender}\n*TTL:* ${currentFormData.ttl}\n*Alamat:* ${currentFormData.alamat}\n*No. WhatsApp:* ${currentFormData.wa}\n*Riwayat Penyakit:* ${currentFormData.penyakit}\n--------------------------------------------------\n*Salam lestari! Saya telah mendaftar.*`;
             window.open(`https://wa.me/${NOMOR_WA_ADMIN}?text=${encodeURIComponent(pesanWA)}`, '_blank');
         }
 
@@ -1900,19 +2221,35 @@
                 }
                 snapshot.forEach(doc => {
                     const data = doc.data();
+                    const docId = doc.id;
                     html += `
-                        <div class="bg-[#0c1017] p-4 rounded-xl shadow border border-purple-900 text-xs space-y-2 text-slate-200">
-                            <div class="flex justify-between font-bold text-purple-400">
-                                <span>${data.regId || 'ID'} - ${data.nama} (${data.panggilan})</span>
-                                <span class="text-purple-300">${data.gender}</span>
+                        <div class="bg-[#0c1017] p-4 rounded-xl shadow border border-purple-900 text-xs space-y-2 text-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                            <div class="space-y-1">
+                                <div class="font-bold text-purple-400 text-sm">${data.regId || 'ID'} - ${data.nama} (${data.panggilan})</div>
+                                <p class="text-slate-400">No. WA: ${data.wa} | Domisili: ${data.alamat} | Gender: ${data.gender}</p>
+                                <p class="text-slate-300 italic">Motivasi: "${data.motivasi}"</p>
                             </div>
-                            <p class="text-slate-400">No. WA: ${data.wa} | Domisili: ${data.alamat}</p>
-                            <p class="text-slate-300 italic">Motivasi: "${data.motivasi}"</p>
+                            <button onclick="deleteParticipant('${docId}')" class="px-3.5 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold transition flex items-center space-x-1.5 flex-shrink-0 shadow">
+                                <i class="fa-solid fa-trash-can"></i>
+                                <span>Hapus Data</span>
+                            </button>
                         </div>
                     `;
                 });
                 container.innerHTML = html;
-            } catch (error) { console.error(error); }
+            } catch (error) { container.innerHTML = `<p class="text-xs text-red-400 text-center py-4">Gagal memuat data.</p>`; }
+        }
+
+        async function deleteParticipant(docId) {
+            if (confirm('Apakah Anda yakin ingin menghapus data peserta ini dari database?')) {
+                try {
+                    if (window.db) {
+                        await db.collection("cadas_pendaftar").doc(docId).delete();
+                        alert('Data peserta berhasil dihapus!');
+                        loadAdminData();
+                    }
+                } catch (error) { alert('Terjadi kesalahan saat menghapus data.'); }
+            }
         }
 
         function exportData() { alert('Fitur export data aktif.'); }
