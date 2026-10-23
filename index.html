@@ -2005,50 +2005,48 @@
             });
         }
 
-        // --- FUNGSI DOWNLOAD LOGO KPA CADAS (AMAN DENGAN BLOB) ---
-        async function downloadLogoDirect() {
-            const logoImg = document.getElementById('logo-img-src');
-            const downloadBtn = document.getElementById('btn-download-logo');
-            const originalBtnText = downloadBtn ? downloadBtn.innerHTML : '';
+      // --- FUNGSI DOWNLOAD LOGO KPA CADAS (AMAN DENGAN BLOB) ---
+async function downloadLogoDirect() {
+    const logoImg = document.getElementById('logo-img-src');
+    const downloadBtn = document.getElementById('btn-download-logo');
+    const originalBtnText = downloadBtn ? downloadBtn.innerHTML : '';
 
-            if (downloadBtn) {
-                downloadBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i>Mengunduh Logo...`;
-                downloadBtn.disabled = true;
-            }
+    if (downloadBtn) {
+        downloadBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i>Mengunduh Logo...`;
+        downloadBtn.disabled = true;
+    }
 
-            try {
-                let base64Url = '';
-                if (logoImg) {
-                    base64Url = await convertImgToBase64(logoImg);
-                } else {
-                    base64Url = 'KPA CADAS.jpg';
-                }
-
-                if (base64Url.startsWith('data:image/')) {
-                    downloadBase64File(base64Url, 'Logo_KPA_CADAS_Parepare.png');
-                } else {
-                    const response = await fetch(base64Url);
-                    const blob = await response.blob();
-                    const blobUrl = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = blobUrl;
-                    a.download = 'Logo_KPA_CADAS_Parepare.png';
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    window.URL.revokeObjectURL(blobUrl);
-                }
-            } catch (e) {
-                console.error("Gagal unduh logo:", e);
-                window.open(logoImg ? logoImg.src : 'KPA CADAS.jpg', '_blank');
-            } finally {
-                if (downloadBtn) {
-                    downloadBtn.innerHTML = originalBtnText;
-                    downloadBtn.disabled = false;
-                }
-            }
+    try {
+        let base64Url = '';
+        if (logoImg) {
+            base64Url = await convertImgToBase64(logoImg);
+        } else {
+            base64Url = 'KPA CADAS.jpg';
         }
 
+        if (!base64Url.startsWith('data:image/')) {
+            const response = await fetch(base64Url);
+            const blob = await response.blob();
+            const reader = new FileReader();
+            base64Url = await new Promise((resolve) => {
+                reader.onloadend = () => resolve(reader.result);
+                reader.readAsDataURL(blob);
+            });
+        }
+
+        // Langsung panggil fungsi download aman berbasis Blob/Share
+        downloadBase64File(base64Url, 'Logo_KPA_CADAS_Parepare.png');
+
+    } catch (e) {
+        console.error("Gagal unduh logo:", e);
+        window.open(logoImg ? logoImg.src : 'KPA CADAS.jpg', '_blank');
+    } finally {
+        if (downloadBtn) {
+            downloadBtn.innerHTML = originalBtnText;
+            downloadBtn.disabled = false;
+        }
+    }
+}
         function downloadPosterGenerated() {
             html2canvas(document.getElementById('poster-capture-area'), { scale: 1.2, useCORS: true, allowTaint: true }).then(canvas => {
                 downloadBase64File(canvas.toDataURL('image/png'), 'Poster_Sewa_Alat.png');
