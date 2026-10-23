@@ -2005,14 +2005,72 @@
             });
         }
 
-      // --- FUNGSI DOWNLOAD LOGO KPA CADAS (AMAN DENGAN BLOB) ---
+// --- 1. FUNGSI UTAMA PENYIMPANAN AMAN DI HP ---
+function downloadBase64File(base64Data, filename) {
+    try {
+        const arr = base64Data.split(',');
+        const mime = arr[0].match(/:(.*?);/)[1];
+        const bstr = atob(arr[1]);
+        let n = bstr.length;
+        const u8arr = new Uint8Array(n);
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        const blob = new Blob([u8arr], { type: mime });
+        const file = new File([blob], filename, { type: mime });
+
+        // Cek apakah HP mendukung fitur Share bawaan
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            navigator.share({
+                files: [file],
+                title: filename,
+                text: 'Simpan file K.P.A CADAS'
+            }).catch(() => {
+                showMobileDownloadModal(base64Data, filename);
+            });
+        } else {
+            // Jika tidak, tampilkan modal pratinjau (Long-press & Save)
+            showMobileDownloadModal(base64Data, filename);
+        }
+    } catch (e) {
+        console.error("Download error:", e);
+        showMobileDownloadModal(base64Data, filename);
+    }
+}
+
+// --- 2. MODAL PRATINJAU AGAR MUDAH DISIMPAN KE GALERI HP ---
+function showMobileDownloadModal(base64Data, filename) {
+    const modal = document.getElementById('preview-photo-modal');
+    if (modal) {
+        document.getElementById('preview-modal-img').src = base64Data;
+        document.getElementById('preview-modal-title').innerText = filename;
+        document.getElementById('preview-modal-category').innerText = "SIAP DISIMPAN KE HP";
+        document.getElementById('preview-modal-date').innerText = "Tekan dan tahan (long-press) gambar di bawah ini, lalu pilih 'Simpan Gambar' untuk menyimpannya ke Galeri.";
+        modal.classList.remove('hidden');
+    } else {
+        const win = window.open();
+        if (win) {
+            win.document.write(`
+                <html>
+                    <head><title>${filename}</title></head>
+                    <body style="background:#05070a; color:white; text-align:center; font-family:sans-serif; padding:20px;">
+                        <h3 style="color:#c084fc;">Tekan dan tahan gambar di bawah ini, lalu pilih "Simpan Gambar"</h3>
+                        <img src="${base64Data}" style="max-width:100%; height:auto; border-radius:12px; border:2px solid #a855f7; margin-top:15px;" />
+                    </body>
+                </html>
+            `);
+        }
+    }
+}
+
+// --- 3. FUNGSI DOWNLOAD LOGO KPA CADAS ---
 async function downloadLogoDirect() {
     const logoImg = document.getElementById('logo-img-src');
     const downloadBtn = document.getElementById('btn-download-logo');
     const originalBtnText = downloadBtn ? downloadBtn.innerHTML : '';
 
     if (downloadBtn) {
-        downloadBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i>Mengunduh Logo...`;
+        downloadBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i>Memproses Logo...`;
         downloadBtn.disabled = true;
     }
 
@@ -2034,7 +2092,7 @@ async function downloadLogoDirect() {
             });
         }
 
-        // Langsung panggil fungsi download aman berbasis Blob/Share
+        // Panggil fungsi unduh aman berbasis modal/share
         downloadBase64File(base64Url, 'Logo_KPA_CADAS_Parepare.png');
 
     } catch (e) {
