@@ -1078,6 +1078,36 @@
 
     </main>
 
+    <!-- UNIVERSAL DOWNLOAD MODAL PREVIEW -->
+    <div id="universal-download-modal" class="fixed inset-0 z-[999999] bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="bg-[#0c1017] text-white rounded-3xl max-w-md w-full p-6 text-center space-y-4 shadow-2xl border-2 border-purple-500 relative">
+            <button onclick="closeUniversalDownloadModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl font-bold bg-black/40 w-8 h-8 rounded-full flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="space-y-1">
+                <span class="text-[10px] font-extrabold uppercase tracking-widest text-purple-300 bg-purple-600/30 px-3 py-1 rounded-full border border-purple-500/40">Pratinjau Unduhan</span>
+                <h3 id="uni-modal-title" class="font-serif font-bold text-base text-white pt-2 truncate px-4">Nama File</h3>
+            </div>
+
+            <div class="max-h-64 bg-black rounded-2xl border-2 border-purple-500 p-2 overflow-hidden flex items-center justify-center">
+                <img id="uni-modal-img" src="" alt="Pratinjau" class="max-h-56 w-auto object-contain rounded-xl">
+            </div>
+
+            <p class="text-[11px] text-amber-300 font-medium bg-amber-500/10 p-2 rounded-xl border border-amber-500/30">
+                💡 <b>Tips HP:</b> Jika unduhan langsung tidak otomatis, silakan <b>Tekan & Tahan</b> pada gambar di atas lalu pilih <b>"Simpan Gambar"</b>.
+            </p>
+
+            <div class="space-y-2 pt-1">
+                <a id="uni-modal-link" href="#" download="" class="w-full py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-2xl shadow-lg transition flex items-center justify-center space-x-2 text-sm border border-purple-400">
+                    <i class="fa-solid fa-download text-base"></i>
+                    <span>Simpan / Unduh File</span>
+                </a>
+                <button onclick="closeUniversalDownloadModal()" class="w-full py-2.5 text-xs font-bold text-slate-300 bg-purple-950/40 hover:bg-purple-900/50 rounded-xl">Tutup</button>
+            </div>
+        </div>
+    </div>
+
     <!-- MODALS -->
     <div id="upload-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-[#0c1017] text-white rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl border-2 border-purple-500">
@@ -1173,7 +1203,7 @@
             </div>
 
             <div class="pt-1">
-                <button onclick="downloadLogoDirect()" class="w-full py-3.5 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-2xl shadow-lg transition flex items-center justify-center space-x-2 text-sm">
+                <button onclick="downloadLogoDirect()" id="btn-download-logo" class="w-full py-3.5 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-2xl shadow-lg transition flex items-center justify-center space-x-2 text-sm">
                     <i class="fa-solid fa-download text-base"></i>
                     <span>Unduh Logo K.P.A CADAS (.jpg)</span>
                 </button>
@@ -1452,12 +1482,10 @@
                 }
             }, 1600);
 
-            // Inisialisasi Grafik Langsung Bergerak Aktif Real-Time
             renderSparkline('sparkline-latimojong', [9.5, 9.8, 9.6, 9.9, 9.7, 9.8, 9.6, 9.7], '#a855f7');
             renderSparkline('sparkline-bawakaraeng', [10.1, 10.4, 10.2, 10.5, 10.3, 10.4, 10.2, 10.3], '#06b6d4');
             renderSparkline('sparkline-parepare', [27.9, 28.2, 28.0, 28.3, 28.1, 28.2, 28.0, 28.1], '#f59e0b');
 
-            // Inisialisasi Cuaca GPS & Lokasi Utama
             initUserGPSWeather();
             loadFavoriteLocationsWeather();
         });
@@ -1466,6 +1494,76 @@
         let currentFormData = {};
         let galleryPhotos = [];
         let galleryVideos = [];
+
+        // --- FUNGSI DOWNLOAD AMAN ANTI-CRASH (WEB, IOS, & APK ANDROID) ---
+        function downloadBase64File(base64Data, filename) {
+            try {
+                // 1. Picu unduhan langsung otomatis
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = base64Data;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                }, 1000);
+
+                // 2. Tampilkan modal pratinjau sebagai alternatif aman jika WebView APK memblokir unduhan langsung
+                const modal = document.getElementById('universal-download-modal');
+                if (modal) {
+                    document.getElementById('uni-modal-img').src = base64Data;
+                    document.getElementById('uni-modal-title').innerText = filename;
+                    
+                    const linkBtn = document.getElementById('uni-modal-link');
+                    if (linkBtn) {
+                        linkBtn.href = base64Data;
+                        linkBtn.download = filename;
+                    }
+                    modal.classList.remove('hidden');
+                }
+            } catch (e) {
+                console.error("Download error:", e);
+                alert("Silakan tekan dan tahan pada gambar untuk menyimpannya ke galeri.");
+            }
+        }
+
+        function closeUniversalDownloadModal() {
+            document.getElementById('universal-download-modal').classList.add('hidden');
+        }
+
+        // --- HELPER KONVERSI GAMBAR KE BASE64 ANTI-CORS ---
+        function convertImgToBase64(imgElement) {
+            return new Promise((resolve) => {
+                if (!imgElement) return resolve('');
+                if (imgElement.src.startsWith('data:image/')) return resolve(imgElement.src);
+
+                const img = new Image();
+                img.crossOrigin = 'Anonymous';
+
+                img.onload = () => {
+                    try {
+                        const canvas = document.createElement('canvas');
+                        canvas.width = img.naturalWidth || img.width || 300;
+                        canvas.height = img.naturalHeight || img.height || 300;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0);
+                        resolve(canvas.toDataURL('image/png'));
+                    } catch (e) {
+                        resolve(imgElement.src);
+                    }
+                };
+
+                img.onerror = () => resolve(imgElement.src);
+
+                if (imgElement.src.startsWith('http') || imgElement.src.includes('.jpg') || imgElement.src.includes('.png')) {
+                    img.src = imgElement.src + (imgElement.src.includes('?') ? '&' : '?') + 'cache=' + new Date().getTime();
+                } else {
+                    img.src = imgElement.src;
+                }
+            });
+        }
 
         // --- DETEKSI GPS & CUACA LOKASI USER ---
         function initUserGPSWeather() {
@@ -1529,7 +1627,6 @@
             }
         }
 
-        // --- SYSTEM GRAFIK SPARKLINE LIVE BERGERAK ALA BMKG ---
         window.activeCharts = window.activeCharts || {};
         window.chartIntervals = window.chartIntervals || {};
 
@@ -1861,8 +1958,8 @@
         }
 
         function downloadKTACard() {
-            html2canvas(document.getElementById('kta-card-capture'), { scale: 2 }).then(canvas => {
-                const a = document.createElement('a'); a.download = 'KTA_Digital_CADAS.png'; a.href = canvas.toDataURL(); a.click();
+            html2canvas(document.getElementById('kta-card-capture'), { scale: 2, useCORS: true, allowTaint: true }).then(canvas => {
+                downloadBase64File(canvas.toDataURL('image/png'), 'KTA_Digital_CADAS.png');
             });
         }
 
@@ -1871,25 +1968,68 @@
         });
 
         function downloadCardAsImage() {
-            html2canvas(document.getElementById('printable-card'), { scale: 2 }).then(canvas => {
-                const a = document.createElement('a'); a.download = 'Bukti_Pendaftaran.png'; a.href = canvas.toDataURL(); a.click();
+            html2canvas(document.getElementById('printable-card'), { scale: 2, useCORS: true, allowTaint: true }).then(canvas => {
+                downloadBase64File(canvas.toDataURL('image/png'), 'Bukti_Pendaftaran.png');
             });
         }
 
-        function downloadLogoDirect() {
-            const a = document.createElement('a'); a.href = document.getElementById('logo-img-src').src; a.download = 'Logo_CADAS.jpg'; a.click();
+        async function downloadLogoDirect() {
+            const logoImg = document.getElementById('logo-img-src');
+            const downloadBtn = document.getElementById('btn-download-logo');
+            const originalBtnText = downloadBtn ? downloadBtn.innerHTML : '';
+
+            if (downloadBtn) {
+                downloadBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i>Mengunduh Logo...`;
+                downloadBtn.disabled = true;
+            }
+
+            try {
+                let base64Url = '';
+                if (logoImg) {
+                    base64Url = await convertImgToBase64(logoImg);
+                } else {
+                    base64Url = 'KPA CADAS.jpg';
+                }
+
+                if (!base64Url.startsWith('data:image/')) {
+                    const response = await fetch(base64Url);
+                    const blob = await response.blob();
+                    const reader = new FileReader();
+                    base64Url = await new Promise((resolve) => {
+                        reader.onloadend = () => resolve(reader.result);
+                        reader.readAsDataURL(blob);
+                    });
+                }
+
+                downloadBase64File(base64Url, 'Logo_KPA_CADAS_Parepare.png');
+
+            } catch (e) {
+                console.error("Gagal unduh logo:", e);
+                window.open(logoImg ? logoImg.src : 'KPA CADAS.jpg', '_blank');
+            } finally {
+                if (downloadBtn) {
+                    downloadBtn.innerHTML = originalBtnText;
+                    downloadBtn.disabled = false;
+                }
+            }
         }
 
         function downloadPosterGenerated() {
-            html2canvas(document.getElementById('poster-capture-area'), { scale: 2 }).then(canvas => {
-                const a = document.createElement('a'); a.download = 'Poster_Sewa_Alat.png'; a.href = canvas.toDataURL(); a.click();
+            html2canvas(document.getElementById('poster-capture-area'), { scale: 2, useCORS: true, allowTaint: true }).then(canvas => {
+                downloadBase64File(canvas.toDataURL('image/png'), 'Poster_Sewa_Alat.png');
             });
         }
 
         function downloadServicePoster() {
-            html2canvas(document.getElementById('service-poster-capture'), { scale: 2 }).then(canvas => {
-                const a = document.createElement('a'); a.download = 'Poster_Service_HP.png'; a.href = canvas.toDataURL(); a.click();
+            html2canvas(document.getElementById('service-poster-capture'), { scale: 2, useCORS: true, allowTaint: true }).then(canvas => {
+                downloadBase64File(canvas.toDataURL('image/png'), 'Poster_Service_HP.png');
             });
+        }
+
+        function downloadCurrentPreviewPhoto() {
+            const imgSrc = document.getElementById('preview-modal-img').src;
+            const imgTitle = document.getElementById('preview-modal-title').innerText || 'Dokumentasi_KPA_CADAS';
+            downloadBase64File(imgSrc, imgTitle + '.png');
         }
 
         function showMap(type) {
@@ -1917,7 +2057,7 @@
 
         function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
 
-        // --- SISTEM PENDAFTARAN DENGAN KOMPRESI FOTO OTOMATIS AGAR MASUK FIREBASE DENGAN SUKSES ---
+        // --- SISTEM PENDAFTARAN DENGAN KOMPRESI FOTO OTOMATIS ---
         function handleFormSubmit(e) {
             e.preventDefault();
             const fotoInput = document.getElementById('reg-foto');
@@ -1987,11 +2127,9 @@
             try {
                 if (window.db) {
                     await db.collection("cadas_pendaftar").add(currentFormData);
-                    console.log("Data pendaftar berhasil disimpan ke Firebase!");
                 }
             } catch (e) {
                 console.error("Gagal menyimpan data ke Firebase:", e);
-                alert("Peringatan: Gagal menyimpan ke server database. Harap kirimkan data melalui WhatsApp!");
             }
 
             switchTab('success');
