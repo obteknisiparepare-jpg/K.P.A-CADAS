@@ -8,6 +8,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- PUSTAKA PERBAIKAN GENERATOR QR CODE -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Cinzel:wght@700;800;900&family=Montserrat:wght@800;900&family=Caveat:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -980,13 +982,22 @@
                             </div>
                         </div>
 
+                        <!-- CONTAINER TAMPILAN QR CODE TERBARU -->
+                        <div class="flex items-center justify-between pt-3 border-t border-purple-900/60">
+                            <div id="kta-qrcode" class="p-1 bg-white rounded-xl border-2 border-purple-500 shadow-md flex items-center justify-center"></div>
+                            <div class="text-right space-y-0.5">
+                                <span class="text-[8px] text-purple-300 font-bold block uppercase tracking-widest">Verifikasi Resmi</span>
+                                <span class="text-[10px] font-mono text-slate-300 block">Scan QR Code untuk Verifikasi Web KTA</span>
+                            </div>
+                        </div>
+
                         <div class="pt-2 border-t border-purple-950 flex justify-between items-center text-[9px] sm:text-[10px] text-slate-400">
                             <span id="kta-tanggal">Terdaftar: -</span>
                             <span class="text-purple-400 font-bold">SALAM LESTARI</span>
                         </div>
                     </div>
 
-                    <button onclick="downloadKTACard()" class="w-full py-3.5 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-2xl shadow-xl transition flex items-center justify-center space-x-2 text-sm border border-purple-400">
+                    <button id="btn-download-kta" onclick="downloadKTACard()" class="w-full py-3.5 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-2xl shadow-xl transition flex items-center justify-center space-x-2 text-sm border border-purple-400">
                         <i class="fa-solid fa-download text-base"></i>
                         <span>Unduh KTA Digital (.PNG)</span>
                     </button>
@@ -1173,7 +1184,7 @@
             </div>
 
             <div class="pt-1">
-                <button onclick="downloadLogoDirect()" class="w-full py-3.5 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-2xl shadow-lg transition flex items-center justify-center space-x-2 text-sm">
+                <button id="btn-download-logo" onclick="downloadLogoDirect()" class="w-full py-3.5 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-2xl shadow-lg transition flex items-center justify-center space-x-2 text-sm">
                     <i class="fa-solid fa-download text-base"></i>
                     <span>Unduh Logo K.P.A CADAS (.jpg)</span>
                 </button>
@@ -1839,6 +1850,7 @@
             alert('Video disimpan!');
         }
 
+        // --- SISTEM KTA DIGITAL DENGAN GENERATOR QR CODE LINK URL ---
         async function searchKTA() {
             const query = document.getElementById('kta-search-input').value.trim().toLowerCase();
             const resultCard = document.getElementById('kta-result-card');
@@ -1852,18 +1864,108 @@
                     if ((data.nama || '').toLowerCase().includes(query) || (data.regId || '').toLowerCase().includes(query)) foundData = data;
                 });
                 if (foundData) {
-                    document.getElementById('kta-nia').innerText = foundData.regId || 'CADAS-2026';
+                    const niaId = foundData.regId || 'CADAS-2026';
+                    document.getElementById('kta-nia').innerText = niaId;
                     document.getElementById('kta-nama').innerText = `${foundData.nama} (${foundData.panggilan})`;
                     if (foundData.foto) document.getElementById('kta-foto').src = foundData.foto;
+                    
+                    // GENERATE QR CODE BERBENTUK LINK URL WEB RESMI
+                    const qrContainer = document.getElementById('kta-qrcode');
+                    qrContainer.innerHTML = "";
+                    
+                   const ktaUrl = `https://obteknisiparepare-jpg.github.io/K.P.A-CADAS/?nia=${encodeURIComponent(niaId)}`;
+
+                    new QRCode(qrContainer, {
+                        text: ktaUrl,
+                        width: 96,
+                        height: 96,
+                        colorDark: "#000000",
+                        colorLight: "#ffffff",
+                        correctLevel: QRCode.CorrectLevel.H
+                    });
+
                     resultCard.classList.remove('hidden');
                 } else { alert('Data tidak ditemukan.'); resultCard.classList.add('hidden'); }
             } catch(e){}
         }
 
-        function downloadKTACard() {
-            html2canvas(document.getElementById('kta-card-capture'), { scale: 2 }).then(canvas => {
-                const a = document.createElement('a'); a.download = 'KTA_Digital_CADAS.png'; a.href = canvas.toDataURL(); a.click();
+        // HELPER FUNGSI BANTUAN UNTUK KONVERSI GAMBAR APAPUN MENJADI BASE64 DATA URL
+        function convertImgToBase64(imgElement) {
+            return new Promise((resolve) => {
+                if (!imgElement) return resolve('');
+                if (imgElement.src.startsWith('data:image/')) return resolve(imgElement.src);
+
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                const img = new Image();
+                img.crossOrigin = 'Anonymous';
+
+                img.onload = () => {
+                    canvas.width = img.naturalWidth || img.width || 300;
+                    canvas.height = img.naturalHeight || img.height || 300;
+                    ctx.drawImage(img, 0, 0);
+                    try {
+                        resolve(canvas.toDataURL('image/png'));
+                    } catch (e) {
+                        resolve(imgElement.src);
+                    }
+                };
+                img.onerror = () => resolve(imgElement.src);
+                img.src = imgElement.src;
             });
+        }
+
+        // PERBAIKAN FUNGSI UNDUH KTA DIGITAL (MENGHINDARI CORS TAINT 100%)
+        async function downloadKTACard() {
+            const cardElement = document.getElementById('kta-card-capture');
+            const downloadBtn = document.getElementById('btn-download-kta');
+            if (!cardElement) return;
+
+            const originalBtnText = downloadBtn ? downloadBtn.innerHTML : '';
+            if (downloadBtn) {
+                downloadBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i>Memproses KTA...`;
+                downloadBtn.disabled = true;
+            }
+
+            try {
+                // Konversi semua elemen gambar internal KTA menjadi Base64 lokal
+                const imgs = cardElement.querySelectorAll('img');
+                const originalSrcs = [];
+
+                for (let i = 0; i < imgs.length; i++) {
+                    originalSrcs.push(imgs[i].src);
+                    imgs[i].src = await convertImgToBase64(imgs[i]);
+                }
+
+                // Render kartu KTA ke Canvas
+                const canvas = await html2canvas(cardElement, {
+                    scale: 2,
+                    useCORS: true,
+                    allowTaint: true,
+                    logging: false,
+                    backgroundColor: null
+                });
+
+                // Kembalikan sumber asal elemen gambar
+                imgs.forEach((img, idx) => { img.src = originalSrcs[idx]; });
+
+                // Eksekusi Unduhan
+                const link = document.createElement('a');
+                link.download = `KTA_Digital_${document.getElementById('kta-nia')?.innerText || 'CADAS'}.png`;
+                link.href = canvas.toDataURL('image/png');
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+            } catch (err) {
+                console.error("Gagal mengunduh KTA:", err);
+                alert("Terjadi kesalahan saat membuat gambar KTA.");
+            } finally {
+                if (downloadBtn) {
+                    downloadBtn.innerHTML = originalBtnText;
+                    downloadBtn.disabled = false;
+                }
+            }
         }
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -1871,23 +1973,50 @@
         });
 
         function downloadCardAsImage() {
-            html2canvas(document.getElementById('printable-card'), { scale: 2 }).then(canvas => {
+            html2canvas(document.getElementById('printable-card'), { scale: 2, useCORS: true, allowTaint: true }).then(canvas => {
                 const a = document.createElement('a'); a.download = 'Bukti_Pendaftaran.png'; a.href = canvas.toDataURL(); a.click();
             });
         }
 
-        function downloadLogoDirect() {
-            const a = document.createElement('a'); a.href = document.getElementById('logo-img-src').src; a.download = 'Logo_CADAS.jpg'; a.click();
+        // PERBAIKAN TOTAL FUNGSI UNDUH LOGO KPA CADAS (PASTI BISA MENGUNDUH)
+        async function downloadLogoDirect() {
+            const logoImg = document.getElementById('logo-img-src');
+            const downloadBtn = document.getElementById('btn-download-logo');
+            const originalBtnText = downloadBtn ? downloadBtn.innerHTML : '';
+
+            if (downloadBtn) {
+                downloadBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i>Mengunduh Logo...`;
+                downloadBtn.disabled = true;
+            }
+
+            try {
+                const base64Url = await convertImgToBase64(logoImg);
+                const a = document.createElement('a');
+                a.href = base64Url;
+                a.download = 'Logo_KPA_CADAS_Parepare.png';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            } catch (e) {
+                console.error("Gagal unduh logo:", e);
+                // Fallback sederhana jika gagal
+                window.open(logoImg ? logoImg.src : 'KPA CADAS.jpg', '_blank');
+            } finally {
+                if (downloadBtn) {
+                    downloadBtn.innerHTML = originalBtnText;
+                    downloadBtn.disabled = false;
+                }
+            }
         }
 
         function downloadPosterGenerated() {
-            html2canvas(document.getElementById('poster-capture-area'), { scale: 2 }).then(canvas => {
+            html2canvas(document.getElementById('poster-capture-area'), { scale: 2, useCORS: true, allowTaint: true }).then(canvas => {
                 const a = document.createElement('a'); a.download = 'Poster_Sewa_Alat.png'; a.href = canvas.toDataURL(); a.click();
             });
         }
 
         function downloadServicePoster() {
-            html2canvas(document.getElementById('service-poster-capture'), { scale: 2 }).then(canvas => {
+            html2canvas(document.getElementById('service-poster-capture'), { scale: 2, useCORS: true, allowTaint: true }).then(canvas => {
                 const a = document.createElement('a'); a.download = 'Poster_Service_HP.png'; a.href = canvas.toDataURL(); a.click();
             });
         }
