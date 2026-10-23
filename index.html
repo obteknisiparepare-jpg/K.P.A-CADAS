@@ -1474,70 +1474,63 @@
         let galleryPhotos = [];
         let galleryVideos = [];
 
-        // --- UNIVERSAL DOWNLOAD & PREVIEW FUNCTION (ANTI GAGAL DI WEB, IOS, & APK WEBINTOAPP) ---
-        function downloadBase64File(base64Data, filename) {
-            try {
-                // 1. Picu download standar (untuk PC / browser umum)
-                const a = document.createElement('a');
-                a.style.display = 'none';
-                a.href = base64Data;
-                a.download = filename;
-                document.body.appendChild(a);
-                a.click();
-                setTimeout(() => document.body.removeChild(a), 1000);
-
-                // 2. Tampilkan Modal Universal agar di APK Android (WebIntoApp) & iOS pasti bisa disimpan
-                const modal = document.getElementById('universal-download-modal');
-                if (modal) {
-                    document.getElementById('uni-modal-img').src = base64Data;
-                    document.getElementById('uni-modal-title').innerText = filename;
-                    const linkBtn = document.getElementById('uni-modal-link');
-                    linkBtn.href = base64Data;
-                    linkBtn.download = filename;
-                    modal.classList.remove('hidden');
-                }
-            } catch (e) {
-                console.error("Download error:", e);
-                alert("Gagal memproses unduhan.");
+       // --- FUNGSI DOWNLOAD AMAN (ANTI-CRASH UNTUK APK WEBINTOAPP & IOS) ---
+function downloadBase64File(base64Data, filename) {
+    try {
+        // Langsung tampilkan modal pratinjau agar aman di APK Android & iOS
+        const modal = document.getElementById('universal-download-modal');
+        if (modal) {
+            document.getElementById('uni-modal-img').src = base64Data;
+            document.getElementById('uni-modal-title').innerText = filename;
+            
+            const linkBtn = document.getElementById('uni-modal-link');
+            if (linkBtn) {
+                linkBtn.href = base64Data;
+                linkBtn.download = filename;
             }
+            modal.classList.remove('hidden');
         }
+    } catch (e) {
+        console.error("Download error:", e);
+        alert("Silakan tekan dan tahan pada gambar untuk menyimpannya ke galeri.");
+    }
+}
 
-        function closeUniversalDownloadModal() {
-            document.getElementById('universal-download-modal').classList.add('hidden');
+function closeUniversalDownloadModal() {
+    document.getElementById('universal-download-modal').classList.add('hidden');
+}
+
+// --- HELPER KONVERSI GAMBAR KE BASE64 ANTI-CORS ---
+function convertImgToBase64(imgElement) {
+    return new Promise((resolve) => {
+        if (!imgElement) return resolve('');
+        if (imgElement.src.startsWith('data:image/')) return resolve(imgElement.src);
+
+        const img = new Image();
+        img.crossOrigin = 'Anonymous';
+
+        img.onload = () => {
+            try {
+                const canvas = document.createElement('canvas');
+                canvas.width = img.naturalWidth || img.width || 300;
+                canvas.height = img.naturalHeight || img.height || 300;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                resolve(canvas.toDataURL('image/png'));
+            } catch (e) {
+                resolve(imgElement.src);
+            }
+        };
+
+        img.onerror = () => resolve(imgElement.src);
+
+        if (imgElement.src.startsWith('http') || imgElement.src.includes('.jpg') || imgElement.src.includes('.png')) {
+            img.src = imgElement.src + (imgElement.src.includes('?') ? '&' : '?') + 'cache=' + new Date().getTime();
+        } else {
+            img.src = imgElement.src;
         }
-
-        // --- HELPER KONVERSI GAMBAR KE BASE64 ANTI-CORS ---
-        function convertImgToBase64(imgElement) {
-            return new Promise((resolve) => {
-                if (!imgElement) return resolve('');
-                if (imgElement.src.startsWith('data:image/')) return resolve(imgElement.src);
-
-                const img = new Image();
-                img.crossOrigin = 'Anonymous';
-
-                img.onload = () => {
-                    try {
-                        const canvas = document.createElement('canvas');
-                        canvas.width = img.naturalWidth || img.width || 300;
-                        canvas.height = img.naturalHeight || img.height || 300;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0);
-                        resolve(canvas.toDataURL('image/png'));
-                    } catch (e) {
-                        resolve(imgElement.src);
-                    }
-                };
-
-                img.onerror = () => resolve(imgElement.src);
-
-                if (imgElement.src.startsWith('http') || imgElement.src.includes('.jpg') || imgElement.src.includes('.png')) {
-                    img.src = imgElement.src + (imgElement.src.includes('?') ? '&' : '?') + 'cache=' + new Date().getTime();
-                } else {
-                    img.src = imgElement.src;
-                }
-            });
-        }
-
+    });
+}
         // --- DETEKSI GPS & CUACA LOKASI USER ---
         function initUserGPSWeather() {
             if ("geolocation" in navigator) {
