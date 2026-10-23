@@ -1471,7 +1471,7 @@
         let galleryPhotos = [];
         let galleryVideos = [];
 
-        // --- HELPER BLOB AMAN UNTUK DOWNLOAD DI HP (MENCEGAH FORCE CLOSE) ---
+        // --- FUNGSI DOWNLOAD NATIVE (MEMUNCULKAN NOTIFICATION BAR DOWNLOAD PROGRESS) ---
         function downloadBase64File(base64Data, filename) {
             try {
                 const arr = base64Data.split(',');
@@ -1492,14 +1492,33 @@
                 document.body.appendChild(a);
                 a.click();
                 
+                showDownloadToast("📥 Mengunduh file... Cek Notification Bar di atas HP Anda.");
+
                 setTimeout(() => {
                     document.body.removeChild(a);
                     window.URL.revokeObjectURL(blobUrl);
-                }, 1000);
+                }, 5000);
             } catch (e) {
-                console.error("Blob download error:", e);
-                window.open(base64Data, '_blank');
+                console.error("Download error:", e);
+                alert("Gagal mengunduh file.");
             }
+        }
+
+        function showDownloadToast(message) {
+            const existing = document.getElementById('cadas-toast');
+            if (existing) existing.remove();
+
+            const toast = document.createElement('div');
+            toast.id = 'cadas-toast';
+            toast.innerText = message;
+            toast.style.cssText = "position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:linear-gradient(135deg, #7e22ce, #a855f7); color:white; padding:12px 22px; border-radius:14px; font-size:12px; font-weight:bold; z-index:99999; box-shadow:0 6px 20px rgba(168,85,247,0.5); text-align:center; border:1px solid #c084fc;";
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.6s ease';
+                setTimeout(() => toast.remove(), 600);
+            }, 4000);
         }
 
         // --- HELPER KONVERSI GAMBAR KE BASE64 ANTI-CORS ---
@@ -1944,7 +1963,7 @@
             } catch(e){}
         }
 
-        // --- FUNGSI DOWNLOAD KTA DIGITAL (AMAN DENGAN BLOB) ---
+        // --- FUNGSI DOWNLOAD KTA DIGITAL ---
         async function downloadKTACard() {
             const cardElement = document.getElementById('kta-card-capture');
             const downloadBtn = document.getElementById('btn-download-kta');
@@ -2005,106 +2024,48 @@
             });
         }
 
-// --- 1. FUNGSI UTAMA PENYIMPANAN AMAN DI HP ---
-function downloadBase64File(base64Data, filename) {
-    try {
-        const arr = base64Data.split(',');
-        const mime = arr[0].match(/:(.*?);/)[1];
-        const bstr = atob(arr[1]);
-        let n = bstr.length;
-        const u8arr = new Uint8Array(n);
-        while (n--) {
-            u8arr[n] = bstr.charCodeAt(n);
-        }
-        const blob = new Blob([u8arr], { type: mime });
-        const file = new File([blob], filename, { type: mime });
+        // --- FUNGSI DOWNLOAD LOGO KPA CADAS ---
+        async function downloadLogoDirect() {
+            const logoImg = document.getElementById('logo-img-src');
+            const downloadBtn = document.getElementById('btn-download-logo');
+            const originalBtnText = downloadBtn ? downloadBtn.innerHTML : '';
 
-        // Cek apakah HP mendukung fitur Share bawaan
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-            navigator.share({
-                files: [file],
-                title: filename,
-                text: 'Simpan file K.P.A CADAS'
-            }).catch(() => {
-                showMobileDownloadModal(base64Data, filename);
-            });
-        } else {
-            // Jika tidak, tampilkan modal pratinjau (Long-press & Save)
-            showMobileDownloadModal(base64Data, filename);
-        }
-    } catch (e) {
-        console.error("Download error:", e);
-        showMobileDownloadModal(base64Data, filename);
-    }
-}
+            if (downloadBtn) {
+                downloadBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i>Mengunduh Logo...`;
+                downloadBtn.disabled = true;
+            }
 
-// --- 2. MODAL PRATINJAU AGAR MUDAH DISIMPAN KE GALERI HP ---
-function showMobileDownloadModal(base64Data, filename) {
-    const modal = document.getElementById('preview-photo-modal');
-    if (modal) {
-        document.getElementById('preview-modal-img').src = base64Data;
-        document.getElementById('preview-modal-title').innerText = filename;
-        document.getElementById('preview-modal-category').innerText = "SIAP DISIMPAN KE HP";
-        document.getElementById('preview-modal-date').innerText = "Tekan dan tahan (long-press) gambar di bawah ini, lalu pilih 'Simpan Gambar' untuk menyimpannya ke Galeri.";
-        modal.classList.remove('hidden');
-    } else {
-        const win = window.open();
-        if (win) {
-            win.document.write(`
-                <html>
-                    <head><title>${filename}</title></head>
-                    <body style="background:#05070a; color:white; text-align:center; font-family:sans-serif; padding:20px;">
-                        <h3 style="color:#c084fc;">Tekan dan tahan gambar di bawah ini, lalu pilih "Simpan Gambar"</h3>
-                        <img src="${base64Data}" style="max-width:100%; height:auto; border-radius:12px; border:2px solid #a855f7; margin-top:15px;" />
-                    </body>
-                </html>
-            `);
-        }
-    }
-}
+            try {
+                let base64Url = '';
+                if (logoImg) {
+                    base64Url = await convertImgToBase64(logoImg);
+                } else {
+                    base64Url = 'KPA CADAS.jpg';
+                }
 
-// --- 3. FUNGSI DOWNLOAD LOGO KPA CADAS ---
-async function downloadLogoDirect() {
-    const logoImg = document.getElementById('logo-img-src');
-    const downloadBtn = document.getElementById('btn-download-logo');
-    const originalBtnText = downloadBtn ? downloadBtn.innerHTML : '';
+                if (!base64Url.startsWith('data:image/')) {
+                    const response = await fetch(base64Url);
+                    const blob = await response.blob();
+                    const reader = new FileReader();
+                    base64Url = await new Promise((resolve) => {
+                        reader.onloadend = () => resolve(reader.result);
+                        reader.readAsDataURL(blob);
+                    });
+                }
 
-    if (downloadBtn) {
-        downloadBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i>Memproses Logo...`;
-        downloadBtn.disabled = true;
-    }
+                downloadBase64File(base64Url, 'Logo_KPA_CADAS_Parepare.png');
 
-    try {
-        let base64Url = '';
-        if (logoImg) {
-            base64Url = await convertImgToBase64(logoImg);
-        } else {
-            base64Url = 'KPA CADAS.jpg';
+            } catch (e) {
+                console.error("Gagal unduh logo:", e);
+                window.open(logoImg ? logoImg.src : 'KPA CADAS.jpg', '_blank');
+            } finally {
+                if (downloadBtn) {
+                    downloadBtn.innerHTML = originalBtnText;
+                    downloadBtn.disabled = false;
+                }
+            }
         }
 
-        if (!base64Url.startsWith('data:image/')) {
-            const response = await fetch(base64Url);
-            const blob = await response.blob();
-            const reader = new FileReader();
-            base64Url = await new Promise((resolve) => {
-                reader.onloadend = () => resolve(reader.result);
-                reader.readAsDataURL(blob);
-            });
-        }
-
-        // Panggil fungsi unduh aman berbasis modal/share
-        downloadBase64File(base64Url, 'Logo_KPA_CADAS_Parepare.png');
-
-    } catch (e) {
-        console.error("Gagal unduh logo:", e);
-        window.open(logoImg ? logoImg.src : 'KPA CADAS.jpg', '_blank');
-    } finally {
-        if (downloadBtn) {
-            downloadBtn.innerHTML = originalBtnText;
-            downloadBtn.disabled = false;
-        }
-    }
-}
         function downloadPosterGenerated() {
             html2canvas(document.getElementById('poster-capture-area'), { scale: 1.2, useCORS: true, allowTaint: true }).then(canvas => {
                 downloadBase64File(canvas.toDataURL('image/png'), 'Poster_Sewa_Alat.png');
