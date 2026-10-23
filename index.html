@@ -8,7 +8,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- PUSTAKA PERBAIKAN GENERATOR QR CODE -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Cinzel:wght@700;800;900&family=Montserrat:wght@800;900&family=Caveat:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -339,7 +338,7 @@
                     </div>
                 </div>
 
-                <!-- WIDGET CUACA DENGAN BACKGROUND PEGUNUNGAN ELEGAN -->
+                <!-- WIDGET CUACA -->
                 <div class="themed-card-weather rounded-3xl p-5 sm:p-7 border-2 border-purple-500/70 shadow-2xl space-y-6 backdrop-blur-sm">
                     <div class="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-purple-900/80 pb-4">
                         <div class="flex items-center space-x-3 text-center sm:text-left">
@@ -357,7 +356,7 @@
                         </button>
                     </div>
 
-                    <!-- KARTU CUACA GPS LOKASI SAYA BER-BACKGROUND TEMA -->
+                    <!-- KARTU CUACA GPS LOKASI SAYA -->
                     <div id="gps-weather-card" class="themed-card-gps rounded-2xl p-4 sm:p-5 border border-purple-500/50 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-4">
                         <div class="flex items-center space-x-4">
                             <div id="gps-weather-icon" class="text-4xl text-purple-400 animate-bounce-slow">
@@ -386,9 +385,8 @@
                         </div>
                     </div>
 
-                    <!-- 3 KARTU CUACA LOKASI FAVORIT DENGAN GRAFIK BERGERAK LIVE -->
+                    <!-- 3 KARTU CUACA LOKASI FAVORIT -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <!-- LATIMOJONG -->
                         <div class="bg-gradient-to-b from-[#0c1017]/90 to-[#05070a]/95 p-4 rounded-2xl border border-purple-500/40 space-y-3 relative overflow-hidden backdrop-blur-md">
                             <div class="flex justify-between items-start">
                                 <div>
@@ -406,7 +404,6 @@
                             </div>
                         </div>
 
-                        <!-- BAWAKARAENG -->
                         <div class="bg-gradient-to-b from-[#0c1017]/90 to-[#05070a]/95 p-4 rounded-2xl border border-cyan-500/40 space-y-3 relative overflow-hidden backdrop-blur-md">
                             <div class="flex justify-between items-start">
                                 <div>
@@ -424,7 +421,6 @@
                             </div>
                         </div>
 
-                        <!-- KOTA PAREPARE -->
                         <div class="bg-gradient-to-b from-[#0c1017]/90 to-[#05070a]/95 p-4 rounded-2xl border border-amber-500/40 space-y-3 relative overflow-hidden backdrop-blur-md">
                             <div class="flex justify-between items-start">
                                 <div>
@@ -599,7 +595,7 @@
             </div>
         </section>
 
-        <!-- SECTION FITUR PETA & CUACA GABUNGAN -->
+        <!-- SECTION PETA & CUACA -->
         <section id="view-trails" class="view-section hidden py-8 sm:py-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
                 <div class="cyber-banner p-6 sm:p-8 text-center space-y-3">
@@ -982,7 +978,6 @@
                             </div>
                         </div>
 
-                        <!-- CONTAINER TAMPILAN QR CODE TERBARU -->
                         <div class="flex items-center justify-between pt-3 border-t border-purple-900/60">
                             <div id="kta-qrcode" class="p-1 bg-white rounded-xl border-2 border-purple-500 shadow-md flex items-center justify-center"></div>
                             <div class="text-right space-y-0.5">
@@ -1452,7 +1447,7 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT LENGKAP -->
+    <!-- JAVASCRIPT UTAMA -->
     <script>
         window.addEventListener('load', () => {
             setTimeout(() => {
@@ -1463,12 +1458,10 @@
                 }
             }, 1600);
 
-            // Inisialisasi Grafik Langsung Bergerak Aktif Real-Time
             renderSparkline('sparkline-latimojong', [9.5, 9.8, 9.6, 9.9, 9.7, 9.8, 9.6, 9.7], '#a855f7');
             renderSparkline('sparkline-bawakaraeng', [10.1, 10.4, 10.2, 10.5, 10.3, 10.4, 10.2, 10.3], '#06b6d4');
             renderSparkline('sparkline-parepare', [27.9, 28.2, 28.0, 28.3, 28.1, 28.2, 28.0, 28.1], '#f59e0b');
 
-            // Inisialisasi Cuaca GPS & Lokasi Utama
             initUserGPSWeather();
             loadFavoriteLocationsWeather();
         });
@@ -1478,7 +1471,38 @@
         let galleryPhotos = [];
         let galleryVideos = [];
 
-        // --- HELPER KONVERSI GAMBAR KE BASE64 ANTI-CORS / ANTI-TAINT ---
+        // --- HELPER BLOB AMAN UNTUK DOWNLOAD DI HP (MENCEGAH FORCE CLOSE) ---
+        function downloadBase64File(base64Data, filename) {
+            try {
+                const arr = base64Data.split(',');
+                const mime = arr[0].match(/:(.*?);/)[1];
+                const bstr = atob(arr[1]);
+                let n = bstr.length;
+                const u8arr = new Uint8Array(n);
+                while (n--) {
+                    u8arr[n] = bstr.charCodeAt(n);
+                }
+                const blob = new Blob([u8arr], { type: mime });
+                const blobUrl = window.URL.createObjectURL(blob);
+                
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = blobUrl;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(blobUrl);
+                }, 1000);
+            } catch (e) {
+                console.error("Blob download error:", e);
+                window.open(base64Data, '_blank');
+            }
+        }
+
+        // --- HELPER KONVERSI GAMBAR KE BASE64 ANTI-CORS ---
         function convertImgToBase64(imgElement) {
             return new Promise((resolve) => {
                 if (!imgElement) return resolve('');
@@ -1572,7 +1596,7 @@
             }
         }
 
-        // --- SYSTEM GRAFIK SPARKLINE LIVE BERGERAK ALA BMKG ---
+        // --- GRAFIK SPARKLINE LIVE ---
         window.activeCharts = window.activeCharts || {};
         window.chartIntervals = window.chartIntervals || {};
 
@@ -1882,7 +1906,7 @@
             alert('Video disimpan!');
         }
 
-        // --- SISTEM KTA DIGITAL DENGAN GENERATOR QR CODE LINK URL ---
+        // --- PENCARIAN KTA & QR CODE ---
         async function searchKTA() {
             const query = document.getElementById('kta-search-input').value.trim().toLowerCase();
             const resultCard = document.getElementById('kta-result-card');
@@ -1901,11 +1925,10 @@
                     document.getElementById('kta-nama').innerText = `${foundData.nama} (${foundData.panggilan})`;
                     if (foundData.foto) document.getElementById('kta-foto').src = foundData.foto;
                     
-                    // GENERATE QR CODE BERBENTUK LINK URL WEB RESMI
                     const qrContainer = document.getElementById('kta-qrcode');
                     qrContainer.innerHTML = "";
                     
-                   const ktaUrl = `https://obteknisiparepare-jpg.github.io/K.P.A-CADAS/?nia=${encodeURIComponent(niaId)}`;
+                    const ktaUrl = `https://obteknisiparepare-jpg.github.io/K.P.A-CADAS/?nia=${encodeURIComponent(niaId)}`;
 
                     new QRCode(qrContainer, {
                         text: ktaUrl,
@@ -1921,7 +1944,7 @@
             } catch(e){}
         }
 
-        // --- PERBAIKAN UTAMA: DOWNLOAD KTA DIGITAL (AMAN DI HP & BEBAS CRASH) ---
+        // --- FUNGSI DOWNLOAD KTA DIGITAL (AMAN DENGAN BLOB) ---
         async function downloadKTACard() {
             const cardElement = document.getElementById('kta-card-capture');
             const downloadBtn = document.getElementById('btn-download-kta');
@@ -1944,7 +1967,6 @@
                     }
                 }
 
-                // Menggunakan scale: 1.2 agar aman untuk RAM HP dan tidak membuat browser tertutup/crash
                 const canvas = await html2canvas(cardElement, {
                     scale: 1.2, 
                     useCORS: true,
@@ -1957,12 +1979,10 @@
                     img.src = originalSrcs[idx]; 
                 });
 
-                const link = document.createElement('a');
-                link.download = `KTA_Digital_${document.getElementById('kta-nia')?.innerText || 'CADAS'}.png`;
-                link.href = canvas.toDataURL('image/png');
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+                const base64Data = canvas.toDataURL('image/png');
+                const fileName = `KTA_Digital_${document.getElementById('kta-nia')?.innerText || 'CADAS'}.png`;
+                
+                downloadBase64File(base64Data, fileName);
 
             } catch (err) {
                 console.error("Gagal mengunduh KTA:", err);
@@ -1980,12 +2000,12 @@
         });
 
         function downloadCardAsImage() {
-            html2canvas(document.getElementById('printable-card'), { scale: 1.5, useCORS: true, allowTaint: true }).then(canvas => {
-                const a = document.createElement('a'); a.download = 'Bukti_Pendaftaran.png'; a.href = canvas.toDataURL(); a.click();
+            html2canvas(document.getElementById('printable-card'), { scale: 1.2, useCORS: true, allowTaint: true }).then(canvas => {
+                downloadBase64File(canvas.toDataURL('image/png'), 'Bukti_Pendaftaran.png');
             });
         }
 
-        // --- PERBAIKAN UTAMA: DOWNLOAD LOGO KPA CADAS (ANTI BLOKIR CORS) ---
+        // --- FUNGSI DOWNLOAD LOGO KPA CADAS (AMAN DENGAN BLOB) ---
         async function downloadLogoDirect() {
             const logoImg = document.getElementById('logo-img-src');
             const downloadBtn = document.getElementById('btn-download-logo');
@@ -2000,14 +2020,24 @@
                 let base64Url = '';
                 if (logoImg) {
                     base64Url = await convertImgToBase64(logoImg);
+                } else {
+                    base64Url = 'KPA CADAS.jpg';
                 }
 
-                const a = document.createElement('a');
-                a.href = base64Url || (logoImg ? logoImg.src : 'KPA CADAS.jpg');
-                a.download = 'Logo_KPA_CADAS_Parepare.png';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
+                if (base64Url.startsWith('data:image/')) {
+                    downloadBase64File(base64Url, 'Logo_KPA_CADAS_Parepare.png');
+                } else {
+                    const response = await fetch(base64Url);
+                    const blob = await response.blob();
+                    const blobUrl = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = blobUrl;
+                    a.download = 'Logo_KPA_CADAS_Parepare.png';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(blobUrl);
+                }
             } catch (e) {
                 console.error("Gagal unduh logo:", e);
                 window.open(logoImg ? logoImg.src : 'KPA CADAS.jpg', '_blank');
@@ -2020,14 +2050,14 @@
         }
 
         function downloadPosterGenerated() {
-            html2canvas(document.getElementById('poster-capture-area'), { scale: 1.5, useCORS: true, allowTaint: true }).then(canvas => {
-                const a = document.createElement('a'); a.download = 'Poster_Sewa_Alat.png'; a.href = canvas.toDataURL(); a.click();
+            html2canvas(document.getElementById('poster-capture-area'), { scale: 1.2, useCORS: true, allowTaint: true }).then(canvas => {
+                downloadBase64File(canvas.toDataURL('image/png'), 'Poster_Sewa_Alat.png');
             });
         }
 
         function downloadServicePoster() {
-            html2canvas(document.getElementById('service-poster-capture'), { scale: 1.5, useCORS: true, allowTaint: true }).then(canvas => {
-                const a = document.createElement('a'); a.download = 'Poster_Service_HP.png'; a.href = canvas.toDataURL(); a.click();
+            html2canvas(document.getElementById('service-poster-capture'), { scale: 1.2, useCORS: true, allowTaint: true }).then(canvas => {
+                downloadBase64File(canvas.toDataURL('image/png'), 'Poster_Service_HP.png');
             });
         }
 
@@ -2056,7 +2086,7 @@
 
         function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
 
-        // --- SISTEM PENDAFTARAN DENGAN KOMPRESI FOTO OTOMATIS AGAR MASUK FIREBASE DENGAN SUKSES ---
+        // --- PENDAFTARAN & KOMPRESI FOTO ---
         function handleFormSubmit(e) {
             e.preventDefault();
             const fotoInput = document.getElementById('reg-foto');
@@ -2126,7 +2156,6 @@
             try {
                 if (window.db) {
                     await db.collection("cadas_pendaftar").add(currentFormData);
-                    console.log("Data pendaftar berhasil disimpan ke Firebase!");
                 }
             } catch (e) {
                 console.error("Gagal menyimpan data ke Firebase:", e);
