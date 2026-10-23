@@ -8,7 +8,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Cinzel:wght@700;800;900&family=Montserrat:wght@800;900&family=Caveat:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -338,7 +337,7 @@
                     </div>
                 </div>
 
-                <!-- WIDGET CUACA -->
+                <!-- WIDGET CUACA DENGAN BACKGROUND PEGUNUNGAN ELEGAN -->
                 <div class="themed-card-weather rounded-3xl p-5 sm:p-7 border-2 border-purple-500/70 shadow-2xl space-y-6 backdrop-blur-sm">
                     <div class="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-purple-900/80 pb-4">
                         <div class="flex items-center space-x-3 text-center sm:text-left">
@@ -356,7 +355,7 @@
                         </button>
                     </div>
 
-                    <!-- KARTU CUACA GPS LOKASI SAYA -->
+                    <!-- KARTU CUACA GPS LOKASI SAYA BER-BACKGROUND TEMA -->
                     <div id="gps-weather-card" class="themed-card-gps rounded-2xl p-4 sm:p-5 border border-purple-500/50 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-4">
                         <div class="flex items-center space-x-4">
                             <div id="gps-weather-icon" class="text-4xl text-purple-400 animate-bounce-slow">
@@ -385,8 +384,9 @@
                         </div>
                     </div>
 
-                    <!-- 3 KARTU CUACA LOKASI FAVORIT -->
+                    <!-- 3 KARTU CUACA LOKASI FAVORIT DENGAN GRAFIK BERGERAK LIVE -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <!-- LATIMOJONG -->
                         <div class="bg-gradient-to-b from-[#0c1017]/90 to-[#05070a]/95 p-4 rounded-2xl border border-purple-500/40 space-y-3 relative overflow-hidden backdrop-blur-md">
                             <div class="flex justify-between items-start">
                                 <div>
@@ -404,6 +404,7 @@
                             </div>
                         </div>
 
+                        <!-- BAWAKARAENG -->
                         <div class="bg-gradient-to-b from-[#0c1017]/90 to-[#05070a]/95 p-4 rounded-2xl border border-cyan-500/40 space-y-3 relative overflow-hidden backdrop-blur-md">
                             <div class="flex justify-between items-start">
                                 <div>
@@ -421,6 +422,7 @@
                             </div>
                         </div>
 
+                        <!-- KOTA PAREPARE -->
                         <div class="bg-gradient-to-b from-[#0c1017]/90 to-[#05070a]/95 p-4 rounded-2xl border border-amber-500/40 space-y-3 relative overflow-hidden backdrop-blur-md">
                             <div class="flex justify-between items-start">
                                 <div>
@@ -595,7 +597,7 @@
             </div>
         </section>
 
-        <!-- SECTION PETA & CUACA -->
+        <!-- SECTION FITUR PETA & CUACA GABUNGAN -->
         <section id="view-trails" class="view-section hidden py-8 sm:py-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
                 <div class="cyber-banner p-6 sm:p-8 text-center space-y-3">
@@ -954,7 +956,7 @@
 
                         <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
                             <div class="w-28 h-36 bg-black rounded-2xl border-2 border-purple-500 overflow-hidden shadow-inner flex items-center justify-center relative flex-shrink-0">
-                                <img id="kta-foto" crossorigin="anonymous" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" alt="Foto Anggota" class="w-full h-full object-cover">
+                                <img id="kta-foto" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" alt="Foto Anggota" class="w-full h-full object-cover">
                             </div>
                             <div class="space-y-2 text-xs text-slate-200 w-full text-center sm:text-left">
                                 <div>
@@ -978,21 +980,13 @@
                             </div>
                         </div>
 
-                        <div class="flex items-center justify-between pt-3 border-t border-purple-900/60">
-                            <div id="kta-qrcode" class="p-1 bg-white rounded-xl border-2 border-purple-500 shadow-md flex items-center justify-center"></div>
-                            <div class="text-right space-y-0.5">
-                                <span class="text-[8px] text-purple-300 font-bold block uppercase tracking-widest">Verifikasi Resmi</span>
-                                <span class="text-[10px] font-mono text-slate-300 block">Scan QR Code untuk Verifikasi Web KTA</span>
-                            </div>
-                        </div>
-
                         <div class="pt-2 border-t border-purple-950 flex justify-between items-center text-[9px] sm:text-[10px] text-slate-400">
                             <span id="kta-tanggal">Terdaftar: -</span>
                             <span class="text-purple-400 font-bold">SALAM LESTARI</span>
                         </div>
                     </div>
 
-                    <button onclick="downloadKTACard()" id="btn-download-kta" class="w-full py-3.5 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-2xl shadow-xl transition flex items-center justify-center space-x-2 text-sm border border-purple-400">
+                    <button onclick="downloadKTACard()" class="w-full py-3.5 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-2xl shadow-xl transition flex items-center justify-center space-x-2 text-sm border border-purple-400">
                         <i class="fa-solid fa-download text-base"></i>
                         <span>Unduh KTA Digital (.PNG)</span>
                     </button>
@@ -1140,28 +1134,25 @@
         </div>
     </div>
 
-    <!-- UNIVERSAL DOWNLOAD & PREVIEW MODAL (ANTI GAGAL UNTUK APK & IOS) -->
-    <div id="universal-download-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4">
-        <div class="bg-[#0c1017] text-white rounded-3xl max-w-md w-full p-5 text-center space-y-4 shadow-2xl border-2 border-purple-500 relative">
-            <button onclick="closeUniversalDownloadModal()" class="absolute top-3 right-3 text-slate-400 hover:text-white text-xl font-bold bg-black/50 w-8 h-8 rounded-full flex items-center justify-center">
-                <i class="fa-solid fa-xmark"></i>
+    <div id="preview-photo-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="relative max-w-4xl w-full text-center space-y-3">
+            <button onclick="closePreviewPhotoModal()" class="absolute -top-12 right-0 text-white hover:text-purple-400 text-xl font-bold px-3 py-1 bg-black/60 rounded-full border border-purple-500">
+                <i class="fa-solid fa-xmark mr-1"></i> Tutup
             </button>
-            <div class="space-y-1">
-                <span class="text-[9px] font-extrabold uppercase tracking-widest text-purple-300 bg-purple-500/20 px-3 py-0.5 rounded-full border border-purple-400">Siap Unduh & Simpan</span>
-                <h3 id="uni-modal-title" class="font-serif font-bold text-base text-purple-400 mt-1">Pratinjau File</h3>
+            <div class="max-h-[70vh] flex items-center justify-center overflow-hidden rounded-2xl border-2 border-purple-500 bg-black shadow-2xl relative">
+                <img id="preview-modal-img" src="" alt="Pratinjau Foto" class="max-h-[70vh] w-auto object-contain">
             </div>
-            <p class="text-xs text-slate-300 bg-purple-950/40 p-2.5 rounded-xl border border-purple-500/30">
-                📲 <strong>Tips untuk APK Android & iOS:</strong> Tekan & Tahan gambar di bawah ini lalu pilih <strong>"Simpan Gambar"</strong> untuk langsung masuk ke Galeri.
-            </p>
-            <div class="max-h-[50vh] flex items-center justify-center overflow-hidden rounded-2xl border border-purple-500 bg-black p-2 shadow-inner">
-                <img id="uni-modal-img" src="" alt="Pratinjau Hasil" class="max-h-[45vh] w-auto object-contain rounded-lg">
-            </div>
-            <div class="space-y-2 pt-1">
-                <a id="uni-modal-link" href="" download="file.png" class="w-full py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl text-xs flex items-center justify-center space-x-2 shadow-lg transition border border-purple-400">
-                    <i class="fa-solid fa-download text-sm"></i>
-                    <span>Download File Langsung</span>
-                </a>
-                <button onclick="closeUniversalDownloadModal()" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-xs transition">Tutup Pratinjau</button>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-between text-left bg-[#0c1017] p-4 rounded-2xl border border-purple-900 shadow-lg gap-3">
+                <div>
+                    <span id="preview-modal-category" class="text-[10px] font-extrabold uppercase tracking-wider text-purple-300 bg-purple-500/10 px-2.5 py-0.5 rounded-full"></span>
+                    <h3 id="preview-modal-title" class="font-bold text-white text-base mt-1"></h3>
+                    <p id="preview-modal-date" class="text-xs text-slate-400"></p>
+                </div>
+                <button onclick="downloadCurrentPreviewPhoto()" class="w-full sm:w-auto px-5 py-2.5 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-xl text-xs flex items-center justify-center space-x-2 shadow-lg transition">
+                    <i class="fa-solid fa-download"></i>
+                    <span>Unduh Foto Ini</span>
+                </button>
             </div>
         </div>
     </div>
@@ -1182,9 +1173,9 @@
             </div>
 
             <div class="pt-1">
-                <button onclick="downloadLogoDirect()" id="btn-download-logo" class="w-full py-3.5 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-2xl shadow-lg transition flex items-center justify-center space-x-2 text-sm">
+                <button onclick="downloadLogoDirect()" class="w-full py-3.5 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-2xl shadow-lg transition flex items-center justify-center space-x-2 text-sm">
                     <i class="fa-solid fa-download text-base"></i>
-                    <span>Unduh Logo K.P.A CADAS (.png)</span>
+                    <span>Unduh Logo K.P.A CADAS (.jpg)</span>
                 </button>
             </div>
 
@@ -1450,7 +1441,7 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT UTAMA -->
+    <!-- JAVASCRIPT LENGKAP -->
     <script>
         window.addEventListener('load', () => {
             setTimeout(() => {
@@ -1461,10 +1452,12 @@
                 }
             }, 1600);
 
+            // Inisialisasi Grafik Langsung Bergerak Aktif Real-Time
             renderSparkline('sparkline-latimojong', [9.5, 9.8, 9.6, 9.9, 9.7, 9.8, 9.6, 9.7], '#a855f7');
             renderSparkline('sparkline-bawakaraeng', [10.1, 10.4, 10.2, 10.5, 10.3, 10.4, 10.2, 10.3], '#06b6d4');
             renderSparkline('sparkline-parepare', [27.9, 28.2, 28.0, 28.3, 28.1, 28.2, 28.0, 28.1], '#f59e0b');
 
+            // Inisialisasi Cuaca GPS & Lokasi Utama
             initUserGPSWeather();
             loadFavoriteLocationsWeather();
         });
@@ -1473,75 +1466,7 @@
         let currentFormData = {};
         let galleryPhotos = [];
         let galleryVideos = [];
-// --- FUNGSI DOWNLOAD OTOMATIS & MODAL AMAN (WEB, IOS, & APK ANDROID) ---
-function downloadBase64File(base64Data, filename) {
-    try {
-        // 1. Picu unduhan langsung agar file langsung tersimpan ke perangkat
-        const a = document.createElement('a');
-        a.style.display = 'none';
-        a.href = base64Data;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        
-        setTimeout(() => {
-            document.body.removeChild(a);
-        }, 1000);
 
-        // 2. Tampilkan juga modal pratinjau sebagai alternatif jika WebView APK memblokir unduhan langsung
-        const modal = document.getElementById('universal-download-modal');
-        if (modal) {
-            document.getElementById('uni-modal-img').src = base64Data;
-            document.getElementById('uni-modal-title').innerText = filename;
-            
-            const linkBtn = document.getElementById('uni-modal-link');
-            if (linkBtn) {
-                linkBtn.href = base64Data;
-                linkBtn.download = filename;
-            }
-            modal.classList.remove('hidden');
-        }
-    } catch (e) {
-        console.error("Download error:", e);
-        alert("Silakan tekan dan tahan pada gambar untuk menyimpannya ke galeri.");
-    }
-}
-
-function closeUniversalDownloadModal() {
-    document.getElementById('universal-download-modal').classList.add('hidden');
-}
-
-// --- HELPER KONVERSI GAMBAR KE BASE64 ANTI-CORS ---
-function convertImgToBase64(imgElement) {
-    return new Promise((resolve) => {
-        if (!imgElement) return resolve('');
-        if (imgElement.src.startsWith('data:image/')) return resolve(imgElement.src);
-
-        const img = new Image();
-        img.crossOrigin = 'Anonymous';
-
-        img.onload = () => {
-            try {
-                const canvas = document.createElement('canvas');
-                canvas.width = img.naturalWidth || img.width || 300;
-                canvas.height = img.naturalHeight || img.height || 300;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0);
-                resolve(canvas.toDataURL('image/png'));
-            } catch (e) {
-                resolve(imgElement.src);
-            }
-        };
-
-        img.onerror = () => resolve(imgElement.src);
-
-        if (imgElement.src.startsWith('http') || imgElement.src.includes('.jpg') || imgElement.src.includes('.png')) {
-            img.src = imgElement.src + (imgElement.src.includes('?') ? '&' : '?') + 'cache=' + new Date().getTime();
-        } else {
-            img.src = imgElement.src;
-        }
-    });
-}
         // --- DETEKSI GPS & CUACA LOKASI USER ---
         function initUserGPSWeather() {
             if ("geolocation" in navigator) {
@@ -1604,7 +1529,7 @@ function convertImgToBase64(imgElement) {
             }
         }
 
-        // --- GRAFIK SPARKLINE LIVE ---
+        // --- SYSTEM GRAFIK SPARKLINE LIVE BERGERAK ALA BMKG ---
         window.activeCharts = window.activeCharts || {};
         window.chartIntervals = window.chartIntervals || {};
 
@@ -1914,7 +1839,6 @@ function convertImgToBase64(imgElement) {
             alert('Video disimpan!');
         }
 
-        // --- PENCARIAN KTA & QR CODE ---
         async function searchKTA() {
             const query = document.getElementById('kta-search-input').value.trim().toLowerCase();
             const resultCard = document.getElementById('kta-result-card');
@@ -1928,79 +1852,18 @@ function convertImgToBase64(imgElement) {
                     if ((data.nama || '').toLowerCase().includes(query) || (data.regId || '').toLowerCase().includes(query)) foundData = data;
                 });
                 if (foundData) {
-                    const niaId = foundData.regId || 'CADAS-2026';
-                    document.getElementById('kta-nia').innerText = niaId;
+                    document.getElementById('kta-nia').innerText = foundData.regId || 'CADAS-2026';
                     document.getElementById('kta-nama').innerText = `${foundData.nama} (${foundData.panggilan})`;
                     if (foundData.foto) document.getElementById('kta-foto').src = foundData.foto;
-                    
-                    const qrContainer = document.getElementById('kta-qrcode');
-                    qrContainer.innerHTML = "";
-                    
-                    const ktaUrl = `https://obteknisiparepare-jpg.github.io/K.P.A-CADAS/?nia=${encodeURIComponent(niaId)}`;
-
-                    new QRCode(qrContainer, {
-                        text: ktaUrl,
-                        width: 96,
-                        height: 96,
-                        colorDark: "#000000",
-                        colorLight: "#ffffff",
-                        correctLevel: QRCode.CorrectLevel.H
-                    });
-
                     resultCard.classList.remove('hidden');
                 } else { alert('Data tidak ditemukan.'); resultCard.classList.add('hidden'); }
             } catch(e){}
         }
 
-        // --- FUNGSI DOWNLOAD KTA DIGITAL ---
-        async function downloadKTACard() {
-            const cardElement = document.getElementById('kta-card-capture');
-            const downloadBtn = document.getElementById('btn-download-kta');
-            if (!cardElement) return;
-
-            const originalBtnText = downloadBtn ? downloadBtn.innerHTML : '';
-            if (downloadBtn) {
-                downloadBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i>Memproses KTA...`;
-                downloadBtn.disabled = true;
-            }
-
-            try {
-                const imgs = cardElement.querySelectorAll('img');
-                const originalSrcs = [];
-
-                for (let i = 0; i < imgs.length; i++) {
-                    originalSrcs.push(imgs[i].src);
-                    if (imgs[i].src) {
-                        imgs[i].src = await convertImgToBase64(imgs[i]);
-                    }
-                }
-
-                const canvas = await html2canvas(cardElement, {
-                    scale: 1.2, 
-                    useCORS: true,
-                    allowTaint: true,
-                    logging: false,
-                    backgroundColor: null
-                });
-
-                imgs.forEach((img, idx) => { 
-                    img.src = originalSrcs[idx]; 
-                });
-
-                const base64Data = canvas.toDataURL('image/png');
-                const fileName = `KTA_Digital_${document.getElementById('kta-nia')?.innerText || 'CADAS'}.png`;
-                
-                downloadBase64File(base64Data, fileName);
-
-            } catch (err) {
-                console.error("Gagal mengunduh KTA:", err);
-                alert("Terjadi kesalahan saat membuat gambar KTA.");
-            } finally {
-                if (downloadBtn) {
-                    downloadBtn.innerHTML = originalBtnText;
-                    downloadBtn.disabled = false;
-                }
-            }
+        function downloadKTACard() {
+            html2canvas(document.getElementById('kta-card-capture'), { scale: 2 }).then(canvas => {
+                const a = document.createElement('a'); a.download = 'KTA_Digital_CADAS.png'; a.href = canvas.toDataURL(); a.click();
+            });
         }
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -2008,62 +1871,24 @@ function convertImgToBase64(imgElement) {
         });
 
         function downloadCardAsImage() {
-            html2canvas(document.getElementById('printable-card'), { scale: 1.2, useCORS: true, allowTaint: true }).then(canvas => {
-                downloadBase64File(canvas.toDataURL('image/png'), 'Bukti_Pendaftaran.png');
+            html2canvas(document.getElementById('printable-card'), { scale: 2 }).then(canvas => {
+                const a = document.createElement('a'); a.download = 'Bukti_Pendaftaran.png'; a.href = canvas.toDataURL(); a.click();
             });
         }
 
-        // --- FUNGSI DOWNLOAD LOGO KPA CADAS ---
-        async function downloadLogoDirect() {
-            const logoImg = document.getElementById('logo-img-src');
-            const downloadBtn = document.getElementById('btn-download-logo');
-            const originalBtnText = downloadBtn ? downloadBtn.innerHTML : '';
-
-            if (downloadBtn) {
-                downloadBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i>Mengunduh Logo...`;
-                downloadBtn.disabled = true;
-            }
-
-            try {
-                let base64Url = '';
-                if (logoImg) {
-                    base64Url = await convertImgToBase64(logoImg);
-                } else {
-                    base64Url = 'KPA CADAS.jpg';
-                }
-
-                if (!base64Url.startsWith('data:image/')) {
-                    const response = await fetch(base64Url);
-                    const blob = await response.blob();
-                    const reader = new FileReader();
-                    base64Url = await new Promise((resolve) => {
-                        reader.onloadend = () => resolve(reader.result);
-                        reader.readAsDataURL(blob);
-                    });
-                }
-
-                downloadBase64File(base64Url, 'Logo_KPA_CADAS_Parepare.png');
-
-            } catch (e) {
-                console.error("Gagal unduh logo:", e);
-                window.open(logoImg ? logoImg.src : 'KPA CADAS.jpg', '_blank');
-            } finally {
-                if (downloadBtn) {
-                    downloadBtn.innerHTML = originalBtnText;
-                    downloadBtn.disabled = false;
-                }
-            }
+        function downloadLogoDirect() {
+            const a = document.createElement('a'); a.href = document.getElementById('logo-img-src').src; a.download = 'Logo_CADAS.jpg'; a.click();
         }
 
         function downloadPosterGenerated() {
-            html2canvas(document.getElementById('poster-capture-area'), { scale: 1.2, useCORS: true, allowTaint: true }).then(canvas => {
-                downloadBase64File(canvas.toDataURL('image/png'), 'Poster_Sewa_Alat.png');
+            html2canvas(document.getElementById('poster-capture-area'), { scale: 2 }).then(canvas => {
+                const a = document.createElement('a'); a.download = 'Poster_Sewa_Alat.png'; a.href = canvas.toDataURL(); a.click();
             });
         }
 
         function downloadServicePoster() {
-            html2canvas(document.getElementById('service-poster-capture'), { scale: 1.2, useCORS: true, allowTaint: true }).then(canvas => {
-                downloadBase64File(canvas.toDataURL('image/png'), 'Poster_Service_HP.png');
+            html2canvas(document.getElementById('service-poster-capture'), { scale: 2 }).then(canvas => {
+                const a = document.createElement('a'); a.download = 'Poster_Service_HP.png'; a.href = canvas.toDataURL(); a.click();
             });
         }
 
@@ -2092,7 +1917,7 @@ function convertImgToBase64(imgElement) {
 
         function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
 
-        // --- PENDAFTARAN & KOMPRESI FOTO ---
+        // --- SISTEM PENDAFTARAN DENGAN KOMPRESI FOTO OTOMATIS AGAR MASUK FIREBASE DENGAN SUKSES ---
         function handleFormSubmit(e) {
             e.preventDefault();
             const fotoInput = document.getElementById('reg-foto');
@@ -2162,6 +1987,7 @@ function convertImgToBase64(imgElement) {
             try {
                 if (window.db) {
                     await db.collection("cadas_pendaftar").add(currentFormData);
+                    console.log("Data pendaftar berhasil disimpan ke Firebase!");
                 }
             } catch (e) {
                 console.error("Gagal menyimpan data ke Firebase:", e);
