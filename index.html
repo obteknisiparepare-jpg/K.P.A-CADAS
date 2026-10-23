@@ -1473,11 +1473,22 @@
         let currentFormData = {};
         let galleryPhotos = [];
         let galleryVideos = [];
-
-       // --- FUNGSI DOWNLOAD AMAN (ANTI-CRASH UNTUK APK WEBINTOAPP & IOS) ---
+// --- FUNGSI DOWNLOAD OTOMATIS & MODAL AMAN (WEB, IOS, & APK ANDROID) ---
 function downloadBase64File(base64Data, filename) {
     try {
-        // Langsung tampilkan modal pratinjau agar aman di APK Android & iOS
+        // 1. Picu unduhan langsung agar file langsung tersimpan ke perangkat
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = base64Data;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        
+        setTimeout(() => {
+            document.body.removeChild(a);
+        }, 1000);
+
+        // 2. Tampilkan juga modal pratinjau sebagai alternatif jika WebView APK memblokir unduhan langsung
         const modal = document.getElementById('universal-download-modal');
         if (modal) {
             document.getElementById('uni-modal-img').src = base64Data;
